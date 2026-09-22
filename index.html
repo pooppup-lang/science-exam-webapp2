@@ -99,21 +99,37 @@
         <label for="newRoomName">ชื่อห้องสอบ / หน่วยการเรียนรู้</label>
         <input type="text" id="newRoomName" placeholder="เช่น วิทยาศาสตร์ ม.2 ครั้งที่ 1 (สารละลายและแรง)">
 
-        <label for="newRoomClass">ระดับชั้น / ห้องเรียน</label>
-        <input type="text" id="newRoomClass" placeholder="เช่น ม.2/1">
+        <div class="input-row">
+          <div>
+            <label for="newRoomGrade">ระดับชั้นข้อสอบ (คลัง 180 ข้อ)</label>
+            <select id="newRoomGrade">
+              <option value="all">ทุกระดับชั้น (ม.1 - ม.6 รวม 180 ข้อ)</option>
+              <option value="ม.1">มัธยมศึกษาปีที่ 1 (ม.1)</option>
+              <option value="ม.2">มัธยมศึกษาปีที่ 2 (ม.2)</option>
+              <option value="ม.3">มัธยมศึกษาปีที่ 3 (ม.3)</option>
+              <option value="ม.4">มัธยมศึกษาปีที่ 4 (ม.4)</option>
+              <option value="ม.5">มัธยมศึกษาปีที่ 5 (ม.5)</option>
+              <option value="ม.6">มัธยมศึกษาปีที่ 6 (ม.6)</option>
+            </select>
+          </div>
+          <div>
+            <label for="newRoomClass">ชั้นเรียน / ห้อง</label>
+            <input type="text" id="newRoomClass" placeholder="เช่น ม.2/1">
+          </div>
+        </div>
 
         <div class="input-row">
           <div>
-            <label for="easyCount">ระดับง่าย (สูงสุด 14 ข้อ)</label>
-            <input type="number" id="easyCount" min="0" max="14" value="5">
+            <label for="easyCount">ระดับง่าย (ข้อ)</label>
+            <input type="number" id="easyCount" min="0" max="60" value="5">
           </div>
           <div>
-            <label for="mediumCount">ระดับปานกลาง (สูงสุด 14 ข้อ)</label>
-            <input type="number" id="mediumCount" min="0" max="14" value="3">
+            <label for="mediumCount">ระดับปานกลาง (ข้อ)</label>
+            <input type="number" id="mediumCount" min="0" max="60" value="3">
           </div>
           <div>
-            <label for="hardCount">ระดับยาก (สูงสุด 14 ข้อ)</label>
-            <input type="number" id="hardCount" min="0" max="14" value="2">
+            <label for="hardCount">ระดับยาก (ข้อ)</label>
+            <input type="number" id="hardCount" min="0" max="60" value="2">
           </div>
         </div>
 

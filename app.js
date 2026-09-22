@@ -60,6 +60,7 @@ function initDemoData() {
       code: 'SCI-DEMO1',
       name: 'ทดสอบความรู้วิทยาศาสตร์พื้นฐาน (ตัวอย่าง)',
       classroom: 'ม.2/1',
+      grade: 'ม.2',
       easy: 3,
       medium: 2,
       hard: 1,
@@ -180,6 +181,7 @@ function generateRoomCode() {
 function createRoom() {
   const name = document.getElementById('newRoomName').value.trim();
   const classroom = document.getElementById('newRoomClass').value.trim();
+  const grade = document.getElementById('newRoomGrade') ? document.getElementById('newRoomGrade').value : 'all';
   const easy = parseInt(document.getElementById('easyCount').value) || 0;
   const medium = parseInt(document.getElementById('mediumCount').value) || 0;
   const hard = parseInt(document.getElementById('hardCount').value) || 0;
@@ -194,12 +196,16 @@ function createRoom() {
     return;
   }
 
-  const easyPoolCount = (typeof QUESTION_BANK !== 'undefined' ? QUESTION_BANK.filter(q => q.difficulty === 'easy').length : 14);
-  const mediumPoolCount = (typeof QUESTION_BANK !== 'undefined' ? QUESTION_BANK.filter(q => q.difficulty === 'medium').length : 14);
-  const hardPoolCount = (typeof QUESTION_BANK !== 'undefined' ? QUESTION_BANK.filter(q => q.difficulty === 'hard').length : 14);
+  let pool = (typeof QUESTION_BANK !== 'undefined') ? QUESTION_BANK : [];
+  if (grade && grade !== 'all') {
+    pool = pool.filter(q => q.grade === grade);
+  }
+  const easyPoolCount = pool.filter(q => q.difficulty === 'easy').length;
+  const mediumPoolCount = pool.filter(q => q.difficulty === 'medium').length;
+  const hardPoolCount = pool.filter(q => q.difficulty === 'hard').length;
 
   if (easy > easyPoolCount || medium > mediumPoolCount || hard > hardPoolCount) {
-    showError('teacherError', `จำนวนข้อเกินคลังข้อสอบที่มี (ง่ายมี ${easyPoolCount}, ปานกลางมี ${mediumPoolCount}, ยากมี ${hardPoolCount} ข้อ)`);
+    showError('teacherError', `จำนวนข้อเกินคลังที่มีสำหรับชั้นนี้ (ง่ายมี ${easyPoolCount}, ปานกลางมี ${mediumPoolCount}, ยากมี ${hardPoolCount} ข้อ)`);
     return;
   }
 
@@ -209,6 +215,7 @@ function createRoom() {
     code: roomCode,
     name: name,
     classroom: classroom,
+    grade: grade,
     easy: easy,
     medium: medium,
     hard: hard,
@@ -465,7 +472,8 @@ function startExam() {
   state.currentExamQuestions = getRandomQuestions(
     state.currentRoom.easy,
     state.currentRoom.medium,
-    state.currentRoom.hard
+    state.currentRoom.hard,
+    state.currentRoom.grade || 'all'
   );
 
   renderExam();
