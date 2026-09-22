@@ -10,178 +10,59 @@
 <body>
   <div class="container">
 
-    <!-- ================= 1. HOME VIEW ================= -->
-    <div id="homeView" class="view active">
-      <div class="card">
-        <h1>🔬 ระบบทำข้อสอบวิทยาศาสตร์</h1>
-        <p class="subtitle">ระบบทดสอบความรู้และประเมินผลออนไลน์ วิชาวิทยาศาสตร์ สำหรับครูและนักเรียน</p>
+    <!-- Top App Navigation / Portal Switcher -->
+    <header class="app-header">
+      <div class="header-logo" onclick="showStudentPortal()">
+        <span class="logo-icon">🔬</span>
+        <span class="logo-text">ระบบข้อสอบวิทยาศาสตร์</span>
+      </div>
+      <div class="header-nav">
+        <button class="small outline portal-btn" id="portalSwitcherBtn" onclick="togglePortal()">
+          🔒 เข้าสู่ระบบครู (Admin)
+        </button>
+      </div>
+    </header>
 
-        <div class="role-grid">
-          <div class="role-card" onclick="showView('studentCodeView')">
-            <span class="role-icon">📝</span>
-            <div class="role-title">เข้าสู่ห้องสอบ (นักเรียน)</div>
-            <div class="role-desc">กรอกรหัสห้องเพื่อเริ่มทำข้อสอบและดูผลคะแนนทันที</div>
-          </div>
+    <!-- ================= 1. STUDENT GUEST HOME VIEW ================= -->
+    <div id="studentHomeView" class="view active">
+      <div class="card hero-card">
+        <div class="badge-tag">🎓 สำหรับนักเรียน (Student Portal)</div>
+        <h1>📝 เข้าสู่ห้องสอบวิทยาศาสตร์</h1>
+        <p class="subtitle">กรอกรหัสห้องสอบที่ได้รับจากครูผู้สอนเพื่อเริ่มทำข้อสอบออนไลน์</p>
+        <div id="studentHomeError" class="error"></div>
 
-          <div class="role-card" onclick="showView('teacherLoginView')">
-            <span class="role-icon">👨‍🏫</span>
-            <div class="role-title">เข้าสู่ระบบครูผู้สอน</div>
-            <div class="role-desc">สร้างห้องสอบ จัดการข้อสอบ และดูผลคะแนนนักเรียน</div>
-          </div>
+        <div class="input-group">
+          <label for="roomCodeInput">รหัสห้องสอบ (Room Code)</label>
+          <input type="text" id="roomCodeInput" placeholder="เช่น SCI-9X4K2A" 
+                 style="text-transform: uppercase; font-size: 24px; font-weight: 800; letter-spacing: 3px; text-align: center;">
+        </div>
 
-          <div class="role-card" onclick="showView('registerTeacherView')">
-            <span class="role-icon">✨</span>
-            <div class="role-title">สมัครบัญชีครูใหม่</div>
-            <div class="role-desc">ลงทะเบียนบัญชีครูเพื่อเริ่มต้นสร้างห้องสอบ</div>
-          </div>
+        <button class="btn-large" onclick="checkRoomCode()">🚀 ยืนยันรหัสห้องสอบ</button>
+
+        <div class="feature-strip">
+          <div class="strip-item"><span>⏱️</span> จับเวลาถอยหลัง</div>
+          <div class="strip-item"><span>🧮</span> เครื่องคิดเลขในตัว</div>
+          <div class="strip-item"><span>🛡️</span> ป้องกันการสลับหน้าจอ</div>
+          <div class="strip-item"><span>📖</span> เฉลยละเอียดทันที</div>
         </div>
       </div>
     </div>
 
-    <!-- ================= 2. TEACHER LOGIN VIEW ================= -->
-    <div id="teacherLoginView" class="view">
-      <div class="card">
-        <h1>👨‍🏫 เข้าสู่ระบบครูผู้สอน</h1>
-        <p class="subtitle">กรอกชื่อผู้ใช้และรหัสผ่านเพื่อเข้าสู่แดชบอร์ดจัดการห้องสอบ</p>
-        <div id="teacherLoginError" class="error"></div>
-
-        <label for="teacherUsername">ชื่อผู้ใช้ (Username)</label>
-        <input type="text" id="teacherUsername" placeholder="เช่น teacher_sc">
-
-        <label for="teacherPassword">รหัสผ่าน (Password)</label>
-        <input type="password" id="teacherPassword" placeholder="••••••••">
-
-        <button onclick="teacherLogin()">เข้าสู่ระบบ</button>
-        <button class="secondary" onclick="showView('homeView')">← กลับหน้าหลัก</button>
-
-        <p style="text-align: center; margin-top: 14px; font-size: 14px; color: var(--text-muted);">
-          ยังไม่มีบัญชีครู? <a href="javascript:void(0)" onclick="showView('registerTeacherView')" style="color: var(--primary); text-decoration: none; font-weight: 600;">สมัครสมาชิกที่นี่</a>
-        </p>
-      </div>
-    </div>
-
-    <!-- ================= 3. REGISTER TEACHER VIEW ================= -->
-    <div id="registerTeacherView" class="view">
-      <div class="card">
-        <h1>✨ สมัครบัญชีครูผู้สอน</h1>
-        <p class="subtitle">สร้างบัญชีสำหรับจัดการและออกข้อสอบ</p>
-        <div id="registerTeacherError" class="error"></div>
-
-        <label for="registerName">ชื่อ-นามสกุล</label>
-        <input type="text" id="registerName" placeholder="เช่น ครูวรพล ใจดี">
-
-        <label for="registerUsername">ชื่อผู้ใช้ (Username)</label>
-        <input type="text" id="registerUsername" placeholder="เช่น worapon_sci">
-
-        <label for="registerPassword">รหัสผ่าน (อย่างน้อย 6 ตัวอักษร)</label>
-        <input type="password" id="registerPassword" placeholder="••••••••">
-
-        <label for="registerConfirmPassword">ยืนยันรหัสผ่าน</label>
-        <input type="password" id="registerConfirmPassword" placeholder="••••••••">
-
-        <button onclick="registerTeacher()">สมัครบัญชีครู</button>
-        <button class="secondary" onclick="showView('homeView')">← กลับหน้าหลัก</button>
-      </div>
-    </div>
-
-    <!-- ================= 4. TEACHER DASHBOARD VIEW ================= -->
-    <div id="teacherDashboardView" class="view">
-      <div class="card">
-        <div class="topbar">
-          <span id="teacherInfo" class="badge-info">ครู: กำลังโหลด...</span>
-          <button class="secondary small" onclick="teacherLogout()">ออกจากระบบ</button>
-        </div>
-
-        <h1>🛠️ สร้างห้องสอบวิทยาศาสตร์</h1>
-        <p class="subtitle">กำหนดรายละเอียดและสัดส่วนระดับความยากของข้อสอบ</p>
-        <div id="teacherError" class="error"></div>
-
-        <label for="newRoomName">ชื่อห้องสอบ / หน่วยการเรียนรู้</label>
-        <input type="text" id="newRoomName" placeholder="เช่น วิทยาศาสตร์ ม.2 ครั้งที่ 1 (สารละลายและแรง)">
-
-        <div class="input-row">
-          <div>
-            <label for="newRoomGrade">ระดับชั้นข้อสอบ (คลัง 180 ข้อ)</label>
-            <select id="newRoomGrade">
-              <option value="all">ทุกระดับชั้น (ม.1 - ม.6 รวม 180 ข้อ)</option>
-              <option value="ม.1">มัธยมศึกษาปีที่ 1 (ม.1)</option>
-              <option value="ม.2">มัธยมศึกษาปีที่ 2 (ม.2)</option>
-              <option value="ม.3">มัธยมศึกษาปีที่ 3 (ม.3)</option>
-              <option value="ม.4">มัธยมศึกษาปีที่ 4 (ม.4)</option>
-              <option value="ม.5">มัธยมศึกษาปีที่ 5 (ม.5)</option>
-              <option value="ม.6">มัธยมศึกษาปีที่ 6 (ม.6)</option>
-            </select>
-          </div>
-          <div>
-            <label for="newRoomClass">ชั้นเรียน / ห้อง</label>
-            <input type="text" id="newRoomClass" placeholder="เช่น ม.2/1">
-          </div>
-        </div>
-
-        <div class="input-row">
-          <div>
-            <label for="easyCount">ระดับง่าย (ข้อ)</label>
-            <input type="number" id="easyCount" min="0" max="60" value="5">
-          </div>
-          <div>
-            <label for="mediumCount">ระดับปานกลาง (ข้อ)</label>
-            <input type="number" id="mediumCount" min="0" max="60" value="3">
-          </div>
-          <div>
-            <label for="hardCount">ระดับยาก (ข้อ)</label>
-            <input type="number" id="hardCount" min="0" max="60" value="2">
-          </div>
-        </div>
-
-        <button onclick="createRoom()">🚀 สร้างห้องสอบและออกรหัส</button>
-
-        <div id="newRoomCode"></div>
-
-        <h2>📋 ห้องสอบที่กำลังเปิดอยู่</h2>
-        <div id="roomList" class="table-responsive">
-          <p style="padding: 16px; color: var(--text-muted);">ยังไม่มีห้องสอบที่สร้าง</p>
-        </div>
-
-        <div id="roomResultsSection" style="margin-top: 24px; display: none;">
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-            <h2 id="roomResultTitle" style="margin: 0;">📊 รายงานคะแนนนักเรียน</h2>
-            <button class="small outline" onclick="exportResultsToCSV()">📥 ส่งออกเป็นไฟล์ Excel/CSV</button>
-          </div>
-          <div id="roomResultsTable" class="table-responsive"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ================= 5. STUDENT CODE VIEW ================= -->
-    <div id="studentCodeView" class="view">
-      <div class="card">
-        <h1>🔑 เข้าสู่ห้องสอบวิทยาศาสตร์</h1>
-        <p class="subtitle">กรอกรหัสห้องสอบที่ได้รับจากครูผู้สอน</p>
-        <div id="studentCodeError" class="error"></div>
-
-        <label for="roomCodeInput">รหัสห้องสอบ (Room Code)</label>
-        <input type="text" id="roomCodeInput" placeholder="เช่น SCI-9X4K2A" style="text-transform: uppercase; font-size: 20px; font-weight: bold; letter-spacing: 2px;">
-
-        <button onclick="checkRoomCode()">ยืนยันรหัสห้องสอบ</button>
-        <button class="secondary" onclick="showView('homeView')">← กลับหน้าหลัก</button>
-      </div>
-    </div>
-
-    <!-- ================= 6. STUDENT PROFILE VIEW ================= -->
+    <!-- ================= 2. STUDENT PROFILE VIEW ================= -->
     <div id="studentProfileView" class="view">
       <div class="card">
         <h1>👤 ยืนยันข้อมูลนักเรียน</h1>
-        <p class="subtitle">กรุณากรอกข้อมูลส่วนตัวเพื่อบันทึกผลการสอบ</p>
+        <p class="subtitle">กรุณากรอกข้อมูลส่วนตัวเพื่อใช้ในการออกรายงานคะแนน</p>
         <div id="profileError" class="error"></div>
 
         <div id="roomSummary" class="room-code-banner"></div>
 
-        <label for="studentName">ชื่อ-นามสกุล</label>
+        <label for="studentName">ชื่อ-นามสกุล นักเรียน</label>
         <input type="text" id="studentName" placeholder="เช่น เด็กชายวิทยา รักเรียน">
 
         <div class="input-row">
           <div>
-            <label for="studentClass">ชั้น / ห้อง</label>
+            <label for="studentClass">ชั้น / ห้องเรียน</label>
             <input type="text" id="studentClass" placeholder="เช่น ม.2/1">
           </div>
           <div>
@@ -190,26 +71,48 @@
           </div>
         </div>
 
-        <button class="success" onclick="startExam()">✍️ เริ่มทำข้อสอบ</button>
-        <button class="secondary" onclick="showView('studentCodeView')">← เปลี่ยนรหัสห้องสอบ</button>
+        <div class="anti-cheat-notice">
+          ⚠️ <strong>ข้อกำหนดในการสอบ:</strong> ข้อสอบจะทำการสลับข้อและสลับตัวเลือก ก-ข-ค-ง อัตโนมัติ และระบบมี <strong>โหมดตรวจจับการสลับหน้าจอ</strong> หากสลับแท็บหรือออกจากหน้าต่าง ระบบจะทำการรีเซ็ตข้อสอบและเริ่มทำใหม่ทันที
+        </div>
+
+        <button class="success btn-large" onclick="startExam()">✍️ ยืนยันและเริ่มทำข้อสอบ</button>
+        <button class="secondary" onclick="showStudentPortal()">← เปลี่ยนรหัสห้องสอบ</button>
       </div>
     </div>
 
-    <!-- ================= 7. STUDENT EXAM VIEW ================= -->
+    <!-- ================= 3. STUDENT EXAM VIEW ================= -->
     <div id="studentExamView" class="view">
-      <div class="card">
-        <div class="topbar">
-          <span id="studentInfo" class="badge-info">นักเรียน: กำลังสอบ</span>
-          <div style="display: flex; gap: 8px;">
-            <button class="small outline" onclick="toggleCalculator()">🧮 เครื่องคิดเลข</button>
-            <button class="small secondary" onclick="exitExam()">ออกจากห้อง</button>
+      <!-- Sticky Header Bar for Timer & Controls -->
+      <div class="exam-sticky-bar" id="examStickyBar">
+        <div class="sticky-left">
+          <span id="studentStickyInfo" class="sticky-tag student-tag">👤 นักเรียน</span>
+          <span id="roomStickyInfo" class="sticky-tag room-tag">SCI-ROOM</span>
+        </div>
+        <div class="sticky-center">
+          <div class="timer-badge" id="examTimerBadge">
+            <span class="timer-icon">⏱️</span>
+            <span class="timer-text" id="timerDigits">--:--</span>
           </div>
+        </div>
+        <div class="sticky-right">
+          <button class="small outline" onclick="toggleCalculator()">🧮 คิดเลข</button>
+          <button class="small danger" onclick="exitExam()">ออกจากห้อง</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 10px;">
+        <div class="anti-cheat-pill">
+          <span class="pulse-dot"></span> ระบบกำลังตรวจจับการสลับหน้าจอ (Anti-Cheat Active)
         </div>
 
         <div id="studentError" class="error"></div>
 
         <!-- Calculator Box -->
         <div id="calculatorBox" class="calc-box">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-size: 13px; color: #94a3b8;">เครื่องคิดเลข</span>
+            <button class="small secondary" onclick="toggleCalculator()" style="padding: 2px 8px; font-size: 11px;">✕ ปิด</button>
+          </div>
           <input type="text" id="calcDisplay" class="calc-display" readonly value="0">
           <div class="calc-grid">
             <button onclick="calcPress('C')">C</button>
@@ -242,13 +145,13 @@
         <!-- Questions Content -->
         <div id="examContent"></div>
 
-        <div style="margin-top: 24px;">
-          <button class="success" onclick="submitExam()">📤 ส่งคำตอบและตรวจคะแนน</button>
+        <div style="margin-top: 30px;">
+          <button class="success btn-large" onclick="submitExam()">📤 ส่งคำตอบและตรวจผลคะแนน</button>
         </div>
       </div>
     </div>
 
-    <!-- ================= 8. STUDENT RESULT VIEW ================= -->
+    <!-- ================= 4. STUDENT RESULT VIEW ================= -->
     <div id="studentResultView" class="view">
       <div class="card">
         <div class="score-summary-card">
@@ -261,7 +164,288 @@
         <h2>📖 เฉลยคำตอบและคำอธิบายละเอียด</h2>
         <div id="resultAnswersReview"></div>
 
-        <button onclick="showView('homeView')">🏠 กลับสู่หน้าหลัก</button>
+        <button class="btn-large" onclick="showStudentPortal()">🏠 กลับสู่หน้าหลักเข้าสอบ</button>
+      </div>
+    </div>
+
+    <!-- ================= 5. TEACHER LOGIN VIEW (ADMIN) ================= -->
+    <div id="teacherLoginView" class="view">
+      <div class="card">
+        <div class="badge-tag admin-tag">🔒 สำหรับครูผู้สอน (Admin Portal)</div>
+        <h1>👨‍🏫 เข้าสู่ระบบครูผู้สอน</h1>
+        <p class="subtitle">ระบบจัดการห้องสอบ ออกแบบข้อสอบ และตรวจผลคะแนนนักเรียน</p>
+        <div id="teacherLoginError" class="error"></div>
+
+        <label for="teacherUsername">ชื่อผู้ใช้ (Username)</label>
+        <input type="text" id="teacherUsername" placeholder="เช่น teacher_sci">
+
+        <label for="teacherPassword">รหัสผ่าน (Password)</label>
+        <input type="password" id="teacherPassword" placeholder="••••••••">
+
+        <button onclick="teacherLogin()">เข้าสู่ระบบ Admin</button>
+        <button class="secondary" onclick="showStudentPortal()">← กลับสู่หน้านักเรียนเข้าสอบ</button>
+
+        <div class="login-sublinks">
+          <a href="javascript:void(0)" onclick="showView('teacherForgotView')">🔑 ลืมรหัสผ่าน / ลืม PIN กู้คืนที่นี่</a>
+          <span>•</span>
+          <a href="javascript:void(0)" onclick="showView('registerTeacherView')">✨ สมัครบัญชีครูใหม่</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 6. TEACHER REGISTER VIEW (ADMIN) ================= -->
+    <div id="registerTeacherView" class="view">
+      <div class="card">
+        <div class="badge-tag admin-tag">✨ สมัครสมาชิกครู (Admin Account)</div>
+        <h1>👨‍🏫 ลงทะเบียนบัญชีครูผู้สอน</h1>
+        <p class="subtitle">สร้างบัญชีครูพร้อมระบบ PIN ความปลอดภัย 4 หลัก และคำถามกันลืม</p>
+        <div id="registerTeacherError" class="error"></div>
+
+        <label for="registerName">ชื่อ-นามสกุล ครูผู้สอน</label>
+        <input type="text" id="registerName" placeholder="เช่น ครูวรพล มุ่งมั่นสอน">
+
+        <label for="registerUsername">ชื่อผู้ใช้ (Username)</label>
+        <input type="text" id="registerUsername" placeholder="เช่น worapon_teacher">
+
+        <div class="input-row">
+          <div>
+            <label for="registerPassword">รหัสผ่าน (อย่างน้อย 6 ตัวอักษร)</label>
+            <input type="password" id="registerPassword" placeholder="••••••••">
+          </div>
+          <div>
+            <label for="registerConfirmPassword">ยืนยันรหัสผ่าน</label>
+            <input type="password" id="registerConfirmPassword" placeholder="••••••••">
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div>
+            <label for="registerPin">PIN ความปลอดภัย 4 หลัก (สำหรับกู้คืน)</label>
+            <input type="password" id="registerPin" maxlength="4" placeholder="เช่น 1234" pattern="[0-9]{4}">
+          </div>
+          <div>
+            <label for="registerSecQuestion">คำถามกันลืม (Security Question)</label>
+            <select id="registerSecQuestion">
+              <option value="pet">สัตว์เลี้ยงตัวแรกชื่ออะไร</option>
+              <option value="school">โรงเรียนประถมศึกษาแห่งแรกชื่ออะไร</option>
+              <option value="color">สีที่คุณชอบที่สุดคือสีอะไร</option>
+              <option value="food">อาหารจานโปรดของคุณคืออะไร</option>
+            </select>
+          </div>
+        </div>
+
+        <label for="registerSecAnswer">คำตอบของคำถามกันลืม</label>
+        <input type="text" id="registerSecAnswer" placeholder="เช่น เจ้าด่าง หรือ มะลิ">
+
+        <button onclick="registerTeacher()">ยืนยันการสมัครบัญชีครู</button>
+        <button class="secondary" onclick="showView('teacherLoginView')">← กลับหน้าเข้าสู่ระบบครู</button>
+      </div>
+    </div>
+
+    <!-- ================= 7. TEACHER FORGOT VIEW ================= -->
+    <div id="teacherForgotView" class="view">
+      <div class="card">
+        <div class="badge-tag admin-tag">🔑 กู้คืนบัญชี (Account Recovery)</div>
+        <h1>กู้คืนรหัสผ่าน / PIN ครู</h1>
+        <p class="subtitle">ตอบคำถามกันลืมหรือกรอก PIN 4 หลักเพื่อตั้งรหัสผ่านใหม่</p>
+        <div id="forgotError" class="error"></div>
+        <div id="forgotSuccess" class="success-banner" style="display: none;"></div>
+
+        <label for="forgotUsername">ชื่อผู้ใช้ (Username) ที่ต้องการกู้คืน</label>
+        <input type="text" id="forgotUsername" placeholder="ระบุ Username ของคุณ">
+
+        <label for="forgotSecQuestion">คำถามกันลืมที่เคยเลือกไว้</label>
+        <select id="forgotSecQuestion">
+          <option value="pet">สัตว์เลี้ยงตัวแรกชื่ออะไร</option>
+          <option value="school">โรงเรียนประถมศึกษาแห่งแรกชื่ออะไร</option>
+          <option value="color">สีที่คุณชอบที่สุดคือสีอะไร</option>
+          <option value="food">อาหารจานโปรดของคุณคืออะไร</option>
+        </select>
+
+        <label for="forgotSecAnswer">คำตอบกันลืม</label>
+        <input type="text" id="forgotSecAnswer" placeholder="กรอกคำตอบที่คุณตั้งไว้">
+
+        <label for="forgotNewPassword">ตั้งรหัสผ่านใหม่ (New Password)</label>
+        <input type="password" id="forgotNewPassword" placeholder="อย่างน้อย 6 ตัวอักษร">
+
+        <button onclick="recoverAccount()">รีเซ็ตรหัสผ่านใหม่</button>
+        <button class="secondary" onclick="showView('teacherLoginView')">← กลับหน้าเข้าสู่ระบบ</button>
+      </div>
+    </div>
+
+    <!-- ================= 8. TEACHER DASHBOARD VIEW ================= -->
+    <div id="teacherDashboardView" class="view">
+      <div class="card">
+        <div class="topbar">
+          <span id="teacherInfo" class="badge-info">ครู: กำลังโหลด...</span>
+          <div style="display: flex; gap: 8px;">
+            <button class="secondary small" onclick="teacherLogout()">ออกจากระบบ Admin</button>
+          </div>
+        </div>
+
+        <!-- Dashboard Navigation Tabs -->
+        <div class="dashboard-tabs">
+          <button class="tab-btn active" id="tabRoomsBtn" onclick="switchTeacherTab('rooms')">📋 จัดการห้องสอบ & ผลคะแนน</button>
+          <button class="tab-btn" id="tabCustomQBtn" onclick="switchTeacherTab('customQ')">➕ คลังข้อสอบของฉัน (คิดข้อสอบเอง)</button>
+        </div>
+
+        <!-- TAB 1: ROOMS & RESULTS -->
+        <div id="teacherTabRooms">
+          <h2>🛠️ สร้างห้องสอบวิทยาศาสตร์ใหม่</h2>
+          <p class="subtitle">กำหนดชื่อห้อง, ระดับชั้น, หมวดวิชา (ฟิสิกส์/เคมี/ชีววิทยา), เวลาสอบ และสัดส่วนข้อสอบ</p>
+          <div id="teacherError" class="error"></div>
+
+          <label for="newRoomName">ชื่อห้องสอบ / หน่วยการเรียนรู้</label>
+          <input type="text" id="newRoomName" placeholder="เช่น กลศาสตร์และแรง ม.4 ครั้งที่ 1">
+
+          <div class="input-row">
+            <div>
+              <label for="newRoomGrade">ระดับชั้นข้อสอบ</label>
+              <select id="newRoomGrade" onchange="updatePoolCountDisplay()">
+                <option value="all">ทุกระดับชั้น (ม.1 - ม.6)</option>
+                <option value="ม.1">มัธยมศึกษาปีที่ 1 (ม.1)</option>
+                <option value="ม.2">มัธยมศึกษาปีที่ 2 (ม.2)</option>
+                <option value="ม.3">มัธยมศึกษาปีที่ 3 (ม.3)</option>
+                <option value="ม.4">มัธยมศึกษาปีที่ 4 (ม.4)</option>
+                <option value="ม.5">มัธยมศึกษาปีที่ 5 (ม.5)</option>
+                <option value="ม.6">มัธยมศึกษาปีที่ 6 (ม.6)</option>
+              </select>
+            </div>
+            <div>
+              <label for="newRoomSubject">หมวดวิชา (ม.ปลาย แยกวิชา)</label>
+              <select id="newRoomSubject" onchange="updatePoolCountDisplay()">
+                <option value="all">ทุกหมวดวิชา (รวมวิทย์)</option>
+                <option value="ฟิสิกส์">ฟิสิกส์ (Physics)</option>
+                <option value="เคมี">เคมี (Chemistry)</option>
+                <option value="ชีววิทยา">ชีววิทยา (Biology)</option>
+              </select>
+            </div>
+            <div>
+              <label for="newRoomClass">ชั้นเรียน / ห้อง</label>
+              <input type="text" id="newRoomClass" placeholder="เช่น ม.4/1">
+            </div>
+          </div>
+
+          <div class="input-row">
+            <div>
+              <label for="newRoomTimeLimit">⏱️ เวลาในการทำข้อสอบ</label>
+              <select id="newRoomTimeLimit">
+                <option value="0">ไม่จำกัดเวลา</option>
+                <option value="10">10 นาที</option>
+                <option value="15">15 นาที</option>
+                <option value="20">20 นาที</option>
+                <option value="30" selected>30 นาที</option>
+                <option value="45">45 นาที</option>
+                <option value="60">60 นาที</option>
+              </select>
+            </div>
+            <div>
+              <label for="easyCount">ระดับง่าย (<span id="availEasy">0</span> ข้อ)</label>
+              <input type="number" id="easyCount" min="0" value="5">
+            </div>
+            <div>
+              <label for="mediumCount">ระดับปานกลาง (<span id="availMed">0</span> ข้อ)</label>
+              <input type="number" id="mediumCount" min="0" value="3">
+            </div>
+            <div>
+              <label for="hardCount">ระดับยาก (<span id="availHard">0</span> ข้อ)</label>
+              <input type="number" id="hardCount" min="0" value="2">
+            </div>
+          </div>
+
+          <button onclick="createRoom()">🚀 สร้างห้องสอบและออกรหัส</button>
+
+          <div id="newRoomCode"></div>
+
+          <h2>📋 ห้องสอบของฉันที่กำลังเปิดอยู่</h2>
+          <div id="roomList" class="table-responsive">
+            <p style="padding: 16px; color: var(--text-muted);">ยังไม่มีห้องสอบที่สร้าง</p>
+          </div>
+
+          <div id="roomResultsSection" style="margin-top: 24px; display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+              <h2 id="roomResultTitle" style="margin: 0;">📊 รายงานคะแนนนักเรียน</h2>
+              <button class="small outline" onclick="exportResultsToCSV()">📥 ส่งออกเป็นไฟล์ Excel/CSV</button>
+            </div>
+            <div id="roomResultsTable" class="table-responsive"></div>
+          </div>
+        </div>
+
+        <!-- TAB 2: CUSTOM QUESTIONS -->
+        <div id="teacherTabCustomQ" style="display: none;">
+          <h2>➕ เพิ่มข้อสอบของฉันเอง</h2>
+          <p class="subtitle">คุณครูสามารถคิดและเพิ่มข้อสอบของตนเองเข้าสู่คลังข้อสอบเพื่อใช้ในการสุ่มได้ทันที</p>
+          <div id="customQError" class="error"></div>
+          <div id="customQSuccess" class="success-banner" style="display: none;"></div>
+
+          <div class="input-row">
+            <div>
+              <label for="customQGrade">ระดับชั้น</label>
+              <select id="customQGrade">
+                <option value="ม.1">ม.1</option>
+                <option value="ม.2">ม.2</option>
+                <option value="ม.3">ม.3</option>
+                <option value="ม.4">ม.4</option>
+                <option value="ม.5">ม.5</option>
+                <option value="ม.6">ม.6</option>
+              </select>
+            </div>
+            <div>
+              <label for="customQSubject">หมวดวิชา</label>
+              <select id="customQSubject">
+                <option value="ฟิสิกส์">ฟิสิกส์</option>
+                <option value="เคมี">เคมี</option>
+                <option value="ชีววิทยา">ชีววิทยา</option>
+                <option value="วิทยาศาสตร์ทั่วไป">วิทยาศาสตร์ทั่วไป</option>
+              </select>
+            </div>
+            <div>
+              <label for="customQDiff">ระดับความยาก</label>
+              <select id="customQDiff">
+                <option value="easy">ง่าย (Easy)</option>
+                <option value="medium">ปานกลาง (Medium)</option>
+                <option value="hard">ยาก (Hard)</option>
+              </select>
+            </div>
+          </div>
+
+          <label for="customQText">โจทย์คำถาม</label>
+          <textarea id="customQText" rows="2" style="width: 100%; padding: 10px; border: 1.5px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 15px;" placeholder="พิมพ์คำถามข้อสอบของคุณที่นี่..."></textarea>
+
+          <div style="margin-top: 10px;">
+            <label>ตัวเลือกคำตอบทั้ง 4 ข้อ:</label>
+            <div style="display: grid; gap: 8px;">
+              <input type="text" id="customChoice1" placeholder="ตัวเลือก ก.">
+              <input type="text" id="customChoice2" placeholder="ตัวเลือก ข.">
+              <input type="text" id="customChoice3" placeholder="ตัวเลือก ค.">
+              <input type="text" id="customChoice4" placeholder="ตัวเลือก ง.">
+            </div>
+          </div>
+
+          <div class="input-row" style="margin-top: 10px;">
+            <div>
+              <label for="customQAnswer">ข้อที่ถูกต้อง</label>
+              <select id="customQAnswer">
+                <option value="A">ก. (ตัวเลือกที่ 1)</option>
+                <option value="B">ข. (ตัวเลือกที่ 2)</option>
+                <option value="C">ค. (ตัวเลือกที่ 3)</option>
+                <option value="D">ง. (ตัวเลือกที่ 4)</option>
+              </select>
+            </div>
+            <div style="grid-column: span 2;">
+              <label for="customQExplanation">คำอธิบายเฉลยละเอียด</label>
+              <input type="text" id="customQExplanation" placeholder="เช่น อธิบายสูตรคำนวณหรือเหตุผลประกอบ...">
+            </div>
+          </div>
+
+          <button onclick="saveCustomQuestion()">💾 บันทึกข้อสอบลงคลังของฉัน</button>
+
+          <h2 style="margin-top: 24px;">📚 รายการข้อสอบที่ฉันสร้างไว้ (<span id="customQCount">0</span> ข้อ)</h2>
+          <div id="customQTable" class="table-responsive">
+            <p style="padding: 16px; color: var(--text-muted); text-align: center;">ยังไม่มีข้อสอบที่คุณสร้างเอง</p>
+          </div>
+        </div>
+
       </div>
     </div>
 

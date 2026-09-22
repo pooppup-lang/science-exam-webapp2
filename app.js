@@ -1,6 +1,14 @@
 /**
- * Application Logic for Science Exam System
- * Works standalone on Vercel & GitHub Pages using localStorage
+ * Application Logic for Science Exam System (Vercel & GitHub Ready)
+ * Features:
+ * - Separated Portals: Student Guest Portal vs Teacher Admin Portal
+ * - Sticky Countdown Timer with Auto-Submit
+ * - Anti-Cheat Tab-Switch Detection with Automatic Reset
+ * - Question and Choice (ก, ข, ค, ง) Randomization
+ * - Teacher Data Isolation (Each teacher only sees their own data)
+ * - 4-Digit PIN & Security Question Recovery
+ * - High School Subject Separation (Physics, Chemistry, Biology)
+ * - Custom Question Creator for Teachers
  */
 
 const STORAGE_KEYS = {
@@ -10,15 +18,19 @@ const STORAGE_KEYS = {
   CURRENT_TEACHER: 'sci_exam_current_teacher'
 };
 
-const letters = ['A', 'B', 'C', 'D'];
+const thaiLetters = ['ก', 'ข', 'ค', 'ง'];
 
 // Application State
 const state = {
   currentTeacher: null,
   currentRoom: null,
   currentStudent: null,
-  currentExamQuestions: [],
-  selectedRoomForResults: null
+  currentExamQuestions: [], // Shuffled questions with shuffled choices
+  selectedRoomForResults: null,
+  examActive: false,
+  timerInterval: null,
+  remainingSeconds: 0,
+  isResetting: false
 };
 
 // ==================== Storage Helper ====================
@@ -40,7 +52,7 @@ function setStorage(key, value) {
   }
 }
 
-// Seed initial demo data if empty
+// Initial demo account & room if storage is completely empty
 function initDemoData() {
   const teachers = getStorage(STORAGE_KEYS.TEACHERS, []);
   if (teachers.length === 0) {
@@ -48,7 +60,11 @@ function initDemoData() {
       id: 't-demo',
       fullName: 'ครูวิทยาศาสตร์ (Demo)',
       username: 'teacher',
-      password: 'password123'
+      password: 'password123',
+      pin: '1234',
+      secQuestion: 'pet',
+      secAnswer: 'ด่าง',
+      createdAt: new Date().toISOString()
     });
     setStorage(STORAGE_KEYS.TEACHERS, teachers);
   }
@@ -58,9 +74,11 @@ function initDemoData() {
     rooms.push({
       id: 'room-demo-1',
       code: 'SCI-DEMO1',
-      name: 'ทดสอบความรู้วิทยาศาสตร์พื้นฐาน (ตัวอย่าง)',
-      classroom: 'ม.2/1',
+      name: 'ทดสอบความรู้วิทยาศาสตร์พื้นฐาน ม.2',
       grade: 'ม.2',
+      subject: 'all',
+      classroom: 'ม.2/1',
+      timeLimit: 15,
       easy: 3,
       medium: 2,
       hard: 1,
@@ -72,7 +90,7 @@ function initDemoData() {
   }
 }
 
-// ==================== View Routing ====================
+// ==================== Navigation & Portal Control ====================
 function showView(viewId) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   const target = document.getElementById(viewId);
@@ -81,11 +99,43 @@ function showView(viewId) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Clear errors on navigation
+  // Clear errors
   document.querySelectorAll('.error').forEach(err => {
     err.textContent = '';
     err.classList.remove('active');
   });
+
+  updatePortalSwitcherBtn(viewId);
+}
+
+function updatePortalSwitcherBtn(currentViewId) {
+  const btn = document.getElementById('portalSwitcherBtn');
+  if (!btn) return;
+
+  const adminViews = ['teacherLoginView', 'registerTeacherView', 'teacherForgotView', 'teacherDashboardView'];
+  if (adminViews.includes(currentViewId)) {
+    btn.textContent = '🎓 หน้าเข้าสอบ (Student)';
+    btn.onclick = showStudentPortal;
+  } else {
+    btn.textContent = state.currentTeacher ? '👨‍🏫 แดชบอร์ดครู (Admin)' : '🔒 เข้าสู่ระบบครู (Admin)';
+    btn.onclick = togglePortal;
+  }
+}
+
+function showStudentPortal() {
+  stopExamTimer();
+  state.examActive = false;
+  showView('studentHomeView');
+}
+
+function togglePortal() {
+  if (state.currentTeacher) {
+    showView('teacherDashboardView');
+    loadTeacherRooms();
+    updatePoolCountDisplay();
+  } else {
+    showView('teacherLoginView');
+  }
 }
 
 function showError(elemId, msg) {
@@ -96,15 +146,18 @@ function showError(elemId, msg) {
   }
 }
 
-// ==================== Teacher Auth ====================
+// ==================== Teacher Auth with PIN & Security Question ====================
 function registerTeacher() {
   const name = document.getElementById('registerName').value.trim();
   const username = document.getElementById('registerUsername').value.trim();
   const password = document.getElementById('registerPassword').value;
   const confirmPassword = document.getElementById('registerConfirmPassword').value;
+  const pin = document.getElementById('registerPin').value.trim();
+  const secQuestion = document.getElementById('registerSecQuestion').value;
+  const secAnswer = document.getElementById('registerSecAnswer').value.trim();
 
-  if (!name || !username || !password) {
-    showError('registerTeacherError', 'กรุณากรอกข้อมูลให้ครบทุกช่อง');
+  if (!name || !username || !password || !pin || !secAnswer) {
+    showError('registerTeacherError', 'กรุณากรอกข้อมูลให้ครบถ้วนทุกช่อง');
     return;
   }
 
@@ -118,6 +171,11 @@ function registerTeacher() {
     return;
   }
 
+  if (!/^\d{4}$/.test(pin)) {
+    showError('registerTeacherError', 'PIN ต้องเป็นตัวเลข 4 หลักเท่านั้น (เช่น 1234)');
+    return;
+  }
+
   const teachers = getStorage(STORAGE_KEYS.TEACHERS, []);
   if (teachers.some(t => t.username.toLowerCase() === username.toLowerCase())) {
     showError('registerTeacherError', 'ชื่อผู้ใช้นี้มีอยู่ในระบบแล้ว กรุณาใช้ชื่ออื่น');
@@ -128,7 +186,11 @@ function registerTeacher() {
     id: 't-' + Date.now(),
     fullName: name,
     username: username,
-    password: password
+    password: password,
+    pin: pin,
+    secQuestion: secQuestion,
+    secAnswer: secAnswer.toLowerCase(),
+    createdAt: new Date().toISOString()
   };
 
   teachers.push(newTeacher);
@@ -160,15 +222,230 @@ function teacherLogin() {
   document.getElementById('teacherInfo').textContent = `ครู: ${teacher.fullName}`;
   showView('teacherDashboardView');
   loadTeacherRooms();
+  loadCustomQuestions();
+  updatePoolCountDisplay();
 }
 
 function teacherLogout() {
   state.currentTeacher = null;
   sessionStorage.removeItem(STORAGE_KEYS.CURRENT_TEACHER);
-  showView('homeView');
+  showStudentPortal();
 }
 
-// ==================== Teacher Dashboard ====================
+// Forgot Password / PIN Recovery
+function recoverAccount() {
+  const username = document.getElementById('forgotUsername').value.trim();
+  const secQuestion = document.getElementById('forgotSecQuestion').value;
+  const secAnswer = document.getElementById('forgotSecAnswer').value.trim().toLowerCase();
+  const newPassword = document.getElementById('forgotNewPassword').value;
+
+  if (!username || !secAnswer || !newPassword) {
+    showError('forgotError', 'กรุณากรอกข้อมูลให้ครบทุกช่อง');
+    return;
+  }
+
+  if (newPassword.length < 6) {
+    showError('forgotError', 'รหัสผ่านใหม่ต้องมีความยาวอย่างน้อย 6 ตัวอักษร');
+    return;
+  }
+
+  const teachers = getStorage(STORAGE_KEYS.TEACHERS, []);
+  const teacher = teachers.find(t => t.username.toLowerCase() === username.toLowerCase());
+
+  if (!teacher) {
+    showError('forgotError', 'ไม่พบบัญชีผู้ใช้นี้ในระบบ');
+    return;
+  }
+
+  if (teacher.secQuestion !== secQuestion || teacher.secAnswer !== secAnswer) {
+    showError('forgotError', 'คำถามหรือคำตอบกันลืมไม่ถูกต้อง');
+    return;
+  }
+
+  // Update password
+  teacher.password = newPassword;
+  setStorage(STORAGE_KEYS.TEACHERS, teachers);
+
+  const successBox = document.getElementById('forgotSuccess');
+  successBox.style.display = 'block';
+  successBox.textContent = `รีเซ็ตรหัสผ่านสำเร็จเรียบร้อย! (PIN ของคุณคือ: ${teacher.pin}) สามารถเข้าสู่ระบบด้วยรหัสผ่านใหม่ได้ทันที`;
+
+  document.getElementById('teacherUsername').value = username;
+  document.getElementById('teacherPassword').value = newPassword;
+
+  setTimeout(() => {
+    showView('teacherLoginView');
+    successBox.style.display = 'none';
+  }, 2500);
+}
+
+// ==================== Dashboard Tabs ====================
+function switchTeacherTab(tabName) {
+  const tabRooms = document.getElementById('teacherTabRooms');
+  const tabCustomQ = document.getElementById('teacherTabCustomQ');
+  const btnRooms = document.getElementById('tabRoomsBtn');
+  const btnCustomQ = document.getElementById('tabCustomQBtn');
+
+  if (tabName === 'rooms') {
+    tabRooms.style.display = 'block';
+    tabCustomQ.style.display = 'none';
+    btnRooms.classList.add('active');
+    btnCustomQ.classList.remove('active');
+    loadTeacherRooms();
+    updatePoolCountDisplay();
+  } else {
+    tabRooms.style.display = 'none';
+    tabCustomQ.style.display = 'block';
+    btnRooms.classList.remove('active');
+    btnCustomQ.classList.add('active');
+    loadCustomQuestions();
+  }
+}
+
+// ==================== Custom Questions Creator ====================
+function getTeacherCustomQuestions() {
+  if (!state.currentTeacher) return [];
+  const key = `sci_exam_custom_${state.currentTeacher.id}`;
+  return getStorage(key, []);
+}
+
+function saveCustomQuestion() {
+  if (!state.currentTeacher) return;
+
+  const grade = document.getElementById('customQGrade').value;
+  const subject = document.getElementById('customQSubject').value;
+  const difficulty = document.getElementById('customQDiff').value;
+  const question = document.getElementById('customQText').value.trim();
+  const c1 = document.getElementById('customChoice1').value.trim();
+  const c2 = document.getElementById('customChoice2').value.trim();
+  const c3 = document.getElementById('customChoice3').value.trim();
+  const c4 = document.getElementById('customChoice4').value.trim();
+  const answer = document.getElementById('customQAnswer').value;
+  const explanation = document.getElementById('customQExplanation').value.trim();
+
+  if (!question || !c1 || !c2 || !c3 || !c4) {
+    showError('customQError', 'กรุณากรอกคำถามและตัวเลือก ก, ข, ค, ง ให้ครบทุกช่อง');
+    return;
+  }
+
+  const customQList = getTeacherCustomQuestions();
+  const newQ = {
+    id: `custom-${Date.now()}`,
+    grade: grade,
+    subject: subject,
+    category: `${subject} (${grade}) [ข้อสอบของฉัน]`,
+    difficulty: difficulty,
+    question: question,
+    choices: [c1, c2, c3, c4],
+    correctAnswer: answer,
+    explanation: explanation || `คำตอบที่ถูกต้องคือข้อ ${thaiLetters[answer.charCodeAt(0) - 65]}`,
+    custom: true
+  };
+
+  customQList.unshift(newQ);
+  const key = `sci_exam_custom_${state.currentTeacher.id}`;
+  setStorage(key, customQList);
+
+  // Clear inputs
+  document.getElementById('customQText').value = '';
+  document.getElementById('customChoice1').value = '';
+  document.getElementById('customChoice2').value = '';
+  document.getElementById('customChoice3').value = '';
+  document.getElementById('customChoice4').value = '';
+  document.getElementById('customQExplanation').value = '';
+
+  const succ = document.getElementById('customQSuccess');
+  succ.textContent = '🎉 บันทึกข้อสอบลงคลังส่วนตัวของคุณเรียบร้อยแล้ว!';
+  succ.style.display = 'block';
+  setTimeout(() => succ.style.display = 'none', 3000);
+
+  loadCustomQuestions();
+  updatePoolCountDisplay();
+}
+
+function loadCustomQuestions() {
+  const customQList = getTeacherCustomQuestions();
+  document.getElementById('customQCount').textContent = customQList.length;
+
+  const tableContainer = document.getElementById('customQTable');
+  if (customQList.length === 0) {
+    tableContainer.innerHTML = '<p style="padding: 16px; color: var(--text-muted); text-align: center;">ยังไม่มีข้อสอบที่คุณสร้างเอง</p>';
+    return;
+  }
+
+  let html = `
+    <table>
+      <thead>
+        <tr>
+          <th>ระดับชั้น/วิชา</th>
+          <th>ระดับ</th>
+          <th>คำถาม</th>
+          <th>การจัดการ</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  customQList.forEach(q => {
+    html += `
+      <tr>
+        <td><strong>${q.grade}</strong> | ${escapeHtml(q.subject)}</td>
+        <td>
+          <span class="q-difficulty q-diff-${q.difficulty}">
+            ${q.difficulty === 'easy' ? 'ง่าย' : q.difficulty === 'medium' ? 'ปานกลาง' : 'ยาก'}
+          </span>
+        </td>
+        <td>${escapeHtml(q.question)}</td>
+        <td>
+          <button class="small danger" onclick="deleteCustomQuestion('${q.id}')">ลบ</button>
+        </td>
+      </tr>
+    `;
+  });
+
+  html += '</tbody></table>';
+  tableContainer.innerHTML = html;
+}
+
+function deleteCustomQuestion(qId) {
+  if (!confirm('ต้องการลบข้อสอบนี้ใช่หรือไม่?')) return;
+  const customQList = getTeacherCustomQuestions().filter(q => q.id !== qId);
+  const key = `sci_exam_custom_${state.currentTeacher.id}`;
+  setStorage(key, customQList);
+  loadCustomQuestions();
+  updatePoolCountDisplay();
+}
+
+// ==================== Dynamic Pool Counter ====================
+function updatePoolCountDisplay() {
+  const grade = document.getElementById('newRoomGrade') ? document.getElementById('newRoomGrade').value : 'all';
+  const subject = document.getElementById('newRoomSubject') ? document.getElementById('newRoomSubject').value : 'all';
+  const customQ = getTeacherCustomQuestions();
+
+  let pool = [...(typeof QUESTION_BANK !== 'undefined' ? QUESTION_BANK : []), ...customQ];
+
+  if (grade && grade !== 'all') {
+    pool = pool.filter(q => q.grade === grade);
+  }
+  if (subject && subject !== 'all') {
+    pool = pool.filter(q => q.subject === subject || (q.category && q.category.includes(subject)));
+  }
+
+  const easyCount = pool.filter(q => q.difficulty === 'easy').length;
+  const medCount = pool.filter(q => q.difficulty === 'medium').length;
+  const hardCount = pool.filter(q => q.difficulty === 'hard').length;
+
+  document.getElementById('availEasy').textContent = easyCount;
+  document.getElementById('availMed').textContent = medCount;
+  document.getElementById('availHard').textContent = hardCount;
+
+  // Update input max limits
+  document.getElementById('easyCount').max = easyCount;
+  document.getElementById('mediumCount').max = medCount;
+  document.getElementById('hardCount').max = hardCount;
+}
+
+// ==================== Room Management ====================
 function generateRoomCode() {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   let code = 'SCI-';
@@ -179,9 +456,13 @@ function generateRoomCode() {
 }
 
 function createRoom() {
+  if (!state.currentTeacher) return;
+
   const name = document.getElementById('newRoomName').value.trim();
   const classroom = document.getElementById('newRoomClass').value.trim();
-  const grade = document.getElementById('newRoomGrade') ? document.getElementById('newRoomGrade').value : 'all';
+  const grade = document.getElementById('newRoomGrade').value;
+  const subject = document.getElementById('newRoomSubject').value;
+  const timeLimit = parseInt(document.getElementById('newRoomTimeLimit').value) || 0;
   const easy = parseInt(document.getElementById('easyCount').value) || 0;
   const medium = parseInt(document.getElementById('mediumCount').value) || 0;
   const hard = parseInt(document.getElementById('hardCount').value) || 0;
@@ -196,16 +477,22 @@ function createRoom() {
     return;
   }
 
-  let pool = (typeof QUESTION_BANK !== 'undefined') ? QUESTION_BANK : [];
+  const customQ = getTeacherCustomQuestions();
+  let pool = [...(typeof QUESTION_BANK !== 'undefined' ? QUESTION_BANK : []), ...customQ];
+
   if (grade && grade !== 'all') {
     pool = pool.filter(q => q.grade === grade);
   }
-  const easyPoolCount = pool.filter(q => q.difficulty === 'easy').length;
-  const mediumPoolCount = pool.filter(q => q.difficulty === 'medium').length;
-  const hardPoolCount = pool.filter(q => q.difficulty === 'hard').length;
+  if (subject && subject !== 'all') {
+    pool = pool.filter(q => q.subject === subject || (q.category && q.category.includes(subject)));
+  }
 
-  if (easy > easyPoolCount || medium > mediumPoolCount || hard > hardPoolCount) {
-    showError('teacherError', `จำนวนข้อเกินคลังที่มีสำหรับชั้นนี้ (ง่ายมี ${easyPoolCount}, ปานกลางมี ${mediumPoolCount}, ยากมี ${hardPoolCount} ข้อ)`);
+  const easyPool = pool.filter(q => q.difficulty === 'easy').length;
+  const medPool = pool.filter(q => q.difficulty === 'medium').length;
+  const hardPool = pool.filter(q => q.difficulty === 'hard').length;
+
+  if (easy > easyPool || medium > medPool || hard > hardPool) {
+    showError('teacherError', `จำนวนข้อเกินคลังที่มีสำหรับชั้นและวิชานี้ (ง่ายมี ${easyPool}, กลางมี ${medPool}, ยากมี ${hardPool} ข้อ)`);
     return;
   }
 
@@ -216,12 +503,14 @@ function createRoom() {
     name: name,
     classroom: classroom,
     grade: grade,
+    subject: subject,
+    timeLimit: timeLimit,
     easy: easy,
     medium: medium,
     hard: hard,
     createdAt: new Date().toISOString(),
     active: true,
-    teacherId: state.currentTeacher ? state.currentTeacher.id : 'unknown'
+    teacherId: state.currentTeacher.id
   };
 
   const rooms = getStorage(STORAGE_KEYS.ROOMS, []);
@@ -232,9 +521,13 @@ function createRoom() {
   const shareUrl = `${window.location.origin}${window.location.pathname}?room=${roomCode}`;
   document.getElementById('newRoomCode').innerHTML = `
     <div class="room-code-banner">
-      <p style="font-weight: 600; color: #1e3a8a;">🎉 สร้างห้องสอบสำเร็จ!</p>
+      <p style="font-weight: 700; color: #1e3a8a; margin: 0;">🎉 สร้างห้องสอบสำเร็จเรียบร้อย!</p>
       <div class="room-code-val">${roomCode}</div>
-      <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 12px;">ส่งรหัสนี้ให้นักเรียนเข้าทำข้อสอบ หรือคัดลอกลิงก์ตรงด้านล่าง</p>
+      <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 12px;">
+        ระดับ: <strong>${grade === 'all' ? 'ทุกระดับชั้น' : grade}</strong> | 
+        วิชา: <strong>${subject === 'all' ? 'ทุกหมวดวิชา' : subject}</strong> | 
+        เวลา: <strong>${timeLimit > 0 ? timeLimit + ' นาที' : 'ไม่จำกัดเวลา'}</strong>
+      </p>
       <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
         <button class="small" onclick="copyText('${roomCode}')">📋 คัดลอกรหัส</button>
         <button class="small outline" onclick="copyText('${shareUrl}')">🔗 คัดลอกลิงก์สอบ</button>
@@ -242,22 +535,21 @@ function createRoom() {
     </div>
   `;
 
-  // Reset form
   document.getElementById('newRoomName').value = '';
   document.getElementById('newRoomClass').value = '';
-
   loadTeacherRooms();
 }
 
+// STRICT TEACHER ISOLATION: Only display rooms of currentTeacher
 function loadTeacherRooms() {
+  if (!state.currentTeacher) return;
+
   const rooms = getStorage(STORAGE_KEYS.ROOMS, []);
-  const teacherRooms = state.currentTeacher
-    ? rooms.filter(r => r.teacherId === state.currentTeacher.id || r.teacherId === 't-demo')
-    : rooms;
+  const teacherRooms = rooms.filter(r => r.teacherId === state.currentTeacher.id);
 
   if (teacherRooms.length === 0) {
     document.getElementById('roomList').innerHTML =
-      '<p style="padding: 16px; color: var(--text-muted); text-align: center;">ยังไม่มีห้องสอบที่สร้าง</p>';
+      '<p style="padding: 16px; color: var(--text-muted); text-align: center;">ยังไม่มีห้องสอบที่คุณสร้าง</p>';
     return;
   }
 
@@ -266,8 +558,9 @@ function loadTeacherRooms() {
       <thead>
         <tr>
           <th>ชื่อห้องสอบ</th>
-          <th>ชั้นเรียน</th>
+          <th>ระดับ/วิชา</th>
           <th>จำนวนข้อ</th>
+          <th>เวลา</th>
           <th>รหัสห้อง</th>
           <th>สถานะ</th>
           <th>การจัดการ</th>
@@ -278,13 +571,18 @@ function loadTeacherRooms() {
 
   teacherRooms.forEach(room => {
     const totalQ = room.easy + room.medium + room.hard;
+    const timeText = room.timeLimit > 0 ? `${room.timeLimit} นาที` : 'ไม่จำกัด';
+    const subjText = room.subject === 'all' ? 'ทุกวิชา' : room.subject;
+    const gradeText = room.grade === 'all' ? 'ม.1-6' : room.grade;
+
     html += `
       <tr>
         <td><strong>${escapeHtml(room.name)}</strong></td>
-        <td>${escapeHtml(room.classroom)}</td>
+        <td><span style="font-size: 13px;">${gradeText} (${subjText})</span></td>
         <td>
-          <span style="font-size: 12px;">รวม ${totalQ} ข้อ (ง่าย ${room.easy} | กลาง ${room.medium} | ยาก ${room.hard})</span>
+          <span style="font-size: 12px;">รวม ${totalQ} ข้อ (ง ${room.easy}|ก ${room.medium}|ย ${room.hard})</span>
         </td>
+        <td><span style="font-size: 12px; font-weight: 600;">⏱️ ${timeText}</span></td>
         <td><strong style="color: var(--primary); letter-spacing: 1px;">${room.code}</strong></td>
         <td>
           <span style="padding: 3px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; ${
@@ -296,11 +594,7 @@ function loadTeacherRooms() {
         <td>
           <div style="display: flex; gap: 4px;">
             <button class="small outline" onclick="showRoomResults('${room.id}')">📊 คะแนน</button>
-            ${
-              room.active
-                ? `<button class="small danger" onclick="closeRoom('${room.id}')">ปิดห้อง</button>`
-                : ''
-            }
+            ${room.active ? `<button class="small danger" onclick="closeRoom('${room.id}')">ปิดห้อง</button>` : ''}
           </div>
         </td>
       </tr>
@@ -315,7 +609,7 @@ function closeRoom(roomId) {
   if (!confirm('ต้องการปิดห้องสอบนี้ใช่หรือไม่? นักเรียนจะไม่สามารถเข้าทำข้อสอบเพิ่มได้')) return;
 
   const rooms = getStorage(STORAGE_KEYS.ROOMS, []);
-  const room = rooms.find(r => r.id === roomId);
+  const room = rooms.find(r => r.id === roomId && r.teacherId === state.currentTeacher.id);
   if (room) {
     room.active = false;
     setStorage(STORAGE_KEYS.ROOMS, rooms);
@@ -323,9 +617,12 @@ function closeRoom(roomId) {
   }
 }
 
+// STRICT TEACHER ISOLATION: Only display results for rooms belonging to currentTeacher
 function showRoomResults(roomId) {
+  if (!state.currentTeacher) return;
+
   const rooms = getStorage(STORAGE_KEYS.ROOMS, []);
-  const room = rooms.find(r => r.id === roomId);
+  const room = rooms.find(r => r.id === roomId && r.teacherId === state.currentTeacher.id);
   if (!room) return;
 
   state.selectedRoomForResults = room;
@@ -379,13 +676,12 @@ function showRoomResults(roomId) {
 
   html += '</tbody></table>';
   document.getElementById('roomResultsTable').innerHTML = html;
-
-  // Scroll to results
   document.getElementById('roomResultsSection').scrollIntoView({ behavior: 'smooth' });
 }
 
 function exportResultsToCSV() {
-  if (!state.selectedRoomForResults) return;
+  if (!state.selectedRoomForResults || state.selectedRoomForResults.teacherId !== state.currentTeacher.id) return;
+
   const room = state.selectedRoomForResults;
   const allResults = getStorage(STORAGE_KEYS.RESULTS, []);
   const results = allResults.filter(r => r.roomId === room.id);
@@ -413,11 +709,11 @@ function exportResultsToCSV() {
   document.body.removeChild(link);
 }
 
-// ==================== Student Portal ====================
+// ==================== Student Portal & Exam ====================
 function checkRoomCode(customCode = null) {
   const code = (customCode || document.getElementById('roomCodeInput').value).trim().toUpperCase();
   if (!code) {
-    showError('studentCodeError', 'กรุณากรอกรหัสห้องสอบ');
+    showError('studentHomeError', 'กรุณากรอกรหัสห้องสอบ');
     return;
   }
 
@@ -425,24 +721,28 @@ function checkRoomCode(customCode = null) {
   const room = rooms.find(r => r.code === code);
 
   if (!room) {
-    showError('studentCodeError', 'ไม่พบห้องสอบนี้ กรุณาตรวจสอบรหัสอีกครั้ง');
+    showError('studentHomeError', 'ไม่พบห้องสอบนี้ กรุณาตรวจสอบรหัสอีกครั้ง');
     return;
   }
 
   if (!room.active) {
-    showError('studentCodeError', 'ห้องสอบนี้ถูกปิดแล้ว ไม่สามารถเข้าทำได้');
+    showError('studentHomeError', 'ห้องสอบนี้ถูกปิดแล้ว ไม่สามารถเข้าทำได้');
     return;
   }
 
   state.currentRoom = room;
 
   const total = room.easy + room.medium + room.hard;
+  const timeText = room.timeLimit > 0 ? `${room.timeLimit} นาที` : 'ไม่จำกัดเวลา';
+  const subjText = room.subject === 'all' ? 'ทุกหมวดวิชา' : room.subject;
+  const gradeText = room.grade === 'all' ? 'ม.1 - ม.6' : room.grade;
+
   document.getElementById('roomSummary').innerHTML = `
-    <div style="font-size: 14px; color: #1e40af; font-weight: 500;">ห้องสอบ</div>
-    <div style="font-size: 20px; font-weight: 700; color: #1d4ed8; margin: 4px 0;">${escapeHtml(room.name)}</div>
+    <div style="font-size: 13px; color: #1e40af; font-weight: 600;">ห้องสอบ</div>
+    <div style="font-size: 22px; font-weight: 800; color: #1d4ed8; margin: 4px 0;">${escapeHtml(room.name)}</div>
     <p style="font-size: 14px; color: var(--text-muted); margin: 0;">
-      ชั้น: ${escapeHtml(room.classroom)} | ข้อสอบทั้งหมด <strong>${total} ข้อ</strong>
-      (ง่าย ${room.easy}, ปานกลาง ${room.medium}, ยาก ${room.hard})
+      ระดับ: <strong>${gradeText}</strong> | วิชา: <strong>${subjText}</strong> | 
+      ข้อสอบทั้งหมด <strong>${total} ข้อ</strong> | ⏱️ เวลา: <strong>${timeText}</strong>
     </p>
   `;
 
@@ -466,23 +766,68 @@ function startExam() {
     number: number
   };
 
-  document.getElementById('studentInfo').textContent = `${name} (${classroom} เลขที่ ${number}) | ${state.currentRoom.name}`;
+  document.getElementById('studentStickyInfo').textContent = `👤 ${name} (${classroom} เลขที่ ${number})`;
+  document.getElementById('roomStickyInfo').textContent = `${state.currentRoom.code}`;
 
-  // Generate random exam
-  state.currentExamQuestions = getRandomQuestions(
+  setupAndRenderExam();
+  showView('studentExamView');
+
+  // Start Timer & Anti-Cheat
+  startExamTimer(state.currentRoom.timeLimit);
+  state.examActive = true;
+}
+
+// Generate Questions with Choice Shuffling (ก, ข, ค, ง)
+function setupAndRenderExam() {
+  // Get teacher's custom questions if any
+  const rooms = getStorage(STORAGE_KEYS.ROOMS, []);
+  const currentRoomData = rooms.find(r => r.id === state.currentRoom.id);
+  let customQ = [];
+  if (currentRoomData && currentRoomData.teacherId) {
+    customQ = getStorage(`sci_exam_custom_${currentRoomData.teacherId}`, []);
+  }
+
+  const rawQuestions = getRandomQuestions(
     state.currentRoom.easy,
     state.currentRoom.medium,
     state.currentRoom.hard,
-    state.currentRoom.grade || 'all'
+    state.currentRoom.grade,
+    state.currentRoom.subject,
+    customQ
   );
 
-  renderExam();
-  showView('studentExamView');
+  // Fisher-Yates shuffle for choices & assign Thai letters
+  state.currentExamQuestions = rawQuestions.map((q, qIdx) => {
+    // Map choices into objects with their correctness
+    const choiceObjects = q.choices.map((text, idx) => {
+      const origLetter = String.fromCharCode(65 + idx); // 'A', 'B', 'C', 'D'
+      return {
+        text: text,
+        isCorrect: origLetter === q.correctAnswer
+      };
+    });
+
+    // Shuffle the 4 choices
+    const shuffledChoices = [...choiceObjects];
+    for (let i = shuffledChoices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledChoices[i], shuffledChoices[j]] = [shuffledChoices[j], shuffledChoices[i]];
+    }
+
+    return {
+      originalQuestion: q,
+      shuffledChoices: shuffledChoices,
+      selectedChoiceIndex: null
+    };
+  });
+
+  renderExamUI();
 }
 
-function renderExam() {
+function renderExamUI() {
   let html = '';
-  state.currentExamQuestions.forEach((q, index) => {
+  state.currentExamQuestions.forEach((item, qIdx) => {
+    const q = item.originalQuestion;
     const diffBadge =
       q.difficulty === 'easy'
         ? '<span class="q-difficulty q-diff-easy">ระดับง่าย</span>'
@@ -491,21 +836,23 @@ function renderExam() {
         : '<span class="q-difficulty q-diff-hard">ระดับยาก</span>';
 
     html += `
-      <div class="question-item" id="q-card-${index}">
+      <div class="question-item" id="q-card-${qIdx}">
         <div class="q-header">
-          <span style="font-size: 13px; font-weight: 600; color: var(--primary);">ข้อที่ ${index + 1} (${q.category})</span>
+          <span style="font-size: 14px; font-weight: 700; color: var(--primary);">ข้อที่ ${qIdx + 1} (${q.category || q.subject})</span>
           ${diffBadge}
         </div>
         <div class="q-title">${escapeHtml(q.question)}</div>
         <div class="choices-list">
     `;
 
-    q.choices.forEach((choice, cIdx) => {
-      const letter = letters[cIdx];
+    item.shuffledChoices.forEach((choice, cIdx) => {
+      const thaiLetter = thaiLetters[cIdx];
+      const isSelected = item.selectedChoiceIndex === cIdx;
       html += `
-        <label class="choice-label" id="choice-${index}-${letter}">
-          <input type="radio" name="ans-${index}" value="${letter}" onchange="selectChoice(${index}, '${letter}')">
-          <span><strong>${letter}.</strong> ${escapeHtml(choice)}</span>
+        <label class="choice-label ${isSelected ? 'selected' : ''}" id="choice-${qIdx}-${cIdx}">
+          <input type="radio" name="ans-${qIdx}" value="${cIdx}" ${isSelected ? 'checked' : ''} onchange="selectChoice(${qIdx}, ${cIdx})">
+          <span class="choice-letter">${thaiLetter}.</span>
+          <span>${escapeHtml(choice.text)}</span>
         </label>
       `;
     });
@@ -519,51 +866,136 @@ function renderExam() {
   document.getElementById('examContent').innerHTML = html;
 }
 
-function selectChoice(qIndex, letter) {
-  letters.forEach(l => {
-    const label = document.getElementById(`choice-${qIndex}-${l}`);
+function selectChoice(qIndex, choiceIndex) {
+  state.currentExamQuestions[qIndex].selectedChoiceIndex = choiceIndex;
+  thaiLetters.forEach((_, cIdx) => {
+    const label = document.getElementById(`choice-${qIndex}-${cIdx}`);
     if (label) label.classList.remove('selected');
   });
-  const selectedLabel = document.getElementById(`choice-${qIndex}-${letter}`);
+  const selectedLabel = document.getElementById(`choice-${qIndex}-${choiceIndex}`);
   if (selectedLabel) selectedLabel.classList.add('selected');
 }
 
-function submitExam() {
-  const userAnswers = [];
-  let unanswered = false;
+// ==================== Sticky Timer Logic ====================
+function startExamTimer(minutes) {
+  stopExamTimer();
+  const digits = document.getElementById('timerDigits');
+  const badge = document.getElementById('examTimerBadge');
 
-  state.currentExamQuestions.forEach((q, idx) => {
-    const selected = document.querySelector(`input[name="ans-${idx}"]:checked`);
-    if (!selected) {
-      unanswered = true;
-    } else {
-      userAnswers.push({
-        questionIndex: idx,
-        selected: selected.value
-      });
-    }
-  });
-
-  if (unanswered) {
-    showError('studentError', 'กรุณาตอบคำถามให้ครบทุกข้อก่อนส่งคำตอบ');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (!minutes || minutes <= 0) {
+    digits.textContent = 'ไม่จำกัดเวลา';
+    badge.classList.remove('urgent');
     return;
   }
 
-  if (!confirm('ยืนยันที่จะส่งข้อสอบและตรวจคะแนน?')) return;
+  state.remainingSeconds = minutes * 60;
+  updateTimerDisplay();
 
-  // Calculate score
+  state.timerInterval = setInterval(() => {
+    state.remainingSeconds--;
+    updateTimerDisplay();
+
+    if (state.remainingSeconds <= 120) {
+      badge.classList.add('urgent');
+    }
+
+    if (state.remainingSeconds <= 0) {
+      stopExamTimer();
+      alert('⏰ หมดเวลาทำข้อสอบแล้ว! ระบบจะส่งคำตอบของคุณโดยอัตโนมัติ');
+      submitExam(true); // Auto force submit
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(state.remainingSeconds / 60);
+  const s = state.remainingSeconds % 60;
+  const digits = document.getElementById('timerDigits');
+  if (digits) {
+    digits.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }
+}
+
+function stopExamTimer() {
+  if (state.timerInterval) {
+    clearInterval(state.timerInterval);
+    state.timerInterval = null;
+  }
+}
+
+// ==================== Anti-Cheat: Screen / Tab Switch Detection ====================
+function restartCurrentExam() {
+  if (state.isResetting) return;
+  state.isResetting = true;
+
+  // Re-generate fresh shuffled questions & choices
+  setupAndRenderExam();
+
+  // Reset timer
+  if (state.currentRoom && state.currentRoom.timeLimit > 0) {
+    startExamTimer(state.currentRoom.timeLimit);
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  setTimeout(() => {
+    state.isResetting = false;
+  }, 1000);
+}
+
+function setupAntiCheatListeners() {
+  const handleCheat = () => {
+    if (!state.examActive || state.isResetting) return;
+
+    // Trigger immediate reset
+    alert('⚠️ ตรวจพบการสลับหน้าจอหรือย่อหน้าต่างข้อสอบ!\n\nตามกฎความซื่อสัตย์ในการสอบ ระบบได้ทำการรีเซ็ตข้อสอบ และสลับข้อสอบใหม่ทั้งหมด คุณต้องเริ่มทำใหม่ตั้งแต่ต้น');
+    restartCurrentExam();
+  };
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && state.examActive) {
+      handleCheat();
+    }
+  });
+
+  window.addEventListener('blur', () => {
+    if (state.examActive) {
+      handleCheat();
+    }
+  });
+}
+
+// ==================== Submit Exam & Results ====================
+function submitExam(force = false) {
+  if (!force) {
+    const unanswered = state.currentExamQuestions.some(item => item.selectedChoiceIndex === null);
+    if (unanswered) {
+      showError('studentError', 'กรุณาตอบคำถามให้ครบทุกข้อก่อนส่งคำตอบ');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    if (!confirm('ยืนยันที่จะส่งข้อสอบและตรวจคะแนน?')) return;
+  }
+
+  // Deactivate exam mode
+  state.examActive = false;
+  stopExamTimer();
+
   let correctCount = 0;
   const reviewData = [];
 
-  state.currentExamQuestions.forEach((q, idx) => {
-    const userChoice = userAnswers[idx].selected;
-    const isCorrect = userChoice === q.correctAnswer;
+  state.currentExamQuestions.forEach(item => {
+    const selectedIdx = item.selectedChoiceIndex;
+    const isAnswered = selectedIdx !== null;
+    const isCorrect = isAnswered && item.shuffledChoices[selectedIdx].isCorrect;
+
     if (isCorrect) correctCount++;
 
     reviewData.push({
-      question: q,
-      userChoice: userChoice,
+      originalQuestion: item.originalQuestion,
+      shuffledChoices: item.shuffledChoices,
+      selectedChoiceIndex: selectedIdx,
       isCorrect: isCorrect
     });
   });
@@ -571,7 +1003,6 @@ function submitExam() {
   const total = state.currentExamQuestions.length;
   const percentage = Math.round((correctCount / total) * 100);
 
-  // Save result to storage
   const resultRecord = {
     id: 'res-' + Date.now(),
     roomId: state.currentRoom.id,
@@ -588,7 +1019,6 @@ function submitExam() {
   allResults.unshift(resultRecord);
   setStorage(STORAGE_KEYS.RESULTS, allResults);
 
-  // Show score & review
   displayResults(resultRecord, reviewData);
   showView('studentResultView');
 }
@@ -603,35 +1033,36 @@ function displayResults(result, reviewData) {
 
   let html = '';
   reviewData.forEach((item, idx) => {
-    const q = item.question;
+    const q = item.originalQuestion;
     const cardClass = item.isCorrect ? 'correct' : 'incorrect';
 
     html += `
       <div class="question-item ${cardClass}">
         <div class="q-header">
-          <span style="font-weight: 600;">ข้อที่ ${idx + 1} (${q.category})</span>
+          <span style="font-weight: 700;">ข้อที่ ${idx + 1} (${q.category || q.subject})</span>
           <span>${item.isCorrect ? '✅ ถูกต้อง (+1)' : '❌ ไม่ถูกต้อง (0)'}</span>
         </div>
         <div class="q-title">${escapeHtml(q.question)}</div>
         <div class="choices-list">
     `;
 
-    q.choices.forEach((choice, cIdx) => {
-      const letter = letters[cIdx];
+    item.shuffledChoices.forEach((choice, cIdx) => {
+      const thaiLetter = thaiLetters[cIdx];
       let choiceStyle = '';
       let badgeText = '';
 
-      if (letter === q.correctAnswer) {
+      if (choice.isCorrect) {
         choiceStyle = 'correct-answer';
         badgeText = ' (คำตอบที่ถูกต้อง)';
-      } else if (letter === item.userChoice && !item.isCorrect) {
+      } else if (cIdx === item.selectedChoiceIndex && !item.isCorrect) {
         choiceStyle = 'user-wrong';
         badgeText = ' (คำตอบของคุณ)';
       }
 
       html += `
         <div class="choice-label ${choiceStyle}">
-          <span><strong>${letter}.</strong> ${escapeHtml(choice)}${badgeText}</span>
+          <span class="choice-letter">${thaiLetter}.</span>
+          <span>${escapeHtml(choice.text)}${badgeText}</span>
         </div>
       `;
     });
@@ -649,15 +1080,17 @@ function displayResults(result, reviewData) {
 }
 
 function exitExam() {
-  if (confirm('คุณต้องการออกจากห้องสอบใช่หรือไม่? คำตอบที่ทำไว้จะไม่ถูกบันทึก')) {
-    showView('homeView');
+  if (confirm('คุณต้องการออกจากห้องสอบใช่หรือไม่? การสอบนี้จะถูกยกเลิก')) {
+    state.examActive = false;
+    stopExamTimer();
+    showStudentPortal();
   }
 }
 
 // ==================== Calculator Logic ====================
 function toggleCalculator() {
   const calc = document.getElementById('calculatorBox');
-  calc.classList.toggle('active');
+  if (calc) calc.classList.toggle('active');
 }
 
 function calcPress(val) {
@@ -675,7 +1108,6 @@ function calcPress(val) {
 
   if (val === '=') {
     try {
-      // Safe arithmetic parsing
       const sanitized = display.value.replace(/×/g, '*').replace(/÷/g, '/');
       if (!/^[0-9+\-*\/().\s]+$/.test(sanitized)) throw new Error();
 
@@ -713,9 +1145,10 @@ function copyText(text) {
   });
 }
 
-// ==================== Init on Load ====================
+// ==================== Initialization ====================
 window.addEventListener('DOMContentLoaded', () => {
   initDemoData();
+  setupAntiCheatListeners();
 
   // Check URL parameters for direct room join (e.g. ?room=SCI-XXXXXX)
   const urlParams = new URLSearchParams(window.location.search);
@@ -723,11 +1156,15 @@ window.addEventListener('DOMContentLoaded', () => {
   if (roomParam) {
     document.getElementById('roomCodeInput').value = roomParam.toUpperCase();
     checkRoomCode(roomParam);
+  } else {
+    showStudentPortal();
   }
 
   // Restore teacher session if logged in
   const savedTeacher = sessionStorage.getItem(STORAGE_KEYS.CURRENT_TEACHER);
   if (savedTeacher) {
-    state.currentTeacher = JSON.parse(savedTeacher);
+    try {
+      state.currentTeacher = JSON.parse(savedTeacher);
+    } catch (e) {}
   }
 });

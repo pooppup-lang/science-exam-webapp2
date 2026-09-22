@@ -1,9 +1,10 @@
-﻿// Official Question Bank (180 questions)
+﻿// Official Enhanced Question Bank (193 questions with Subjects)
 const QUESTION_BANK = [
     {
         "id":  "SCI-M1-E-01",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.1)",
         "difficulty":  "easy",
         "question":  "หน่วยพื้นฐานของสิ่งมีชีวิตคืออะไร",
         "choices":  [
@@ -18,7 +19,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-E-02",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.1)",
         "difficulty":  "easy",
         "question":  "พืชสร้างอาหารด้วยกระบวนการใด",
         "choices":  [
@@ -33,7 +35,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-E-03",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.1)",
         "difficulty":  "easy",
         "question":  "อวัยวะใดใช้สูบฉีดเลือด",
         "choices":  [
@@ -48,7 +51,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-E-04",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.1)",
         "difficulty":  "easy",
         "question":  "น้ำมีสูตรเคมีใด",
         "choices":  [
@@ -63,7 +67,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-E-05",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.1)",
         "difficulty":  "easy",
         "question":  "ก๊าซใดช่วยให้เกิดการเผาไหม้",
         "choices":  [
@@ -78,7 +83,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-E-06",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.1)",
         "difficulty":  "easy",
         "question":  "ของแข็งมีลักษณะสำคัญข้อใด",
         "choices":  [
@@ -93,7 +99,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-E-07",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.1)",
         "difficulty":  "easy",
         "question":  "เครื่องมือวัดอุณหภูมิเรียกว่าอะไร",
         "choices":  [
@@ -108,7 +115,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-E-08",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.1)",
         "difficulty":  "easy",
         "question":  "โลกหมุนรอบตัวเองใช้เวลาประมาณเท่าไร",
         "choices":  [
@@ -123,7 +131,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-E-09",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.1)",
         "difficulty":  "easy",
         "question":  "สัตว์ที่มีกระดูกสันหลังตัวอย่างหนึ่งคืออะไร",
         "choices":  [
@@ -138,7 +147,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-E-10",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.1)",
         "difficulty":  "easy",
         "question":  "รากพืชทำหน้าที่หลักข้อใด",
         "choices":  [
@@ -153,7 +163,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-M-01",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.1)",
         "difficulty":  "medium",
         "question":  "วัตถุมีมวล 15 กรัม และปริมาตร 3 cm³ มีความหนาแน่นกี่ g/cm³",
         "choices":  [
@@ -168,7 +179,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-M-02",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.1)",
         "difficulty":  "medium",
         "question":  "วัตถุมีมวล 20 กรัม และปริมาตร 4 cm³ มีความหนาแน่นกี่ g/cm³",
         "choices":  [
@@ -183,7 +195,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-M-03",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.1)",
         "difficulty":  "medium",
         "question":  "วัตถุมีมวล 25 กรัม และปริมาตร 5 cm³ มีความหนาแน่นกี่ g/cm³",
         "choices":  [
@@ -198,7 +211,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-M-04",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.1)",
         "difficulty":  "medium",
         "question":  "วัตถุมีมวล 30 กรัม และปริมาตร 6 cm³ มีความหนาแน่นกี่ g/cm³",
         "choices":  [
@@ -213,7 +227,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-M-05",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.1)",
         "difficulty":  "medium",
         "question":  "วัตถุมีมวล 35 กรัม และปริมาตร 7 cm³ มีความหนาแน่นกี่ g/cm³",
         "choices":  [
@@ -228,7 +243,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-M-06",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.1)",
         "difficulty":  "medium",
         "question":  "วัตถุมีมวล 40 กรัม และปริมาตร 8 cm³ มีความหนาแน่นกี่ g/cm³",
         "choices":  [
@@ -243,7 +259,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-M-07",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.1)",
         "difficulty":  "medium",
         "question":  "วัตถุมีมวล 45 กรัม และปริมาตร 9 cm³ มีความหนาแน่นกี่ g/cm³",
         "choices":  [
@@ -258,7 +275,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-M-08",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.1)",
         "difficulty":  "medium",
         "question":  "วัตถุมีมวล 50 กรัม และปริมาตร 10 cm³ มีความหนาแน่นกี่ g/cm³",
         "choices":  [
@@ -273,7 +291,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-M-09",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.1)",
         "difficulty":  "medium",
         "question":  "วัตถุมีมวล 55 กรัม และปริมาตร 11 cm³ มีความหนาแน่นกี่ g/cm³",
         "choices":  [
@@ -288,7 +307,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-M-10",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.1)",
         "difficulty":  "medium",
         "question":  "วัตถุมีมวล 60 กรัม และปริมาตร 12 cm³ มีความหนาแน่นกี่ g/cm³",
         "choices":  [
@@ -303,7 +323,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-H-01",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "วิทยาศาสตร์ทั่วไป",
+        "category":  "วิทยาศาสตร์ทั่วไป (ม.1)",
         "difficulty":  "hard",
         "question":  "การทดลองที่ดีควรเปลี่ยนแปลงตัวแปรต้นครั้งละกี่ตัว",
         "choices":  [
@@ -318,7 +339,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-H-02",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "วิทยาศาสตร์ทั่วไป",
+        "category":  "วิทยาศาสตร์ทั่วไป (ม.1)",
         "difficulty":  "hard",
         "question":  "ในการทดลองผลของแสงต่อการเจริญของพืช สิ่งใดคือ ตัวแปรต้น",
         "choices":  [
@@ -333,7 +355,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-H-03",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "วิทยาศาสตร์ทั่วไป",
+        "category":  "วิทยาศาสตร์ทั่วไป (ม.1)",
         "difficulty":  "hard",
         "question":  "ถ้าต้องการเปรียบเทียบการละลายของน้ำตาล ควรควบคุมสิ่งใดให้เท่ากัน",
         "choices":  [
@@ -348,7 +371,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-H-04",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "วิทยาศาสตร์ทั่วไป",
+        "category":  "วิทยาศาสตร์ทั่วไป (ม.1)",
         "difficulty":  "hard",
         "question":  "ข้อมูลที่อ่านได้จากเครื่องมือวัดเรียกว่าอะไร",
         "choices":  [
@@ -363,7 +387,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-H-05",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "วิทยาศาสตร์ทั่วไป",
+        "category":  "วิทยาศาสตร์ทั่วไป (ม.1)",
         "difficulty":  "hard",
         "question":  "การสรุปผลที่ถูกต้องควรอ้างอิงจากอะไร",
         "choices":  [
@@ -378,7 +403,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-H-06",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "วิทยาศาสตร์ทั่วไป",
+        "category":  "วิทยาศาสตร์ทั่วไป (ม.1)",
         "difficulty":  "hard",
         "question":  "ข้อใดช่วยให้ผลการทดลองน่าเชื่อถือขึ้น",
         "choices":  [
@@ -393,7 +419,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-H-07",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "วิทยาศาสตร์ทั่วไป",
+        "category":  "วิทยาศาสตร์ทั่วไป (ม.1)",
         "difficulty":  "hard",
         "question":  "การใช้แว่นตานิรภัยในห้องปฏิบัติการมีเป้าหมายใด",
         "choices":  [
@@ -408,7 +435,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-H-08",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "วิทยาศาสตร์ทั่วไป",
+        "category":  "วิทยาศาสตร์ทั่วไป (ม.1)",
         "difficulty":  "hard",
         "question":  "สารที่ไม่ทราบชนิดไม่ควรทำสิ่งใด",
         "choices":  [
@@ -423,7 +451,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-H-09",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "วิทยาศาสตร์ทั่วไป",
+        "category":  "วิทยาศาสตร์ทั่วไป (ม.1)",
         "difficulty":  "hard",
         "question":  "การแยกทรายออกจากน้ำใช้วิธีใด",
         "choices":  [
@@ -438,7 +467,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M1-H-10",
         "grade":  "ม.1",
-        "category":  "วิทยาศาสตร์ ม.1",
+        "subject":  "วิทยาศาสตร์ทั่วไป",
+        "category":  "วิทยาศาสตร์ทั่วไป (ม.1)",
         "difficulty":  "hard",
         "question":  "ถ้าผลการทดลองไม่ตรงสมมติฐาน ควรทำอย่างไร",
         "choices":  [
@@ -453,7 +483,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-E-01",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.2)",
         "difficulty":  "easy",
         "question":  "อวัยวะใดใช้แลกเปลี่ยนก๊าซในมนุษย์",
         "choices":  [
@@ -468,7 +499,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-E-02",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.2)",
         "difficulty":  "easy",
         "question":  "เลือดที่มีออกซิเจนมากสูบออกจากหัวใจห้องใด",
         "choices":  [
@@ -483,7 +515,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-E-03",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.2)",
         "difficulty":  "easy",
         "question":  "ระบบใดควบคุมการตอบสนองของร่างกาย",
         "choices":  [
@@ -498,7 +531,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-E-04",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.2)",
         "difficulty":  "easy",
         "question":  "หน่วยของแรงคืออะไร",
         "choices":  [
@@ -513,7 +547,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-E-05",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.2)",
         "difficulty":  "easy",
         "question":  "แรงเสียดทานมีผลอย่างไรต่อการเคลื่อนที่",
         "choices":  [
@@ -528,7 +563,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-E-06",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.2)",
         "difficulty":  "easy",
         "question":  "วงจรที่กระแสมีทางเดินเดียวเรียกว่าอะไร",
         "choices":  [
@@ -543,7 +579,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-E-07",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.2)",
         "difficulty":  "easy",
         "question":  "อุปกรณ์ใดใช้เปิดและปิดวงจรไฟฟ้า",
         "choices":  [
@@ -558,7 +595,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-E-08",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.2)",
         "difficulty":  "easy",
         "question":  "โลหะชนิดใดนำไฟฟ้าได้ดี",
         "choices":  [
@@ -573,7 +611,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-E-09",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.2)",
         "difficulty":  "easy",
         "question":  "สัตว์ที่สร้างอาหารเองในห่วงโซ่อาหารเรียกว่าอะไร",
         "choices":  [
@@ -588,7 +627,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-E-10",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.2)",
         "difficulty":  "easy",
         "question":  "เห็ดรามีบทบาทใดในระบบนิเวศ",
         "choices":  [
@@ -603,7 +643,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-M-01",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.2)",
         "difficulty":  "medium",
         "question":  "จักรยานเคลื่อนที่ด้วยความเร็ว 5 m/s เป็นเวลา 4 วินาที เคลื่อนที่ได้ระยะทางกี่เมตร",
         "choices":  [
@@ -618,7 +659,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-M-02",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.2)",
         "difficulty":  "medium",
         "question":  "จักรยานเคลื่อนที่ด้วยความเร็ว 6 m/s เป็นเวลา 5 วินาที เคลื่อนที่ได้ระยะทางกี่เมตร",
         "choices":  [
@@ -633,7 +675,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-M-03",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.2)",
         "difficulty":  "medium",
         "question":  "จักรยานเคลื่อนที่ด้วยความเร็ว 7 m/s เป็นเวลา 6 วินาที เคลื่อนที่ได้ระยะทางกี่เมตร",
         "choices":  [
@@ -648,7 +691,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-M-04",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.2)",
         "difficulty":  "medium",
         "question":  "จักรยานเคลื่อนที่ด้วยความเร็ว 8 m/s เป็นเวลา 7 วินาที เคลื่อนที่ได้ระยะทางกี่เมตร",
         "choices":  [
@@ -663,7 +707,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-M-05",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.2)",
         "difficulty":  "medium",
         "question":  "จักรยานเคลื่อนที่ด้วยความเร็ว 9 m/s เป็นเวลา 8 วินาที เคลื่อนที่ได้ระยะทางกี่เมตร",
         "choices":  [
@@ -678,7 +723,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-M-06",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.2)",
         "difficulty":  "medium",
         "question":  "จักรยานเคลื่อนที่ด้วยความเร็ว 10 m/s เป็นเวลา 9 วินาที เคลื่อนที่ได้ระยะทางกี่เมตร",
         "choices":  [
@@ -693,7 +739,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-M-07",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.2)",
         "difficulty":  "medium",
         "question":  "จักรยานเคลื่อนที่ด้วยความเร็ว 11 m/s เป็นเวลา 10 วินาที เคลื่อนที่ได้ระยะทางกี่เมตร",
         "choices":  [
@@ -708,7 +755,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-M-08",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.2)",
         "difficulty":  "medium",
         "question":  "จักรยานเคลื่อนที่ด้วยความเร็ว 12 m/s เป็นเวลา 11 วินาที เคลื่อนที่ได้ระยะทางกี่เมตร",
         "choices":  [
@@ -723,7 +771,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-M-09",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.2)",
         "difficulty":  "medium",
         "question":  "จักรยานเคลื่อนที่ด้วยความเร็ว 13 m/s เป็นเวลา 12 วินาที เคลื่อนที่ได้ระยะทางกี่เมตร",
         "choices":  [
@@ -738,7 +787,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-M-10",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.2)",
         "difficulty":  "medium",
         "question":  "จักรยานเคลื่อนที่ด้วยความเร็ว 14 m/s เป็นเวลา 13 วินาที เคลื่อนที่ได้ระยะทางกี่เมตร",
         "choices":  [
@@ -753,7 +803,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-H-01",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.2)",
         "difficulty":  "hard",
         "question":  "ผู้ผลิตมีพลังงาน 1100 kJ หากส่งต่อพลังงานเฉลี่ย 10% ไปยังผู้บริโภคอันดับหนึ่ง ผู้บริโภคอันดับหนึ่งได้รับพลังงานกี่ kJ",
         "choices":  [
@@ -768,7 +819,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-H-02",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.2)",
         "difficulty":  "hard",
         "question":  "ผู้ผลิตมีพลังงาน 1200 kJ หากส่งต่อพลังงานเฉลี่ย 10% ไปยังผู้บริโภคอันดับหนึ่ง ผู้บริโภคอันดับหนึ่งได้รับพลังงานกี่ kJ",
         "choices":  [
@@ -783,7 +835,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-H-03",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.2)",
         "difficulty":  "hard",
         "question":  "ผู้ผลิตมีพลังงาน 1300 kJ หากส่งต่อพลังงานเฉลี่ย 10% ไปยังผู้บริโภคอันดับหนึ่ง ผู้บริโภคอันดับหนึ่งได้รับพลังงานกี่ kJ",
         "choices":  [
@@ -798,7 +851,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-H-04",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.2)",
         "difficulty":  "hard",
         "question":  "ผู้ผลิตมีพลังงาน 1400 kJ หากส่งต่อพลังงานเฉลี่ย 10% ไปยังผู้บริโภคอันดับหนึ่ง ผู้บริโภคอันดับหนึ่งได้รับพลังงานกี่ kJ",
         "choices":  [
@@ -813,7 +867,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-H-05",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.2)",
         "difficulty":  "hard",
         "question":  "ผู้ผลิตมีพลังงาน 1500 kJ หากส่งต่อพลังงานเฉลี่ย 10% ไปยังผู้บริโภคอันดับหนึ่ง ผู้บริโภคอันดับหนึ่งได้รับพลังงานกี่ kJ",
         "choices":  [
@@ -828,7 +883,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-H-06",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.2)",
         "difficulty":  "hard",
         "question":  "ผู้ผลิตมีพลังงาน 1600 kJ หากส่งต่อพลังงานเฉลี่ย 10% ไปยังผู้บริโภคอันดับหนึ่ง ผู้บริโภคอันดับหนึ่งได้รับพลังงานกี่ kJ",
         "choices":  [
@@ -843,7 +899,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-H-07",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.2)",
         "difficulty":  "hard",
         "question":  "ผู้ผลิตมีพลังงาน 1700 kJ หากส่งต่อพลังงานเฉลี่ย 10% ไปยังผู้บริโภคอันดับหนึ่ง ผู้บริโภคอันดับหนึ่งได้รับพลังงานกี่ kJ",
         "choices":  [
@@ -858,7 +915,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-H-08",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.2)",
         "difficulty":  "hard",
         "question":  "ผู้ผลิตมีพลังงาน 1800 kJ หากส่งต่อพลังงานเฉลี่ย 10% ไปยังผู้บริโภคอันดับหนึ่ง ผู้บริโภคอันดับหนึ่งได้รับพลังงานกี่ kJ",
         "choices":  [
@@ -873,7 +931,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-H-09",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.2)",
         "difficulty":  "hard",
         "question":  "ผู้ผลิตมีพลังงาน 1900 kJ หากส่งต่อพลังงานเฉลี่ย 10% ไปยังผู้บริโภคอันดับหนึ่ง ผู้บริโภคอันดับหนึ่งได้รับพลังงานกี่ kJ",
         "choices":  [
@@ -888,7 +947,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M2-H-10",
         "grade":  "ม.2",
-        "category":  "วิทยาศาสตร์ ม.2",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.2)",
         "difficulty":  "hard",
         "question":  "ผู้ผลิตมีพลังงาน 2000 kJ หากส่งต่อพลังงานเฉลี่ย 10% ไปยังผู้บริโภคอันดับหนึ่ง ผู้บริโภคอันดับหนึ่งได้รับพลังงานกี่ kJ",
         "choices":  [
@@ -903,7 +963,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-E-01",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.3)",
         "difficulty":  "easy",
         "question":  "หน่วยพื้นฐานของพันธุกรรมคืออะไร",
         "choices":  [
@@ -918,7 +979,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-E-02",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.3)",
         "difficulty":  "easy",
         "question":  "DNA พบเด่นชัดในส่วนใดของเซลล์",
         "choices":  [
@@ -933,7 +995,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-E-03",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.3)",
         "difficulty":  "easy",
         "question":  "การผสม Aa × Aa มีอัตราส่วนฟีโนไทป์เด่นต่อด้อยเท่าไร",
         "choices":  [
@@ -948,7 +1011,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-E-04",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.3)",
         "difficulty":  "easy",
         "question":  "อะตอมที่มีประจุเรียกว่าอะไร",
         "choices":  [
@@ -963,7 +1027,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-E-05",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "easy",
         "question":  "โปรตอนมีประจุชนิดใด",
         "choices":  [
@@ -978,7 +1043,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-E-06",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "easy",
         "question":  "อิเล็กตรอนมีประจุชนิดใด",
         "choices":  [
@@ -993,7 +1059,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-E-07",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "วิทยาศาสตร์โลก",
+        "category":  "วิทยาศาสตร์โลก (ม.3)",
         "difficulty":  "easy",
         "question":  "ชั้นบรรยากาศที่เกิดสภาพอากาศคือชั้นใด",
         "choices":  [
@@ -1008,7 +1075,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-E-08",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "วิทยาศาสตร์โลก",
+        "category":  "วิทยาศาสตร์โลก (ม.3)",
         "difficulty":  "easy",
         "question":  "แผ่นดินไหวเกิดจากการเคลื่อนที่ของอะไร",
         "choices":  [
@@ -1023,7 +1091,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-E-09",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "วิทยาศาสตร์โลก",
+        "category":  "วิทยาศาสตร์โลก (ม.3)",
         "difficulty":  "easy",
         "question":  "สุริยุปราคาเกิดเมื่อสิ่งใดบังดวงอาทิตย์",
         "choices":  [
@@ -1038,7 +1107,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-E-10",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "วิทยาศาสตร์โลก",
+        "category":  "วิทยาศาสตร์โลก (ม.3)",
         "difficulty":  "easy",
         "question":  "จันทรุปราคาเกิดเมื่อสิ่งใดบังดวงจันทร์",
         "choices":  [
@@ -1053,7 +1123,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-M-01",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "medium",
         "question":  "วงจรมีความต่างศักย์ 8 V และความต้านทาน 3 Ω มีกระแสไฟฟ้ากี่แอมแปร์",
         "choices":  [
@@ -1068,7 +1139,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-M-02",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "medium",
         "question":  "วงจรมีความต่างศักย์ 10 V และความต้านทาน 4 Ω มีกระแสไฟฟ้ากี่แอมแปร์",
         "choices":  [
@@ -1083,7 +1155,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-M-03",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "medium",
         "question":  "วงจรมีความต่างศักย์ 12 V และความต้านทาน 5 Ω มีกระแสไฟฟ้ากี่แอมแปร์",
         "choices":  [
@@ -1098,7 +1171,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-M-04",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "medium",
         "question":  "วงจรมีความต่างศักย์ 14 V และความต้านทาน 6 Ω มีกระแสไฟฟ้ากี่แอมแปร์",
         "choices":  [
@@ -1113,7 +1187,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-M-05",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "medium",
         "question":  "วงจรมีความต่างศักย์ 16 V และความต้านทาน 2 Ω มีกระแสไฟฟ้ากี่แอมแปร์",
         "choices":  [
@@ -1128,7 +1203,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-M-06",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "medium",
         "question":  "วงจรมีความต่างศักย์ 18 V และความต้านทาน 3 Ω มีกระแสไฟฟ้ากี่แอมแปร์",
         "choices":  [
@@ -1143,7 +1219,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-M-07",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "medium",
         "question":  "วงจรมีความต่างศักย์ 20 V และความต้านทาน 4 Ω มีกระแสไฟฟ้ากี่แอมแปร์",
         "choices":  [
@@ -1158,7 +1235,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-M-08",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "medium",
         "question":  "วงจรมีความต่างศักย์ 22 V และความต้านทาน 5 Ω มีกระแสไฟฟ้ากี่แอมแปร์",
         "choices":  [
@@ -1173,7 +1251,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-M-09",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "medium",
         "question":  "วงจรมีความต่างศักย์ 24 V และความต้านทาน 6 Ω มีกระแสไฟฟ้ากี่แอมแปร์",
         "choices":  [
@@ -1188,7 +1267,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-M-10",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "medium",
         "question":  "วงจรมีความต่างศักย์ 26 V และความต้านทาน 2 Ω มีกระแสไฟฟ้ากี่แอมแปร์",
         "choices":  [
@@ -1203,7 +1283,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-H-01",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "hard",
         "question":  "อุปกรณ์ไฟฟ้าใช้ความต่างศักย์ 8 V และกระแส 2 A มีกำลังไฟฟ้ากี่วัตต์",
         "choices":  [
@@ -1218,7 +1299,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-H-02",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "hard",
         "question":  "อุปกรณ์ไฟฟ้าใช้ความต่างศักย์ 10 V และกระแส 3 A มีกำลังไฟฟ้ากี่วัตต์",
         "choices":  [
@@ -1233,7 +1315,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-H-03",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "hard",
         "question":  "อุปกรณ์ไฟฟ้าใช้ความต่างศักย์ 12 V และกระแส 4 A มีกำลังไฟฟ้ากี่วัตต์",
         "choices":  [
@@ -1248,7 +1331,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-H-04",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "hard",
         "question":  "อุปกรณ์ไฟฟ้าใช้ความต่างศักย์ 14 V และกระแส 1 A มีกำลังไฟฟ้ากี่วัตต์",
         "choices":  [
@@ -1263,7 +1347,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-H-05",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "hard",
         "question":  "อุปกรณ์ไฟฟ้าใช้ความต่างศักย์ 16 V และกระแส 2 A มีกำลังไฟฟ้ากี่วัตต์",
         "choices":  [
@@ -1278,7 +1363,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-H-06",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "hard",
         "question":  "อุปกรณ์ไฟฟ้าใช้ความต่างศักย์ 18 V และกระแส 3 A มีกำลังไฟฟ้ากี่วัตต์",
         "choices":  [
@@ -1293,7 +1379,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-H-07",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "hard",
         "question":  "อุปกรณ์ไฟฟ้าใช้ความต่างศักย์ 20 V และกระแส 4 A มีกำลังไฟฟ้ากี่วัตต์",
         "choices":  [
@@ -1308,7 +1395,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-H-08",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "hard",
         "question":  "อุปกรณ์ไฟฟ้าใช้ความต่างศักย์ 22 V และกระแส 1 A มีกำลังไฟฟ้ากี่วัตต์",
         "choices":  [
@@ -1323,7 +1411,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-H-09",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "hard",
         "question":  "อุปกรณ์ไฟฟ้าใช้ความต่างศักย์ 24 V และกระแส 2 A มีกำลังไฟฟ้ากี่วัตต์",
         "choices":  [
@@ -1338,7 +1427,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M3-H-10",
         "grade":  "ม.3",
-        "category":  "วิทยาศาสตร์ ม.3",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.3)",
         "difficulty":  "hard",
         "question":  "อุปกรณ์ไฟฟ้าใช้ความต่างศักย์ 26 V และกระแส 3 A มีกำลังไฟฟ้ากี่วัตต์",
         "choices":  [
@@ -1353,7 +1443,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-E-01",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.4)",
         "difficulty":  "easy",
         "question":  "เลขอะตอมบอกจำนวนอนุภาคใด",
         "choices":  [
@@ -1368,7 +1459,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-E-02",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.4)",
         "difficulty":  "easy",
         "question":  "เลขมวลเท่ากับผลรวมของอนุภาคใด",
         "choices":  [
@@ -1383,7 +1475,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-E-03",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.4)",
         "difficulty":  "easy",
         "question":  "สารที่มี pH น้อยกว่า 7 มีสมบัติเป็นอะไร",
         "choices":  [
@@ -1398,7 +1491,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-E-04",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.4)",
         "difficulty":  "easy",
         "question":  "สารที่มี pH มากกว่า 7 มีสมบัติเป็นอะไร",
         "choices":  [
@@ -1413,7 +1507,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-E-05",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "easy",
         "question":  "แรงลัพธ์เป็นศูนย์หมายถึงวัตถุอยู่ในสภาพใด",
         "choices":  [
@@ -1428,7 +1523,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-E-06",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "easy",
         "question":  "กฎข้อที่สองของนิวตันเขียนเป็นสมการใด",
         "choices":  [
@@ -1443,7 +1539,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-E-07",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "easy",
         "question":  "พลังงานของวัตถุที่กำลังเคลื่อนที่เรียกว่าอะไร",
         "choices":  [
@@ -1458,7 +1555,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-E-08",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "easy",
         "question":  "พลังงานที่ขึ้นกับตำแหน่งสูงเรียกว่าอะไร",
         "choices":  [
@@ -1473,7 +1571,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-E-09",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.4)",
         "difficulty":  "easy",
         "question":  "ตัวเร่งปฏิกิริยามีผลอย่างไร",
         "choices":  [
@@ -1488,7 +1587,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-E-10",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.4)",
         "difficulty":  "easy",
         "question":  "การเผาไหม้เป็นการเปลี่ยนแปลงแบบใด",
         "choices":  [
@@ -1503,7 +1603,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-M-01",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "medium",
         "question":  "วัตถุมวล 3 kg มีความเร่ง 3 m/s² แรงลัพธ์มีค่าเท่าไรกี่นิวตัน",
         "choices":  [
@@ -1518,7 +1619,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-M-02",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "medium",
         "question":  "วัตถุมวล 4 kg มีความเร่ง 4 m/s² แรงลัพธ์มีค่าเท่าไรกี่นิวตัน",
         "choices":  [
@@ -1533,7 +1635,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-M-03",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "medium",
         "question":  "วัตถุมวล 5 kg มีความเร่ง 5 m/s² แรงลัพธ์มีค่าเท่าไรกี่นิวตัน",
         "choices":  [
@@ -1548,7 +1651,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-M-04",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "medium",
         "question":  "วัตถุมวล 6 kg มีความเร่ง 6 m/s² แรงลัพธ์มีค่าเท่าไรกี่นิวตัน",
         "choices":  [
@@ -1563,7 +1667,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-M-05",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "medium",
         "question":  "วัตถุมวล 7 kg มีความเร่ง 7 m/s² แรงลัพธ์มีค่าเท่าไรกี่นิวตัน",
         "choices":  [
@@ -1578,7 +1683,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-M-06",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "medium",
         "question":  "วัตถุมวล 8 kg มีความเร่ง 2 m/s² แรงลัพธ์มีค่าเท่าไรกี่นิวตัน",
         "choices":  [
@@ -1593,7 +1699,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-M-07",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "medium",
         "question":  "วัตถุมวล 9 kg มีความเร่ง 3 m/s² แรงลัพธ์มีค่าเท่าไรกี่นิวตัน",
         "choices":  [
@@ -1608,7 +1715,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-M-08",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "medium",
         "question":  "วัตถุมวล 10 kg มีความเร่ง 4 m/s² แรงลัพธ์มีค่าเท่าไรกี่นิวตัน",
         "choices":  [
@@ -1623,7 +1731,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-M-09",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "medium",
         "question":  "วัตถุมวล 11 kg มีความเร่ง 5 m/s² แรงลัพธ์มีค่าเท่าไรกี่นิวตัน",
         "choices":  [
@@ -1638,7 +1747,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-M-10",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "medium",
         "question":  "วัตถุมวล 12 kg มีความเร่ง 6 m/s² แรงลัพธ์มีค่าเท่าไรกี่นิวตัน",
         "choices":  [
@@ -1653,7 +1763,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-H-01",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "hard",
         "question":  "วัตถุมวล 3 kg เคลื่อนที่ด้วยความเร็ว 4 m/s มีพลังงานจลน์กี่จูล",
         "choices":  [
@@ -1668,7 +1779,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-H-02",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "hard",
         "question":  "วัตถุมวล 4 kg เคลื่อนที่ด้วยความเร็ว 5 m/s มีพลังงานจลน์กี่จูล",
         "choices":  [
@@ -1683,7 +1795,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-H-03",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "hard",
         "question":  "วัตถุมวล 5 kg เคลื่อนที่ด้วยความเร็ว 6 m/s มีพลังงานจลน์กี่จูล",
         "choices":  [
@@ -1698,7 +1811,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-H-04",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "hard",
         "question":  "วัตถุมวล 6 kg เคลื่อนที่ด้วยความเร็ว 7 m/s มีพลังงานจลน์กี่จูล",
         "choices":  [
@@ -1713,7 +1827,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-H-05",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "hard",
         "question":  "วัตถุมวล 7 kg เคลื่อนที่ด้วยความเร็ว 8 m/s มีพลังงานจลน์กี่จูล",
         "choices":  [
@@ -1728,7 +1843,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-H-06",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "hard",
         "question":  "วัตถุมวล 8 kg เคลื่อนที่ด้วยความเร็ว 9 m/s มีพลังงานจลน์กี่จูล",
         "choices":  [
@@ -1743,7 +1859,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-H-07",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "hard",
         "question":  "วัตถุมวล 9 kg เคลื่อนที่ด้วยความเร็ว 3 m/s มีพลังงานจลน์กี่จูล",
         "choices":  [
@@ -1758,7 +1875,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-H-08",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "hard",
         "question":  "วัตถุมวล 10 kg เคลื่อนที่ด้วยความเร็ว 4 m/s มีพลังงานจลน์กี่จูล",
         "choices":  [
@@ -1773,7 +1891,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-H-09",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "hard",
         "question":  "วัตถุมวล 11 kg เคลื่อนที่ด้วยความเร็ว 5 m/s มีพลังงานจลน์กี่จูล",
         "choices":  [
@@ -1788,7 +1907,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M4-H-10",
         "grade":  "ม.4",
-        "category":  "วิทยาศาสตร์ ม.4",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.4)",
         "difficulty":  "hard",
         "question":  "วัตถุมวล 12 kg เคลื่อนที่ด้วยความเร็ว 6 m/s มีพลังงานจลน์กี่จูล",
         "choices":  [
@@ -1803,7 +1923,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-E-01",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.5)",
         "difficulty":  "easy",
         "question":  "คลื่นกลต้องอาศัยสิ่งใดในการเคลื่อนที่",
         "choices":  [
@@ -1818,7 +1939,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-E-02",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.5)",
         "difficulty":  "easy",
         "question":  "แสงเดินทางได้เร็วที่สุดในตัวกลางใด",
         "choices":  [
@@ -1833,7 +1955,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-E-03",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.5)",
         "difficulty":  "easy",
         "question":  "ความถี่มีหน่วยเป็นอะไร",
         "choices":  [
@@ -1848,7 +1971,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-E-04",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.5)",
         "difficulty":  "easy",
         "question":  "การหักเหของแสงเกิดเมื่อแสงเปลี่ยนอะไร",
         "choices":  [
@@ -1863,7 +1987,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-E-05",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.5)",
         "difficulty":  "easy",
         "question":  "สารละลายที่มีตัวถูกละลายมากที่สุดที่อุณหภูมิหนึ่งเรียกว่าอะไร",
         "choices":  [
@@ -1878,7 +2003,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-E-06",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.5)",
         "difficulty":  "easy",
         "question":  "กรดกับเบสทำปฏิกิริยากันเรียกว่าอะไร",
         "choices":  [
@@ -1893,7 +2019,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-E-07",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.5)",
         "difficulty":  "easy",
         "question":  "โมลเป็นหน่วยบอกปริมาณของอะไร",
         "choices":  [
@@ -1908,7 +2035,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-E-08",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.5)",
         "difficulty":  "easy",
         "question":  "อัตราการเกิดปฏิกิริยาเพิ่มขึ้นเมื่อเพิ่มสิ่งใด",
         "choices":  [
@@ -1923,7 +2051,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-E-09",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.5)",
         "difficulty":  "easy",
         "question":  "การเกิดสนิมต้องอาศัยออกซิเจนและอะไร",
         "choices":  [
@@ -1938,7 +2067,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-E-10",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.5)",
         "difficulty":  "easy",
         "question":  "ความเข้มข้นของสารละลายโมลาร์มีหน่วยใด",
         "choices":  [
@@ -1953,7 +2083,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-M-01",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.5)",
         "difficulty":  "medium",
         "question":  "คลื่นมีความถี่ 15 Hz และความยาวคลื่น 3 m มีอัตราเร็วคลื่นกี่ m/s",
         "choices":  [
@@ -1968,7 +2099,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-M-02",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.5)",
         "difficulty":  "medium",
         "question":  "คลื่นมีความถี่ 20 Hz และความยาวคลื่น 4 m มีอัตราเร็วคลื่นกี่ m/s",
         "choices":  [
@@ -1983,7 +2115,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-M-03",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.5)",
         "difficulty":  "medium",
         "question":  "คลื่นมีความถี่ 25 Hz และความยาวคลื่น 5 m มีอัตราเร็วคลื่นกี่ m/s",
         "choices":  [
@@ -1998,7 +2131,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-M-04",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.5)",
         "difficulty":  "medium",
         "question":  "คลื่นมีความถี่ 30 Hz และความยาวคลื่น 2 m มีอัตราเร็วคลื่นกี่ m/s",
         "choices":  [
@@ -2013,7 +2147,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-M-05",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.5)",
         "difficulty":  "medium",
         "question":  "คลื่นมีความถี่ 35 Hz และความยาวคลื่น 3 m มีอัตราเร็วคลื่นกี่ m/s",
         "choices":  [
@@ -2028,7 +2163,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-M-06",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.5)",
         "difficulty":  "medium",
         "question":  "คลื่นมีความถี่ 40 Hz และความยาวคลื่น 4 m มีอัตราเร็วคลื่นกี่ m/s",
         "choices":  [
@@ -2043,7 +2179,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-M-07",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.5)",
         "difficulty":  "medium",
         "question":  "คลื่นมีความถี่ 45 Hz และความยาวคลื่น 5 m มีอัตราเร็วคลื่นกี่ m/s",
         "choices":  [
@@ -2058,7 +2195,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-M-08",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.5)",
         "difficulty":  "medium",
         "question":  "คลื่นมีความถี่ 50 Hz และความยาวคลื่น 2 m มีอัตราเร็วคลื่นกี่ m/s",
         "choices":  [
@@ -2073,7 +2211,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-M-09",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.5)",
         "difficulty":  "medium",
         "question":  "คลื่นมีความถี่ 55 Hz และความยาวคลื่น 3 m มีอัตราเร็วคลื่นกี่ m/s",
         "choices":  [
@@ -2088,7 +2227,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-M-10",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.5)",
         "difficulty":  "medium",
         "question":  "คลื่นมีความถี่ 60 Hz และความยาวคลื่น 4 m มีอัตราเร็วคลื่นกี่ m/s",
         "choices":  [
@@ -2103,7 +2243,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-H-01",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.5)",
         "difficulty":  "hard",
         "question":  "สารละลายมีตัวถูกละลาย 2 mol ในปริมาตร 1 L มีความเข้มข้นกี่ mol/L",
         "choices":  [
@@ -2118,7 +2259,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-H-02",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.5)",
         "difficulty":  "hard",
         "question":  "สารละลายมีตัวถูกละลาย 3 mol ในปริมาตร 1.5 L มีความเข้มข้นกี่ mol/L",
         "choices":  [
@@ -2133,7 +2275,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-H-03",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.5)",
         "difficulty":  "hard",
         "question":  "สารละลายมีตัวถูกละลาย 4 mol ในปริมาตร 2 L มีความเข้มข้นกี่ mol/L",
         "choices":  [
@@ -2148,7 +2291,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-H-04",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.5)",
         "difficulty":  "hard",
         "question":  "สารละลายมีตัวถูกละลาย 5 mol ในปริมาตร 0.5 L มีความเข้มข้นกี่ mol/L",
         "choices":  [
@@ -2163,7 +2307,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-H-05",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.5)",
         "difficulty":  "hard",
         "question":  "สารละลายมีตัวถูกละลาย 1 mol ในปริมาตร 1 L มีความเข้มข้นกี่ mol/L",
         "choices":  [
@@ -2178,7 +2323,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-H-06",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.5)",
         "difficulty":  "hard",
         "question":  "สารละลายมีตัวถูกละลาย 2 mol ในปริมาตร 1.5 L มีความเข้มข้นกี่ mol/L",
         "choices":  [
@@ -2193,7 +2339,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-H-07",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.5)",
         "difficulty":  "hard",
         "question":  "สารละลายมีตัวถูกละลาย 3 mol ในปริมาตร 2 L มีความเข้มข้นกี่ mol/L",
         "choices":  [
@@ -2208,7 +2355,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-H-08",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.5)",
         "difficulty":  "hard",
         "question":  "สารละลายมีตัวถูกละลาย 4 mol ในปริมาตร 0.5 L มีความเข้มข้นกี่ mol/L",
         "choices":  [
@@ -2223,7 +2371,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-H-09",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.5)",
         "difficulty":  "hard",
         "question":  "สารละลายมีตัวถูกละลาย 5 mol ในปริมาตร 1 L มีความเข้มข้นกี่ mol/L",
         "choices":  [
@@ -2238,7 +2387,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M5-H-10",
         "grade":  "ม.5",
-        "category":  "วิทยาศาสตร์ ม.5",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.5)",
         "difficulty":  "hard",
         "question":  "สารละลายมีตัวถูกละลาย 1 mol ในปริมาตร 1.5 L มีความเข้มข้นกี่ mol/L",
         "choices":  [
@@ -2253,7 +2403,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-E-01",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "easy",
         "question":  "หมู่ฟังก์ชันของแอลกอฮอล์คืออะไร",
         "choices":  [
@@ -2268,7 +2419,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-E-02",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "easy",
         "question":  "พอลิเมอร์เกิดจากหน่วยเล็ก ๆ ที่เรียกว่าอะไร",
         "choices":  [
@@ -2283,7 +2435,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-E-03",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "easy",
         "question":  "เบนซีนจัดเป็นสารประกอบชนิดใด",
         "choices":  [
@@ -2298,7 +2451,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-E-04",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "easy",
         "question":  "แก๊สเรือนกระจกที่เกิดจากการเผาไหม้เชื้อเพลิงฟอสซิลมากคืออะไร",
         "choices":  [
@@ -2313,7 +2467,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-E-05",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.6)",
         "difficulty":  "easy",
         "question":  "การขยายความเข้มข้นทางชีวภาพเกิดเด่นชัดในสิ่งใด",
         "choices":  [
@@ -2328,7 +2483,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-E-06",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.6)",
         "difficulty":  "easy",
         "question":  "การคัดเลือกโดยธรรมชาติทำให้ลักษณะใดเพิ่มขึ้น",
         "choices":  [
@@ -2343,7 +2499,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-E-07",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.6)",
         "difficulty":  "easy",
         "question":  "การแบ่งเซลล์ไมโอซิสให้เซลล์สืบพันธุ์ที่มีโครโมโซมเท่าไร",
         "choices":  [
@@ -2358,7 +2515,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-E-08",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.6)",
         "difficulty":  "easy",
         "question":  "เอนไซม์มีหน้าที่สำคัญข้อใด",
         "choices":  [
@@ -2373,7 +2531,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-E-09",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.6)",
         "difficulty":  "easy",
         "question":  "แอนติบอดีมีหน้าที่สำคัญข้อใด",
         "choices":  [
@@ -2388,7 +2547,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-E-10",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "ฟิสิกส์",
+        "category":  "ฟิสิกส์ (ม.6)",
         "difficulty":  "easy",
         "question":  "พลังงานหมุนเวียนตัวอย่างหนึ่งคืออะไร",
         "choices":  [
@@ -2403,7 +2563,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-M-01",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "medium",
         "question":  "สารมีจำนวน 2 mol และมวลโมลาร์ 32 g/mol สารมีมวลกี่กรัม",
         "choices":  [
@@ -2418,7 +2579,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-M-02",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "medium",
         "question":  "สารมีจำนวน 3 mol และมวลโมลาร์ 44 g/mol สารมีมวลกี่กรัม",
         "choices":  [
@@ -2433,7 +2595,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-M-03",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "medium",
         "question":  "สารมีจำนวน 4 mol และมวลโมลาร์ 58 g/mol สารมีมวลกี่กรัม",
         "choices":  [
@@ -2448,7 +2611,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-M-04",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "medium",
         "question":  "สารมีจำนวน 1 mol และมวลโมลาร์ 60 g/mol สารมีมวลกี่กรัม",
         "choices":  [
@@ -2463,7 +2627,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-M-05",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "medium",
         "question":  "สารมีจำนวน 2 mol และมวลโมลาร์ 18 g/mol สารมีมวลกี่กรัม",
         "choices":  [
@@ -2478,7 +2643,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-M-06",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "medium",
         "question":  "สารมีจำนวน 3 mol และมวลโมลาร์ 32 g/mol สารมีมวลกี่กรัม",
         "choices":  [
@@ -2493,7 +2659,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-M-07",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "medium",
         "question":  "สารมีจำนวน 4 mol และมวลโมลาร์ 44 g/mol สารมีมวลกี่กรัม",
         "choices":  [
@@ -2508,7 +2675,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-M-08",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "medium",
         "question":  "สารมีจำนวน 1 mol และมวลโมลาร์ 58 g/mol สารมีมวลกี่กรัม",
         "choices":  [
@@ -2523,7 +2691,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-M-09",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "medium",
         "question":  "สารมีจำนวน 2 mol และมวลโมลาร์ 60 g/mol สารมีมวลกี่กรัม",
         "choices":  [
@@ -2538,7 +2707,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-M-10",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "medium",
         "question":  "สารมีจำนวน 3 mol และมวลโมลาร์ 18 g/mol สารมีมวลกี่กรัม",
         "choices":  [
@@ -2553,7 +2723,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-H-01",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "hard",
         "question":  "แก๊สอุณหภูมิคงที่มี P₁ = 2 atm V₁ = 3 L และ P₂ = 3 atm ปริมาตร V₂ เท่ากับกี่ลิตร",
         "choices":  [
@@ -2568,7 +2739,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-H-02",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "hard",
         "question":  "แก๊สอุณหภูมิคงที่มี P₁ = 3 atm V₁ = 4 L และ P₂ = 4 atm ปริมาตร V₂ เท่ากับกี่ลิตร",
         "choices":  [
@@ -2583,7 +2755,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-H-03",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "hard",
         "question":  "แก๊สอุณหภูมิคงที่มี P₁ = 4 atm V₁ = 5 L และ P₂ = 5 atm ปริมาตร V₂ เท่ากับกี่ลิตร",
         "choices":  [
@@ -2598,7 +2771,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-H-04",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "hard",
         "question":  "แก๊สอุณหภูมิคงที่มี P₁ = 1 atm V₁ = 6 L และ P₂ = 6 atm ปริมาตร V₂ เท่ากับกี่ลิตร",
         "choices":  [
@@ -2613,7 +2787,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-H-05",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "hard",
         "question":  "แก๊สอุณหภูมิคงที่มี P₁ = 2 atm V₁ = 2 L และ P₂ = 2 atm ปริมาตร V₂ เท่ากับกี่ลิตร",
         "choices":  [
@@ -2628,7 +2803,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-H-06",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "hard",
         "question":  "แก๊สอุณหภูมิคงที่มี P₁ = 3 atm V₁ = 3 L และ P₂ = 3 atm ปริมาตร V₂ เท่ากับกี่ลิตร",
         "choices":  [
@@ -2643,7 +2819,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-H-07",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "hard",
         "question":  "แก๊สอุณหภูมิคงที่มี P₁ = 4 atm V₁ = 4 L และ P₂ = 4 atm ปริมาตร V₂ เท่ากับกี่ลิตร",
         "choices":  [
@@ -2658,7 +2835,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-H-08",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "hard",
         "question":  "แก๊สอุณหภูมิคงที่มี P₁ = 1 atm V₁ = 5 L และ P₂ = 5 atm ปริมาตร V₂ เท่ากับกี่ลิตร",
         "choices":  [
@@ -2673,7 +2851,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-H-09",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "hard",
         "question":  "แก๊สอุณหภูมิคงที่มี P₁ = 2 atm V₁ = 6 L และ P₂ = 6 atm ปริมาตร V₂ เท่ากับกี่ลิตร",
         "choices":  [
@@ -2688,7 +2867,8 @@ const QUESTION_BANK = [
     {
         "id":  "SCI-M6-H-10",
         "grade":  "ม.6",
-        "category":  "วิทยาศาสตร์ ม.6",
+        "subject":  "เคมี",
+        "category":  "เคมี (ม.6)",
         "difficulty":  "hard",
         "question":  "แก๊สอุณหภูมิคงที่มี P₁ = 3 atm V₁ = 2 L และ P₂ = 2 atm ปริมาตร V₂ เท่ากับกี่ลิตร",
         "choices":  [
@@ -2699,13 +2879,227 @@ const QUESTION_BANK = [
                     ],
         "correctAnswer":  "C",
         "explanation":  "คำตอบที่ถูกต้องคือ C (3)"
+    },
+    {
+        "id":  "SCI-M4-BIO-E01",
+        "grade":  "ม.4",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.4)",
+        "difficulty":  "easy",
+        "question":  "โครงสร้างใดของเซลล์ที่ทำหน้าที่เป็นเยื่อเลือกผ่าน (Semipermeable membrane)?",
+        "choices":  [
+                        "ผนังเซลล์",
+                        "เยื่อหุ้มเซลล์",
+                        "ไซโทพลาสซึม",
+                        "ไรโบโซม"
+                    ],
+        "correctAnswer":  "B",
+        "explanation":  "เยื่อหุ้มเซลล์ทำหน้าที่ควบคุมการผ่านเข้าออกของสารเข้าสู่เซลล์"
+    },
+    {
+        "id":  "SCI-M4-BIO-E02",
+        "grade":  "ม.4",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.4)",
+        "difficulty":  "easy",
+        "question":  "สารชีวโมเลกุลชนิดใดเป็นแหล่งพลังงานหลักที่ร่างกายนำมาใช้เป็นลำดับแรก?",
+        "choices":  [
+                        "โปรตีน",
+                        "ลิพิด",
+                        "คาร์โบไฮเดรต",
+                        "กรดนิวคลีอิก"
+                    ],
+        "correctAnswer":  "C",
+        "explanation":  "คาร์โบไฮเดรตในรูปกลูโคสเป็นสารอาหารที่ร่างกายสลายเป็นพลังงานอันดับแรก"
+    },
+    {
+        "id":  "SCI-M4-BIO-E03",
+        "grade":  "ม.4",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.4)",
+        "difficulty":  "easy",
+        "question":  "กระบวนการหายใจระดับเซลล์เกิดขึ้นเพื่อสร้างสารพลังงานสูงชนิดใด?",
+        "choices":  [
+                        "DNA",
+                        "ATP",
+                        "RNA",
+                        "NADH"
+                    ],
+        "correctAnswer":  "B",
+        "explanation":  "การหายใจระดับเซลล์สร้างพลังงานในรูป ATP สำหรับกิจกรรมต่างๆ ของเซลล์"
+    },
+    {
+        "id":  "SCI-M4-BIO-M01",
+        "grade":  "ม.4",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.4)",
+        "difficulty":  "medium",
+        "question":  "กระบวนการไกลโคไลซิส (Glycolysis) เกิดขึ้นที่บริเวณใดของเซลล์?",
+        "choices":  [
+                        "ไมโทคอนเดรีย",
+                        "ไซโทพลาสซึม (Cytosol)",
+                        "คลอโรพลาสต์",
+                        "นิวเคลียส"
+                    ],
+        "correctAnswer":  "B",
+        "explanation":  "ไกลโคไลซิสเป็นการสลายกลูโคสเกิดขึ้นในไซโทพลาสซึมโดยไม่ต้องใช้ออกซิเจน"
+    },
+    {
+        "id":  "SCI-M4-BIO-M02",
+        "grade":  "ม.4",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.4)",
+        "difficulty":  "medium",
+        "question":  "ในกระบวนการสังเคราะห์ด้วยแสง ปฏิกิริยาแสง (Light reaction) เกิดขึ้นที่โครงสร้างใดของคลอโรพลาสต์?",
+        "choices":  [
+                        "สโตรมา (Stroma)",
+                        "ไทลาคอยด์ (Thylakoid)",
+                        "เยื่อหุ้มชั้นนอก",
+                        "คริสตี (Cristae)"
+                    ],
+        "correctAnswer":  "B",
+        "explanation":  "ปฏิกิริยาแสงเกิดขึ้นที่เยื่อไทลาคอยด์ที่มีสารสีคลอโรฟิลล์ดูดกลืนพลังงานแสง"
+    },
+    {
+        "id":  "SCI-M4-BIO-H01",
+        "grade":  "ม.4",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.4)",
+        "difficulty":  "hard",
+        "question":  "ในการหายใจระดับเซลล์แบบใช้ออกซิเจน การถ่ายทอดอิเล็กตรอน (ETC) 1 โมเลกุลของกลูโคสผลิต ATP ได้ประมาณเท่าใด?",
+        "choices":  [
+                        "2 ATP",
+                        "4 ATP",
+                        "26 - 28 ATP",
+                        "100 ATP"
+                    ],
+        "correctAnswer":  "C",
+        "explanation":  "ระบบถ่ายทอดอิเล็กตรอนสร้าง ATP ได้มากที่สุด ประมาณ 26-28 ATP จากทั้งหมดประมาณ 30-32 ATP"
+    },
+    {
+        "id":  "SCI-M4-BIO-H02",
+        "grade":  "ม.4",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.4)",
+        "difficulty":  "hard",
+        "question":  "ระยะใดในวัฏจักรเซลล์ที่มีการจำลองตัวเองของ DNA (DNA Replication)?",
+        "choices":  [
+                        "G1 phase",
+                        "S phase",
+                        "G2 phase",
+                        "M phase"
+                    ],
+        "correctAnswer":  "B",
+        "explanation":  "ระยะ S phase (Synthesis phase) ในระยะอินเตอร์เฟส มีการจำลอง DNA เพิ่มเป็น 2 เท่า"
+    },
+    {
+        "id":  "SCI-M5-BIO-E01",
+        "grade":  "ม.5",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.5)",
+        "difficulty":  "easy",
+        "question":  "เนื้อเยื่อลำเลียงน้ำและแร่ธาตุในพืชมีชื่อว่าอะไร?",
+        "choices":  [
+                        "โฟลเอ็ม (Phloem)",
+                        "ไซเล็ม (Xylem)",
+                        "คอร์เทกซ์ (Cortex)",
+                        "เอพิเดอร์มิส"
+                    ],
+        "correctAnswer":  "B",
+        "explanation":  "ไซเล็ม (Xylem) ทำหน้าที่ลำเลียงน้ำและแร่ธาตุจากรากขึ้นสู่ยอด"
+    },
+    {
+        "id":  "SCI-M5-BIO-E02",
+        "grade":  "ม.5",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.5)",
+        "difficulty":  "easy",
+        "question":  "ฮอร์โมนพืชชนิดใดมีบทบาทหลักในการเร่งการสุกของผลไม้?",
+        "choices":  [
+                        "ออกซิน (Auxin)",
+                        "จิบเบอเรลลิน (Gibberellin)",
+                        "เอทิลีน (Ethylene)",
+                        "ไซโทไคนิน (Cytokinin)"
+                    ],
+        "correctAnswer":  "C",
+        "explanation":  "เอทิลีนเป็นฮอร์โมนพืชในรูปแก๊สทำหน้าที่เร่งการสุกของผลไม้และการร่วงของใบ"
+    },
+    {
+        "id":  "SCI-M5-BIO-M01",
+        "grade":  "ม.5",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.5)",
+        "difficulty":  "medium",
+        "question":  "การคายน้ำของพืชเกิดขึ้นมากที่สุดผ่านโครงสร้างใด?",
+        "choices":  [
+                        "เลนติเซล (Lenticel)",
+                        "ปากใบ (Stomata)",
+                        "ขนราก (Root hair)",
+                        "คิวทิเคิล (Cuticle)"
+                    ],
+        "correctAnswer":  "B",
+        "explanation":  "พืชสูญเสียน้ำในรูปไอน้ำผ่านทางปากใบมากที่สุดกว่าร้อยละ 90"
+    },
+    {
+        "id":  "SCI-M5-BIO-M02",
+        "grade":  "ม.5",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.5)",
+        "difficulty":  "medium",
+        "question":  "การเปิด-ปิดของปากใบพืชถูกควบคุมโดยการเปลี่ยนแปลงความเต่งของเซลล์ใด?",
+        "choices":  [
+                        "เซลล์คุม (Guard cell)",
+                        "เซลล์พาเรนไคมา",
+                        "เซลล์ขนราก",
+                        "เซลล์มีโซฟิลล์"
+                    ],
+        "correctAnswer":  "A",
+        "explanation":  "เซลล์คุมทำหน้าที่ควบคุมการเปิดปิดของรูปากใบเมื่อมีการสะสมโพแทสเซียมไอออนและน้ำเข้าสู่เซลล์"
+    },
+    {
+        "id":  "SCI-M5-BIO-H01",
+        "grade":  "ม.5",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.5)",
+        "difficulty":  "hard",
+        "question":  "แรงหลักที่ใช้ในการดึงน้ำขึ้นสู่ยอดไม้สูงหลายสิบเมตรคือแรงใด?",
+        "choices":  [
+                        "แรงดันราก (Root pressure)",
+                        "แรงดึงจากการคายน้ำ (Transpiration pull)",
+                        "แรงแคพิลลารี (Capillary action)",
+                        "แรงออสโมซิส"
+                    ],
+        "correctAnswer":  "B",
+        "explanation":  "แรงดึงจากการคายน้ำร่วมกับแรงโคฮีชัน (Cohesion) และแอดฮีชัน (Adhesion) สามารถลำเลียงน้ำขึ้นสู่ยอดไม้สูงได้"
+    },
+    {
+        "id":  "SCI-M5-BIO-H02",
+        "grade":  "ม.5",
+        "subject":  "ชีววิทยา",
+        "category":  "ชีววิทยา (ม.5)",
+        "difficulty":  "hard",
+        "question":  "การปฏิสนธิซ้อน (Double fertilization) ในพืชดอก ผลลัพธ์จะได้ไซโกต (2n) และอะไร?",
+        "choices":  [
+                        "เอนโดสเปิร์ม (3n)",
+                        "โอวูล (2n)",
+                        "ละอองเรณู (n)",
+                        "รังไข่ (2n)"
+                    ],
+        "correctAnswer":  "A",
+        "explanation":  "สเปิร์มตัวที่ 1 ผสมกับเซลล์ไข่ได้ไซโกต (2n) ส่วนสเปิร์มตัวที่ 2 ผสมกับโพลาร์นิวคลีไอได้เอนโดสเปิร์ม (3n)"
     }
 ];
 
-function getRandomQuestions(easyCount, mediumCount, hardCount, grade = null) {
-  let pool = QUESTION_BANK;
+// ฟังก์ชันสุ่มข้อสอบตามระดับความยาก, ระดับชั้น, หมวดวิชา และรวมข้อสอบที่ครูสร้างเอง
+function getRandomQuestions(easyCount, mediumCount, hardCount, grade = null, subject = null, customQuestions = []) {
+  let pool = [...QUESTION_BANK, ...(customQuestions || [])];
+  
   if (grade && grade !== 'all') {
     pool = pool.filter(q => q.grade === grade);
+  }
+  
+  if (subject && subject !== 'all') {
+    pool = pool.filter(q => q.subject === subject || (q.category && q.category.includes(subject)));
   }
 
   const easyPool = pool.filter(q => q.difficulty === 'easy');
