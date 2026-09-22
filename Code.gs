@@ -142,3 +142,40 @@ function validateRoomCode(code) {
   }
   throw new Error('ไม่พบห้องสอบนี้ หรือห้องสอบถูกปิดไปแล้ว');
 }
+
+function recordResult(roomId, studentName, studentClass, studentNumber, score, total, percentage) {
+  const sheet = getOrCreateSheet(SHEET_RESULTS);
+  const id = 'res-' + Utilities.getUuid();
+  sheet.appendRow([id, roomId, studentName, studentClass, studentNumber, score, total, percentage, new Date().toISOString()]);
+  return { success: true, id: id };
+}
+
+function doPost(e) {
+  try {
+    const postData = JSON.parse(e.postData.contents);
+    const action = postData.action;
+
+    let result = null;
+    if (action === 'submitScore') {
+      result = recordResult(
+        postData.roomId,
+        postData.studentName,
+        postData.studentClass,
+        postData.studentNumber,
+        postData.score,
+        postData.total,
+        postData.percentage
+      );
+    } else if (action === 'validateRoom') {
+      result = validateRoomCode(postData.roomCode);
+    } else {
+      throw new Error('ไม่รู้จักคำสั่ง ' + action);
+    }
+
+    return ContentService.createTextOutput(JSON.stringify({ status: 'success', data: result }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ status: 'error', message: err.message }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
