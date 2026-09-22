@@ -1024,59 +1024,29 @@ function submitExam(force = false) {
 }
 
 function displayResults(result, reviewData) {
-  document.getElementById('scoreDisplayCircle').textContent = `${result.score} / ${result.total}`;
-  document.getElementById('scoreDisplayPct').textContent = `${result.percentage}% (${
-    result.percentage >= 50 ? 'ผ่านเกณฑ์ ✅' : 'ไม่ผ่านเกณฑ์ ⚠️'
-  })`;
-  document.getElementById('scoreStudentDetails').textContent =
-    `ผู้สอบ: ${result.studentName} (${result.studentClass} เลขที่ ${result.studentNumber}) | ห้องสอบ: ${state.currentRoom.name}`;
+  // Requirement: ไม่ต้องเฉลยทันที (Withhold answers & explanations from students upon submission)
+  // Teachers retain full score & answer review visibility in the Teacher Admin Dashboard
+  const circle = document.getElementById('scoreDisplayCircle');
+  if (circle) circle.textContent = '✓';
 
-  let html = '';
-  reviewData.forEach((item, idx) => {
-    const q = item.originalQuestion;
-    const cardClass = item.isCorrect ? 'correct' : 'incorrect';
+  const pct = document.getElementById('scoreDisplayPct');
+  if (pct) pct.textContent = 'ระบบบันทึกการส่งคำตอบเรียบร้อยแล้ว';
 
-    html += `
-      <div class="question-item ${cardClass}">
-        <div class="q-header">
-          <span style="font-weight: 700;">ข้อที่ ${idx + 1} (${q.category || q.subject})</span>
-          <span>${item.isCorrect ? '✅ ถูกต้อง (+1)' : '❌ ไม่ถูกต้อง (0)'}</span>
-        </div>
-        <div class="q-title">${escapeHtml(q.question)}</div>
-        <div class="choices-list">
-    `;
-
-    item.shuffledChoices.forEach((choice, cIdx) => {
-      const thaiLetter = thaiLetters[cIdx];
-      let choiceStyle = '';
-      let badgeText = '';
-
-      if (choice.isCorrect) {
-        choiceStyle = 'correct-answer';
-        badgeText = ' (คำตอบที่ถูกต้อง)';
-      } else if (cIdx === item.selectedChoiceIndex && !item.isCorrect) {
-        choiceStyle = 'user-wrong';
-        badgeText = ' (คำตอบของคุณ)';
-      }
-
-      html += `
-        <div class="choice-label ${choiceStyle}">
-          <span class="choice-letter">${thaiLetter}.</span>
-          <span>${escapeHtml(choice.text)}${badgeText}</span>
-        </div>
-      `;
+  const details = document.getElementById('scoreStudentDetails');
+  if (details) {
+    const formattedTime = new Date(result.submittedAt).toLocaleTimeString('th-TH', {
+      hour: '2-digit',
+      minute: '2-digit'
     });
+    details.textContent = `ผู้สอบ: ${result.studentName} (${result.studentClass} เลขที่ ${result.studentNumber}) | ห้องสอบ: ${state.currentRoom.name} (${state.currentRoom.code}) | เวลาส่ง: ${formattedTime} น.`;
+  }
 
-    html += `
-        </div>
-        <div class="explanation-box">
-          💡 <strong>คำอธิบาย:</strong> ${escapeHtml(q.explanation)}
-        </div>
-      </div>
-    `;
-  });
-
-  document.getElementById('resultAnswersReview').innerHTML = html;
+  // Ensure answer keys and explanations remain hidden from students
+  const reviewContainer = document.getElementById('resultAnswersReview');
+  if (reviewContainer) {
+    reviewContainer.innerHTML = '';
+    reviewContainer.style.display = 'none';
+  }
 }
 
 function exitExam() {
@@ -1087,44 +1057,235 @@ function exitExam() {
   }
 }
 
-// ==================== Calculator Logic ====================
+// ==================== Scientific Calculator Logic ====================
+let calcIsDeg = true; // true = DEG, false = RAD
+let calcJustEvaluated = false;
+
 function toggleCalculator() {
   const calc = document.getElementById('calculatorBox');
   if (calc) calc.classList.toggle('active');
 }
 
+function calcToggleDegRad() {
+  calcIsDeg = !calcIsDeg;
+  const btn = document.getElementById('degRadBtn');
+  if (btn) {
+    if (calcIsDeg) {
+      btn.textContent = 'DEG';
+      btn.classList.remove('rad-mode');
+    } else {
+      btn.textContent = 'RAD';
+      btn.classList.add('rad-mode');
+    }
+  }
+}
+
 function calcPress(val) {
   const display = document.getElementById('calcDisplay');
+  const formula = document.getElementById('calcFormula');
+  if (!display) return;
 
   if (val === 'C') {
     display.value = '0';
+    if (formula) formula.textContent = '';
+    calcJustEvaluated = false;
     return;
   }
 
   if (val === 'back') {
-    display.value = display.value.length > 1 ? display.value.slice(0, -1) : '0';
+    if (display.value === 'Error') {
+      display.value = '0';
+      calcJustEvaluated = false;
+      return;
+    }
+    const multiFuncs = ['sin(', 'cos(', 'tan(', 'log(', 'ln(', '√('];
+    let removed = false;
+    for (const f of multiFuncs) {
+      if (display.value.endsWith(f)) {
+        display.value = display.value.slice(0, -f.length);
+        removed = true;
+        break;
+      }
+    }
+    if (!removed) {
+      display.value = display.value.length > 1 ? display.value.slice(0, -1) : '0';
+    }
+    if (display.value === '' || display.value === '-') {
+      display.value = '0';
+    }
+    calcJustEvaluated = false;
+    return;
+  }
+
+  if (val === 'toggleSign') {
+    if (display.value === '0' || display.value === 'Error') return;
+    if (display.value.startsWith('-(') && display.value.endsWith(')')) {
+      display.value = display.value.slice(2, -1);
+    } else if (display.value.startsWith('-')) {
+      display.value = display.value.slice(1);
+    } else if (/^[0-9.]+$/.test(display.value)) {
+      display.value = '-' + display.value;
+    } else {
+      display.value = '-(' + display.value + ')';
+    }
+    calcJustEvaluated = false;
+    return;
+  }
+
+  if (val === 'inv') {
+    if (display.value === '0' || display.value === 'Error') return;
+    display.value = '1/(' + display.value + ')';
+    calcJustEvaluated = false;
     return;
   }
 
   if (val === '=') {
-    try {
-      const sanitized = display.value.replace(/×/g, '*').replace(/÷/g, '/');
-      if (!/^[0-9+\-*\/().\s]+$/.test(sanitized)) throw new Error();
+    calcEvaluate();
+    return;
+  }
 
-      const res = Function(`"use strict"; return (${sanitized})`)();
-      if (!Number.isFinite(res)) throw new Error();
-      display.value = Number(res.toFixed(6)).toString();
-    } catch (e) {
-      display.value = 'Error';
+  // After evaluation, pressing operator continues calculation; pressing number starts fresh
+  if (calcJustEvaluated) {
+    if (['+', '-', '*', '/', '^', '%'].includes(val)) {
+      calcJustEvaluated = false;
+    } else {
+      display.value = '0';
+      calcJustEvaluated = false;
+    }
+  }
+
+  if (val === '^2') {
+    if (display.value !== 'Error') {
+      display.value += '^2';
+    }
+    return;
+  }
+
+  if (val === '%') {
+    if (display.value !== 'Error') {
+      display.value += '/100';
     }
     return;
   }
 
   if (display.value === '0' || display.value === 'Error') {
-    display.value = val;
+    if (['+', '*', '/', '^', '%', ')'].includes(val)) {
+      display.value = '0' + val;
+    } else if (val === '.') {
+      display.value = '0.';
+    } else {
+      display.value = val;
+    }
   } else {
     display.value += val;
   }
+}
+
+function calcEvaluate() {
+  const display = document.getElementById('calcDisplay');
+  const formula = document.getElementById('calcFormula');
+  if (!display) return;
+
+  const rawInput = display.value;
+  if (!rawInput || rawInput === 'Error') return;
+
+  if (formula) {
+    formula.textContent = rawInput + ' =';
+  }
+
+  try {
+    let expr = rawInput
+      .replace(/×/g, '*')
+      .replace(/÷/g, '/')
+      .replace(/−/g, '-');
+
+    // Balance unclosed parentheses
+    const openCount = (expr.match(/\(/g) || []).length;
+    const closeCount = (expr.match(/\)/g) || []).length;
+    if (openCount > closeCount) {
+      expr += ')'.repeat(openCount - closeCount);
+    }
+
+    // Replace mathematical symbols & constants
+    expr = expr.replace(/π/g, '(__PI__)');
+    expr = expr.replace(/e/g, '(__E__)');
+    expr = expr.replace(/\^/g, '**');
+    expr = expr.replace(/√\(/g, '__sqrt__(');
+
+    // Replace function names
+    expr = expr.replace(/\bsin\(/g, '__sin__(');
+    expr = expr.replace(/\bcos\(/g, '__cos__(');
+    expr = expr.replace(/\btan\(/g, '__tan__(');
+    expr = expr.replace(/\bln\(/g, '__ln__(');
+    expr = expr.replace(/\blog\(/g, '__log__(');
+
+    // Handle implicit multiplication: e.g. 2( -> 2*(, )2 -> )*2, )( -> )*(
+    expr = expr.replace(/(\d)(\()/g, '$1*$2');
+    expr = expr.replace(/(\))(\d)/g, '$1*$2');
+    expr = expr.replace(/(\))(\()/g, '$1*$2');
+    expr = expr.replace(/(\d)(__PI__|__E__|__sin__|__cos__|__tan__|__log__|__ln__|__sqrt__)/g, '$1*$2');
+    expr = expr.replace(/(__PI__|__E__)(\d|\()/g, '$1*$2');
+
+    // Safe execution sandbox
+    const degToRad = deg => (deg * Math.PI) / 180;
+    const __PI__ = Math.PI;
+    const __E__ = Math.E;
+
+    const __sin__ = x => {
+      const rad = calcIsDeg ? degToRad(x) : x;
+      const res = Math.sin(rad);
+      return Math.abs(res) < 1e-14 ? 0 : res;
+    };
+
+    const __cos__ = x => {
+      const rad = calcIsDeg ? degToRad(x) : x;
+      const res = Math.cos(rad);
+      return Math.abs(res) < 1e-14 ? 0 : res;
+    };
+
+    const __tan__ = x => {
+      if (calcIsDeg) {
+        const norm = ((x % 180) + 180) % 180;
+        if (Math.abs(norm - 90) < 1e-10) throw new Error('Undefined');
+      }
+      const rad = calcIsDeg ? degToRad(x) : x;
+      const res = Math.tan(rad);
+      return Math.abs(res) < 1e-14 ? 0 : res;
+    };
+
+    const __log__ = x => {
+      if (x <= 0) throw new Error('Invalid');
+      return Math.log10(x);
+    };
+
+    const __ln__ = x => {
+      if (x <= 0) throw new Error('Invalid');
+      return Math.log(x);
+    };
+
+    const __sqrt__ = x => {
+      if (x < 0) throw new Error('Invalid');
+      return Math.sqrt(x);
+    };
+
+    const evalFn = new Function(
+      '__PI__', '__E__', '__sin__', '__cos__', '__tan__', '__log__', '__ln__', '__sqrt__',
+      `"use strict"; return (${expr});`
+    );
+
+    const result = evalFn(__PI__, __E__, __sin__, __cos__, __tan__, __log__, __ln__, __sqrt__);
+
+    if (!Number.isFinite(result)) {
+      display.value = 'Error';
+    } else {
+      let clean = parseFloat(result.toFixed(10));
+      display.value = clean.toString();
+    }
+  } catch (err) {
+    display.value = 'Error';
+  }
+
+  calcJustEvaluated = true;
 }
 
 // ==================== Utility ====================

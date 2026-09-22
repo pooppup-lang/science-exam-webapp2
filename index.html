@@ -107,38 +107,59 @@
 
         <div id="studentError" class="error"></div>
 
-        <!-- Calculator Box -->
+        <!-- Scientific Calculator Box -->
         <div id="calculatorBox" class="calc-box">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <span style="font-size: 13px; color: #94a3b8;">เครื่องคิดเลข</span>
-            <button class="small secondary" onclick="toggleCalculator()" style="padding: 2px 8px; font-size: 11px;">✕ ปิด</button>
+          <div class="calc-header">
+            <div class="calc-title">
+              <span>🧮 เครื่องคิดเลขวิทยาศาสตร์</span>
+              <button class="deg-rad-btn" id="degRadBtn" onclick="calcToggleDegRad()">DEG</button>
+            </div>
+            <button class="calc-close-btn" onclick="toggleCalculator()">✕</button>
           </div>
-          <input type="text" id="calcDisplay" class="calc-display" readonly value="0">
-          <div class="calc-grid">
-            <button onclick="calcPress('C')">C</button>
-            <button onclick="calcPress('back')">⌫</button>
-            <button onclick="calcPress('(')">(</button>
-            <button onclick="calcPress(')')">)</button>
+          <div class="calc-screen">
+            <div id="calcFormula" class="calc-formula"></div>
+            <input type="text" id="calcDisplay" class="calc-display" readonly value="0">
+          </div>
+          <div class="calc-grid sci-grid">
+            <button class="sci-btn" onclick="calcPress('sin(')">sin</button>
+            <button class="sci-btn" onclick="calcPress('cos(')">cos</button>
+            <button class="sci-btn" onclick="calcPress('tan(')">tan</button>
+            <button class="sci-btn" onclick="calcPress('π')">π</button>
+            <button class="sci-btn" onclick="calcPress('e')">e</button>
 
-            <button onclick="calcPress('7')">7</button>
-            <button onclick="calcPress('8')">8</button>
-            <button onclick="calcPress('9')">9</button>
-            <button class="op" onclick="calcPress('/')">÷</button>
+            <button class="sci-btn" onclick="calcPress('ln(')">ln</button>
+            <button class="sci-btn" onclick="calcPress('log(')">log</button>
+            <button class="sci-btn" onclick="calcPress('√(')">√</button>
+            <button class="sci-btn" onclick="calcPress('^2')">x²</button>
+            <button class="sci-btn" onclick="calcPress('^')">xʸ</button>
 
-            <button onclick="calcPress('4')">4</button>
-            <button onclick="calcPress('5')">5</button>
-            <button onclick="calcPress('6')">6</button>
-            <button class="op" onclick="calcPress('*')">×</button>
+            <button class="fn-btn" onclick="calcPress('(')">(</button>
+            <button class="fn-btn" onclick="calcPress(')')">)</button>
+            <button class="fn-btn" onclick="calcPress('inv')">1/x</button>
+            <button class="danger-btn" onclick="calcPress('back')">⌫</button>
+            <button class="danger-btn" onclick="calcPress('C')">C</button>
 
-            <button onclick="calcPress('1')">1</button>
-            <button onclick="calcPress('2')">2</button>
-            <button onclick="calcPress('3')">3</button>
-            <button class="op" onclick="calcPress('-')">−</button>
+            <button class="num-btn" onclick="calcPress('7')">7</button>
+            <button class="num-btn" onclick="calcPress('8')">8</button>
+            <button class="num-btn" onclick="calcPress('9')">9</button>
+            <button class="op-btn" onclick="calcPress('/')">÷</button>
+            <button class="fn-btn" onclick="calcPress('toggleSign')">±</button>
 
-            <button onclick="calcPress('0')">0</button>
-            <button onclick="calcPress('.')">.</button>
-            <button class="equal" onclick="calcPress('=')">=</button>
-            <button class="op" onclick="calcPress('+')">+</button>
+            <button class="num-btn" onclick="calcPress('4')">4</button>
+            <button class="num-btn" onclick="calcPress('5')">5</button>
+            <button class="num-btn" onclick="calcPress('6')">6</button>
+            <button class="op-btn" onclick="calcPress('*')">×</button>
+            <button class="sci-btn" onclick="calcPress('%')">%</button>
+
+            <button class="num-btn" onclick="calcPress('1')">1</button>
+            <button class="num-btn" onclick="calcPress('2')">2</button>
+            <button class="num-btn" onclick="calcPress('3')">3</button>
+            <button class="op-btn" onclick="calcPress('-')">−</button>
+            <button class="op-btn" onclick="calcPress('+')">+</button>
+
+            <button class="num-btn zero-btn" onclick="calcPress('0')">0</button>
+            <button class="num-btn" onclick="calcPress('.')">.</button>
+            <button class="equal-btn" onclick="calcPress('=')">=</button>
           </div>
         </div>
 
@@ -146,7 +167,7 @@
         <div id="examContent"></div>
 
         <div style="margin-top: 30px;">
-          <button class="success btn-large" onclick="submitExam()">📤 ส่งคำตอบและตรวจผลคะแนน</button>
+          <button class="success btn-large" onclick="submitExam()">📤 ส่งคำตอบและบันทึกคะแนน</button>
         </div>
       </div>
     </div>
@@ -155,14 +176,22 @@
     <div id="studentResultView" class="view">
       <div class="card">
         <div class="score-summary-card">
-          <h2 style="color: white; margin: 0;">ผลการทดสอบวิทยาศาสตร์</h2>
-          <div id="scoreDisplayCircle" class="score-circle">0 / 0</div>
-          <div id="scoreDisplayPct" class="score-pct">0%</div>
-          <p id="scoreStudentDetails" style="margin-top: 8px; opacity: 0.95;"></p>
+          <div class="submitted-badge">✅ ส่งข้อสอบสำเร็จ</div>
+          <h2 style="color: white; margin: 10px 0 6px;">บันทึกข้อมูลการสอบเรียบร้อยแล้ว</h2>
+          <div id="scoreDisplayCircle" class="score-circle">✓</div>
+          <div id="scoreDisplayPct" class="score-pct">ระบบได้รับคำตอบของคุณเรียบร้อยแล้ว</div>
+          <p id="scoreStudentDetails" style="margin-top: 12px; opacity: 0.95; font-size: 15px;"></p>
         </div>
 
-        <h2>📖 เฉลยคำตอบและคำอธิบายละเอียด</h2>
-        <div id="resultAnswersReview"></div>
+        <div class="no-reveal-notice">
+          <div class="notice-icon">🔒</div>
+          <div class="notice-content">
+            <h3>การสอบนี้ปิดระบบเฉลยคำตอบทันที</h3>
+            <p>เพื่อรักษามาตรฐานและความยุติธรรมในการจัดสอบ ระบบได้จัดส่งคำตอบของคุณไปยังคุณครูผู้สอนเรียบร้อยแล้ว โดยคุณครูผู้สอนจะเป็นผู้ตรวจสอบ สรุปคะแนน และประกาศผลพร้อมเฉลยในภายหลัง</p>
+          </div>
+        </div>
+
+        <div id="resultAnswersReview" style="display: none;"></div>
 
         <button class="btn-large" onclick="showStudentPortal()">🏠 กลับสู่หน้าหลักเข้าสอบ</button>
       </div>

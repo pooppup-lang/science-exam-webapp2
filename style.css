@@ -635,56 +635,202 @@ button.small {
   font-weight: 600;
 }
 
-/* ================= Calculator ================= */
+/* ================= Scientific Calculator ================= */
 .calc-box {
   display: none;
-  background: #1e293b;
+  background: #0f172a;
   color: white;
   padding: 16px;
-  border-radius: 14px;
-  box-shadow: var(--shadow-lg);
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
   margin-bottom: 20px;
-  max-width: 320px;
+  max-width: 440px;
   margin-left: auto;
   margin-right: auto;
+  border: 1px solid #334155;
 }
 
 .calc-box.active { display: block; }
 
+.calc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.calc-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.deg-rad-btn {
+  background: #1e293b !important;
+  color: #38bdf8 !important;
+  border: 1px solid #38bdf8 !important;
+  padding: 2px 8px !important;
+  font-size: 11px !important;
+  border-radius: 6px !important;
+  width: auto !important;
+  margin: 0 !important;
+  cursor: pointer;
+}
+
+.deg-rad-btn.rad-mode {
+  background: #d97706 !important;
+  color: white !important;
+  border-color: #d97706 !important;
+}
+
+.calc-close-btn {
+  background: transparent !important;
+  color: #94a3b8 !important;
+  font-size: 16px !important;
+  border: none !important;
+  padding: 4px 8px !important;
+  width: auto !important;
+  margin: 0 !important;
+  cursor: pointer;
+}
+.calc-close-btn:hover { color: white !important; }
+
+.calc-screen {
+  background: #020617;
+  border: 1.5px solid #1e293b;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  text-align: right;
+}
+
+.calc-formula {
+  font-size: 13px;
+  color: #64748b;
+  min-height: 18px;
+  font-family: monospace;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
 .calc-display {
-  background: #0f172a;
+  background: transparent;
   color: #38bdf8;
-  font-size: 24px;
+  font-size: 26px;
+  font-weight: 700;
   font-family: monospace;
   text-align: right;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 12px;
-  border: 1px solid #334155;
+  padding: 4px 0;
+  margin: 0;
+  border: none;
   width: 100%;
 }
 
-.calc-grid {
+.sci-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
 }
 
-.calc-grid button {
-  padding: 12px 0;
-  font-size: 16px;
+.sci-grid button {
+  padding: 10px 0;
+  font-size: 14px;
   font-weight: 600;
   border-radius: 8px;
-  background: #334155;
-  color: white;
   margin: 0;
+  border: none;
 }
 
-.calc-grid button:hover { background: #475569; }
-.calc-grid button.op { background: #d97706; }
-.calc-grid button.op:hover { background: #b45309; }
-.calc-grid button.equal { background: #16a34a; grid-column: span 2; }
-.calc-grid button.equal:hover { background: #15803d; }
+.sci-btn {
+  background: #1e293b;
+  color: #7dd3fc;
+}
+.sci-btn:hover { background: #0284c7; color: white; }
+
+.fn-btn {
+  background: #334155;
+  color: #e2e8f0;
+}
+.fn-btn:hover { background: #475569; }
+
+.danger-btn {
+  background: #881337;
+  color: #fecdd3;
+}
+.danger-btn:hover { background: #be123c; color: white; }
+
+.num-btn {
+  background: #1e293b;
+  color: #f8fafc;
+  font-size: 16px !important;
+}
+.num-btn:hover { background: #334155; }
+
+.op-btn {
+  background: #b45309;
+  color: white;
+  font-size: 16px !important;
+}
+.op-btn:hover { background: #d97706; }
+
+.equal-btn {
+  background: #15803d;
+  color: white;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  grid-column: span 2;
+}
+.equal-btn:hover { background: #16a34a; }
+
+.zero-btn {
+  grid-column: span 2;
+}
+
+/* ================= No-Reveal Result Notice ================= */
+.submitted-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.no-reveal-notice {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-left: 5px solid #2563eb;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.notice-icon {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.notice-content h3 {
+  font-size: 17px;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.notice-content p {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0;
+}
 
 /* ================= Tables ================= */
 .table-responsive {
