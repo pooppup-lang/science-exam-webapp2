@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบทำข้อสอบวิทยาศาสตร์ - Science Exam System</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔬</text></svg>">
+</head>
+<body>
+  <div class="container">
+
+    <!-- ================= 1. HOME VIEW ================= -->
+    <div id="homeView" class="view active">
+      <div class="card">
+        <h1>🔬 ระบบทำข้อสอบวิทยาศาสตร์</h1>
+        <p class="subtitle">ระบบทดสอบความรู้และประเมินผลออนไลน์ วิชาวิทยาศาสตร์ สำหรับครูและนักเรียน</p>
+
+        <div class="role-grid">
+          <div class="role-card" onclick="showView('studentCodeView')">
+            <span class="role-icon">📝</span>
+            <div class="role-title">เข้าสู่ห้องสอบ (นักเรียน)</div>
+            <div class="role-desc">กรอกรหัสห้องเพื่อเริ่มทำข้อสอบและดูผลคะแนนทันที</div>
+          </div>
+
+          <div class="role-card" onclick="showView('teacherLoginView')">
+            <span class="role-icon">👨‍🏫</span>
+            <div class="role-title">เข้าสู่ระบบครูผู้สอน</div>
+            <div class="role-desc">สร้างห้องสอบ จัดการข้อสอบ และดูผลคะแนนนักเรียน</div>
+          </div>
+
+          <div class="role-card" onclick="showView('registerTeacherView')">
+            <span class="role-icon">✨</span>
+            <div class="role-title">สมัครบัญชีครูใหม่</div>
+            <div class="role-desc">ลงทะเบียนบัญชีครูเพื่อเริ่มต้นสร้างห้องสอบ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 2. TEACHER LOGIN VIEW ================= -->
+    <div id="teacherLoginView" class="view">
+      <div class="card">
+        <h1>👨‍🏫 เข้าสู่ระบบครูผู้สอน</h1>
+        <p class="subtitle">กรอกชื่อผู้ใช้และรหัสผ่านเพื่อเข้าสู่แดชบอร์ดจัดการห้องสอบ</p>
+        <div id="teacherLoginError" class="error"></div>
+
+        <label for="teacherUsername">ชื่อผู้ใช้ (Username)</label>
+        <input type="text" id="teacherUsername" placeholder="เช่น teacher_sc">
+
+        <label for="teacherPassword">รหัสผ่าน (Password)</label>
+        <input type="password" id="teacherPassword" placeholder="••••••••">
+
+        <button onclick="teacherLogin()">เข้าสู่ระบบ</button>
+        <button class="secondary" onclick="showView('homeView')">← กลับหน้าหลัก</button>
+
+        <p style="text-align: center; margin-top: 14px; font-size: 14px; color: var(--text-muted);">
+          ยังไม่มีบัญชีครู? <a href="javascript:void(0)" onclick="showView('registerTeacherView')" style="color: var(--primary); text-decoration: none; font-weight: 600;">สมัครสมาชิกที่นี่</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- ================= 3. REGISTER TEACHER VIEW ================= -->
+    <div id="registerTeacherView" class="view">
+      <div class="card">
+        <h1>✨ สมัครบัญชีครูผู้สอน</h1>
+        <p class="subtitle">สร้างบัญชีสำหรับจัดการและออกข้อสอบ</p>
+        <div id="registerTeacherError" class="error"></div>
+
+        <label for="registerName">ชื่อ-นามสกุล</label>
+        <input type="text" id="registerName" placeholder="เช่น ครูวรพล ใจดี">
+
+        <label for="registerUsername">ชื่อผู้ใช้ (Username)</label>
+        <input type="text" id="registerUsername" placeholder="เช่น worapon_sci">
+
+        <label for="registerPassword">รหัสผ่าน (อย่างน้อย 6 ตัวอักษร)</label>
+        <input type="password" id="registerPassword" placeholder="••••••••">
+
+        <label for="registerConfirmPassword">ยืนยันรหัสผ่าน</label>
+        <input type="password" id="registerConfirmPassword" placeholder="••••••••">
+
+        <button onclick="registerTeacher()">สมัครบัญชีครู</button>
+        <button class="secondary" onclick="showView('homeView')">← กลับหน้าหลัก</button>
+      </div>
+    </div>
+
+    <!-- ================= 4. TEACHER DASHBOARD VIEW ================= -->
+    <div id="teacherDashboardView" class="view">
+      <div class="card">
+        <div class="topbar">
+          <span id="teacherInfo" class="badge-info">ครู: กำลังโหลด...</span>
+          <button class="secondary small" onclick="teacherLogout()">ออกจากระบบ</button>
+        </div>
+
+        <h1>🛠️ สร้างห้องสอบวิทยาศาสตร์</h1>
+        <p class="subtitle">กำหนดรายละเอียดและสัดส่วนระดับความยากของข้อสอบ</p>
+        <div id="teacherError" class="error"></div>
+
+        <label for="newRoomName">ชื่อห้องสอบ / หน่วยการเรียนรู้</label>
+        <input type="text" id="newRoomName" placeholder="เช่น วิทยาศาสตร์ ม.2 ครั้งที่ 1 (สารละลายและแรง)">
+
+        <label for="newRoomClass">ระดับชั้น / ห้องเรียน</label>
+        <input type="text" id="newRoomClass" placeholder="เช่น ม.2/1">
+
+        <div class="input-row">
+          <div>
+            <label for="easyCount">ระดับง่าย (สูงสุด 14 ข้อ)</label>
+            <input type="number" id="easyCount" min="0" max="14" value="5">
+          </div>
+          <div>
+            <label for="mediumCount">ระดับปานกลาง (สูงสุด 14 ข้อ)</label>
+            <input type="number" id="mediumCount" min="0" max="14" value="3">
+          </div>
+          <div>
+            <label for="hardCount">ระดับยาก (สูงสุด 14 ข้อ)</label>
+            <input type="number" id="hardCount" min="0" max="14" value="2">
+          </div>
+        </div>
+
+        <button onclick="createRoom()">🚀 สร้างห้องสอบและออกรหัส</button>
+
+        <div id="newRoomCode"></div>
+
+        <h2>📋 ห้องสอบที่กำลังเปิดอยู่</h2>
+        <div id="roomList" class="table-responsive">
+          <p style="padding: 16px; color: var(--text-muted);">ยังไม่มีห้องสอบที่สร้าง</p>
+        </div>
+
+        <div id="roomResultsSection" style="margin-top: 24px; display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <h2 id="roomResultTitle" style="margin: 0;">📊 รายงานคะแนนนักเรียน</h2>
+            <button class="small outline" onclick="exportResultsToCSV()">📥 ส่งออกเป็นไฟล์ Excel/CSV</button>
+          </div>
+          <div id="roomResultsTable" class="table-responsive"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 5. STUDENT CODE VIEW ================= -->
+    <div id="studentCodeView" class="view">
+      <div class="card">
+        <h1>🔑 เข้าสู่ห้องสอบวิทยาศาสตร์</h1>
+        <p class="subtitle">กรอกรหัสห้องสอบที่ได้รับจากครูผู้สอน</p>
+        <div id="studentCodeError" class="error"></div>
+
+        <label for="roomCodeInput">รหัสห้องสอบ (Room Code)</label>
+        <input type="text" id="roomCodeInput" placeholder="เช่น SCI-9X4K2A" style="text-transform: uppercase; font-size: 20px; font-weight: bold; letter-spacing: 2px;">
+
+        <button onclick="checkRoomCode()">ยืนยันรหัสห้องสอบ</button>
+        <button class="secondary" onclick="showView('homeView')">← กลับหน้าหลัก</button>
+      </div>
+    </div>
+
+    <!-- ================= 6. STUDENT PROFILE VIEW ================= -->
+    <div id="studentProfileView" class="view">
+      <div class="card">
+        <h1>👤 ยืนยันข้อมูลนักเรียน</h1>
+        <p class="subtitle">กรุณากรอกข้อมูลส่วนตัวเพื่อบันทึกผลการสอบ</p>
+        <div id="profileError" class="error"></div>
+
+        <div id="roomSummary" class="room-code-banner"></div>
+
+        <label for="studentName">ชื่อ-นามสกุล</label>
+        <input type="text" id="studentName" placeholder="เช่น เด็กชายวิทยา รักเรียน">
+
+        <div class="input-row">
+          <div>
+            <label for="studentClass">ชั้น / ห้อง</label>
+            <input type="text" id="studentClass" placeholder="เช่น ม.2/1">
+          </div>
+          <div>
+            <label for="studentNumber">เลขที่</label>
+            <input type="number" id="studentNumber" min="1" placeholder="เช่น 15">
+          </div>
+        </div>
+
+        <button class="success" onclick="startExam()">✍️ เริ่มทำข้อสอบ</button>
+        <button class="secondary" onclick="showView('studentCodeView')">← เปลี่ยนรหัสห้องสอบ</button>
+      </div>
+    </div>
+
+    <!-- ================= 7. STUDENT EXAM VIEW ================= -->
+    <div id="studentExamView" class="view">
+      <div class="card">
+        <div class="topbar">
+          <span id="studentInfo" class="badge-info">นักเรียน: กำลังสอบ</span>
+          <div style="display: flex; gap: 8px;">
+            <button class="small outline" onclick="toggleCalculator()">🧮 เครื่องคิดเลข</button>
+            <button class="small secondary" onclick="exitExam()">ออกจากห้อง</button>
+          </div>
+        </div>
+
+        <div id="studentError" class="error"></div>
+
+        <!-- Calculator Box -->
+        <div id="calculatorBox" class="calc-box">
+          <input type="text" id="calcDisplay" class="calc-display" readonly value="0">
+          <div class="calc-grid">
+            <button onclick="calcPress('C')">C</button>
+            <button onclick="calcPress('back')">⌫</button>
+            <button onclick="calcPress('(')">(</button>
+            <button onclick="calcPress(')')">)</button>
+
+            <button onclick="calcPress('7')">7</button>
+            <button onclick="calcPress('8')">8</button>
+            <button onclick="calcPress('9')">9</button>
+            <button class="op" onclick="calcPress('/')">÷</button>
+
+            <button onclick="calcPress('4')">4</button>
+            <button onclick="calcPress('5')">5</button>
+            <button onclick="calcPress('6')">6</button>
+            <button class="op" onclick="calcPress('*')">×</button>
+
+            <button onclick="calcPress('1')">1</button>
+            <button onclick="calcPress('2')">2</button>
+            <button onclick="calcPress('3')">3</button>
+            <button class="op" onclick="calcPress('-')">−</button>
+
+            <button onclick="calcPress('0')">0</button>
+            <button onclick="calcPress('.')">.</button>
+            <button class="equal" onclick="calcPress('=')">=</button>
+            <button class="op" onclick="calcPress('+')">+</button>
+          </div>
+        </div>
+
+        <!-- Questions Content -->
+        <div id="examContent"></div>
+
+        <div style="margin-top: 24px;">
+          <button class="success" onclick="submitExam()">📤 ส่งคำตอบและตรวจคะแนน</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 8. STUDENT RESULT VIEW ================= -->
+    <div id="studentResultView" class="view">
+      <div class="card">
+        <div class="score-summary-card">
+          <h2 style="color: white; margin: 0;">ผลการทดสอบวิทยาศาสตร์</h2>
+          <div id="scoreDisplayCircle" class="score-circle">0 / 0</div>
+          <div id="scoreDisplayPct" class="score-pct">0%</div>
+          <p id="scoreStudentDetails" style="margin-top: 8px; opacity: 0.95;"></p>
+        </div>
+
+        <h2>📖 เฉลยคำตอบและคำอธิบายละเอียด</h2>
+        <div id="resultAnswersReview"></div>
+
+        <button onclick="showView('homeView')">🏠 กลับสู่หน้าหลัก</button>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 ระบบทำข้อสอบวิทยาศาสตร์ (Science Exam System) | Ready for Vercel & GitHub</p>
+    </footer>
+
+  </div>
+
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
