@@ -1128,8 +1128,6 @@ function exitExam() {
   }
 }
 
-// ==================== Scientific Calculator Logic ====================
-let calcIsDeg = true; // true = DEG, false = RAD
 // ==================== Exact Math & Root / Fraction Simplification ====================
 function gcd(a, b) {
   a = Math.abs(Math.round(a));
