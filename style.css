@@ -686,6 +686,26 @@ button.small {
   border-color: #d97706 !important;
 }
 
+.sd-header-btn {
+  background: #047857 !important;
+  color: #a7f3d0 !important;
+  border-color: #10b981 !important;
+}
+.sd-header-btn:hover {
+  background: #059669 !important;
+  color: white !important;
+}
+
+.sd-btn {
+  background: #0284c7 !important;
+  color: white !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+}
+.sd-btn:hover {
+  background: #0369a1 !important;
+}
+
 .calc-close-btn {
   background: transparent !important;
   color: #94a3b8 !important;

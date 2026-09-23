@@ -828,18 +828,11 @@ function renderExamUI() {
   let html = '';
   state.currentExamQuestions.forEach((item, qIdx) => {
     const q = item.originalQuestion;
-    const diffBadge =
-      q.difficulty === 'easy'
-        ? '<span class="q-difficulty q-diff-easy">ระดับง่าย</span>'
-        : q.difficulty === 'medium'
-        ? '<span class="q-difficulty q-diff-medium">ระดับปานกลาง</span>'
-        : '<span class="q-difficulty q-diff-hard">ระดับยาก</span>';
 
     html += `
       <div class="question-item" id="q-card-${qIdx}">
         <div class="q-header">
-          <span style="font-size: 14px; font-weight: 700; color: var(--primary);">ข้อที่ ${qIdx + 1} (${q.category || q.subject})</span>
-          ${diffBadge}
+          <span style="font-size: 16px; font-weight: 700; color: var(--primary);">ข้อที่ ${qIdx + 1}</span>
         </div>
         <div class="q-title">${escapeHtml(q.question)}</div>
         <div class="choices-list">
@@ -1059,7 +1052,122 @@ function exitExam() {
 
 // ==================== Scientific Calculator Logic ====================
 let calcIsDeg = true; // true = DEG, false = RAD
+// ==================== Exact Math & Root / Fraction Simplification ====================
+function gcd(a, b) {
+  a = Math.abs(Math.round(a));
+  b = Math.abs(Math.round(b));
+  while (b) {
+    const t = b;
+    b = a % b;
+    a = t;
+  }
+  return a;
+}
+
+function toFraction(val, maxDenom = 2000) {
+  if (Math.abs(val) < 1e-12) return { num: 0, den: 1 };
+  const sign = val < 0 ? -1 : 1;
+  val = Math.abs(val);
+
+  if (Math.abs(val - Math.round(val)) < 1e-9) {
+    return { num: sign * Math.round(val), den: 1 };
+  }
+
+  let m00 = 0, m01 = 1, m10 = 1, m11 = 0;
+  let x = val;
+  for (let iter = 0; iter < 25; iter++) {
+    const a = Math.floor(x);
+    let t = m00 + a * m01; m00 = m01; m01 = t;
+    t = m10 + a * m11; m10 = m11; m11 = t;
+
+    if (m11 > maxDenom) break;
+    if (Math.abs(val - m01 / m11) < 1e-8) {
+      return { num: sign * m01, den: m11 };
+    }
+    const rem = x - a;
+    if (rem < 1e-12) break;
+    x = 1 / rem;
+  }
+  return { num: sign * m01, den: m11 };
+}
+
+function simplifySquareRoot(N) {
+  if (N <= 0 || !Number.isInteger(N)) return { outside: 1, inside: N };
+  let outside = 1;
+  let inside = N;
+  let d = 2;
+  while (d * d <= inside) {
+    if (inside % (d * d) === 0) {
+      outside *= d;
+      inside = Math.floor(inside / (d * d));
+    } else {
+      d++;
+    }
+  }
+  return { outside, inside };
+}
+
+function formatExactValue(val) {
+  if (!Number.isFinite(val)) return 'Error';
+  if (Math.abs(val) < 1e-12) return '0';
+
+  const signStr = val < 0 ? '-' : '';
+  const absVal = Math.abs(val);
+
+  // If already a clean integer
+  if (Math.abs(absVal - Math.round(absVal)) < 1e-9) {
+    return signStr + Math.round(absVal).toString();
+  }
+
+  // 1. Check if square value is rational (handles pure roots like √8 = 2√2, √12 = 2√3, and roots with fractions like √3/2, √2/2, 2√5/3)
+  const sq = absVal * absVal;
+  const sqFrac = toFraction(sq, 2000);
+  const sqDiff = Math.abs(sq - sqFrac.num / sqFrac.den);
+
+  if (sqDiff < 1e-7 && sqFrac.num > 0 && sqFrac.den > 0 && sqFrac.den <= 1000) {
+    const prod = sqFrac.num * sqFrac.den;
+    const { outside, inside } = simplifySquareRoot(prod);
+
+    // Only accept if simplified root inside is reasonable (<= 500)
+    if (inside <= 500) {
+      const g = gcd(outside, sqFrac.den);
+      const numCoeff = outside / g;
+      const denCoeff = sqFrac.den / g;
+
+      if (inside === 1) {
+        // Pure fraction
+        if (denCoeff === 1) return signStr + numCoeff.toString();
+        return `${signStr}${numCoeff}/${denCoeff}`;
+      } else {
+        // Contains square root (ติดรูท)
+        const rootStr = numCoeff === 1 ? `√${inside}` : `${numCoeff}√${inside}`;
+        if (denCoeff === 1) return `${signStr}${rootStr}`;
+        return `${signStr}${rootStr}/${denCoeff}`;
+      }
+    }
+  }
+
+  // 2. If not caught by square, check clean direct fraction (den <= 500)
+  const frac = toFraction(absVal, 500);
+  if (Math.abs(absVal - frac.num / frac.den) < 1e-8 && frac.den <= 500) {
+    if (frac.den === 1) return signStr + frac.num.toString();
+    return `${signStr}${frac.num}/${frac.den}`;
+  }
+
+  // 3. Fallback: clean decimal representation
+  return parseFloat(val.toFixed(8)).toString();
+}
+
+// ==================== Scientific Calculator State & Logic ====================
+let calcIsDeg = true; // true = DEG, false = RAD
 let calcJustEvaluated = false;
+let calcResultState = {
+  rawNumeric: null,
+  exactForm: '',
+  decimalForm: '',
+  showingExact: true,
+  lastFormula: ''
+};
 
 function toggleCalculator() {
   const calc = document.getElementById('calculatorBox');
@@ -1080,6 +1188,27 @@ function calcToggleDegRad() {
   }
 }
 
+function calcToggleSD() {
+  if (calcResultState.rawNumeric === null) return;
+  const display = document.getElementById('calcDisplay');
+  const formula = document.getElementById('calcFormula');
+  if (!display) return;
+
+  calcResultState.showingExact = !calcResultState.showingExact;
+
+  if (calcResultState.showingExact) {
+    display.value = calcResultState.exactForm;
+    if (formula && calcResultState.exactForm !== calcResultState.decimalForm) {
+      formula.textContent = `${calcResultState.lastFormula} (≈ ${calcResultState.decimalForm})`;
+    }
+  } else {
+    display.value = calcResultState.decimalForm;
+    if (formula && calcResultState.exactForm !== calcResultState.decimalForm) {
+      formula.textContent = `${calcResultState.lastFormula} [${calcResultState.exactForm}]`;
+    }
+  }
+}
+
 function calcPress(val) {
   const display = document.getElementById('calcDisplay');
   const formula = document.getElementById('calcFormula');
@@ -1089,6 +1218,7 @@ function calcPress(val) {
     display.value = '0';
     if (formula) formula.textContent = '';
     calcJustEvaluated = false;
+    calcResultState.rawNumeric = null;
     return;
   }
 
@@ -1096,6 +1226,7 @@ function calcPress(val) {
     if (display.value === 'Error') {
       display.value = '0';
       calcJustEvaluated = false;
+      calcResultState.rawNumeric = null;
       return;
     }
     const multiFuncs = ['sin(', 'cos(', 'tan(', 'log(', 'ln(', '√('];
@@ -1114,6 +1245,7 @@ function calcPress(val) {
       display.value = '0';
     }
     calcJustEvaluated = false;
+    calcResultState.rawNumeric = null;
     return;
   }
 
@@ -1129,6 +1261,7 @@ function calcPress(val) {
       display.value = '-(' + display.value + ')';
     }
     calcJustEvaluated = false;
+    calcResultState.rawNumeric = null;
     return;
   }
 
@@ -1136,6 +1269,7 @@ function calcPress(val) {
     if (display.value === '0' || display.value === 'Error') return;
     display.value = '1/(' + display.value + ')';
     calcJustEvaluated = false;
+    calcResultState.rawNumeric = null;
     return;
   }
 
@@ -1144,13 +1278,14 @@ function calcPress(val) {
     return;
   }
 
-  // After evaluation, pressing operator continues calculation; pressing number starts fresh
+  // After evaluation: if operator pressed, continue calculating; if number/function pressed, start fresh
   if (calcJustEvaluated) {
     if (['+', '-', '*', '/', '^', '%'].includes(val)) {
       calcJustEvaluated = false;
     } else {
       display.value = '0';
       calcJustEvaluated = false;
+      calcResultState.rawNumeric = null;
     }
   }
 
@@ -1189,10 +1324,6 @@ function calcEvaluate() {
   const rawInput = display.value;
   if (!rawInput || rawInput === 'Error') return;
 
-  if (formula) {
-    formula.textContent = rawInput + ' =';
-  }
-
   try {
     let expr = rawInput
       .replace(/×/g, '*')
@@ -1210,7 +1341,10 @@ function calcEvaluate() {
     expr = expr.replace(/π/g, '(__PI__)');
     expr = expr.replace(/e/g, '(__E__)');
     expr = expr.replace(/\^/g, '**');
+
+    // Handle square roots: both √(x) and √number or 2√2
     expr = expr.replace(/√\(/g, '__sqrt__(');
+    expr = expr.replace(/√([0-9.]+)/g, '__sqrt__($1)');
 
     // Replace function names
     expr = expr.replace(/\bsin\(/g, '__sin__(');
@@ -1219,7 +1353,7 @@ function calcEvaluate() {
     expr = expr.replace(/\bln\(/g, '__ln__(');
     expr = expr.replace(/\blog\(/g, '__log__(');
 
-    // Handle implicit multiplication: e.g. 2( -> 2*(, )2 -> )*2, )( -> )*(
+    // Handle implicit multiplication: e.g. 2( -> 2*(, )2 -> )*2, )( -> )*(, 2√3 -> 2*√3
     expr = expr.replace(/(\d)(\()/g, '$1*$2');
     expr = expr.replace(/(\))(\d)/g, '$1*$2');
     expr = expr.replace(/(\))(\()/g, '$1*$2');
@@ -1277,12 +1411,30 @@ function calcEvaluate() {
 
     if (!Number.isFinite(result)) {
       display.value = 'Error';
+      calcResultState.rawNumeric = null;
     } else {
-      let clean = parseFloat(result.toFixed(10));
-      display.value = clean.toString();
+      const exact = formatExactValue(result);
+      const decimal = parseFloat(result.toFixed(8)).toString();
+
+      calcResultState.rawNumeric = result;
+      calcResultState.exactForm = exact;
+      calcResultState.decimalForm = decimal;
+      calcResultState.showingExact = true;
+      calcResultState.lastFormula = `${rawInput} =`;
+
+      display.value = exact;
+
+      if (formula) {
+        if (exact !== decimal) {
+          formula.textContent = `${rawInput} = (≈ ${decimal})`;
+        } else {
+          formula.textContent = `${rawInput} =`;
+        }
+      }
     }
   } catch (err) {
     display.value = 'Error';
+    calcResultState.rawNumeric = null;
   }
 
   calcJustEvaluated = true;

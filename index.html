@@ -38,13 +38,6 @@
         </div>
 
         <button class="btn-large" onclick="checkRoomCode()">🚀 ยืนยันรหัสห้องสอบ</button>
-
-        <div class="feature-strip">
-          <div class="strip-item"><span>⏱️</span> จับเวลาถอยหลัง</div>
-          <div class="strip-item"><span>🧮</span> เครื่องคิดเลขในตัว</div>
-          <div class="strip-item"><span>🛡️</span> ป้องกันการสลับหน้าจอ</div>
-          <div class="strip-item"><span>📖</span> เฉลยละเอียดทันที</div>
-        </div>
       </div>
     </div>
 
@@ -113,6 +106,7 @@
             <div class="calc-title">
               <span>🧮 เครื่องคิดเลขวิทยาศาสตร์</span>
               <button class="deg-rad-btn" id="degRadBtn" onclick="calcToggleDegRad()">DEG</button>
+              <button class="deg-rad-btn sd-header-btn" id="sdHeaderBtn" onclick="calcToggleSD()" title="สลับเศษส่วน/ติดรูท ⇔ ทศนิยม">S⇔D</button>
             </div>
             <button class="calc-close-btn" onclick="toggleCalculator()">✕</button>
           </div>
@@ -157,8 +151,9 @@
             <button class="op-btn" onclick="calcPress('-')">−</button>
             <button class="op-btn" onclick="calcPress('+')">+</button>
 
-            <button class="num-btn zero-btn" onclick="calcPress('0')">0</button>
+            <button class="num-btn" onclick="calcPress('0')">0</button>
             <button class="num-btn" onclick="calcPress('.')">.</button>
+            <button class="fn-btn sd-btn" id="sdPadBtn" onclick="calcToggleSD()" title="สลับเศษส่วน/ติดรูท ⇔ ทศนิยม">S⇔D</button>
             <button class="equal-btn" onclick="calcPress('=')">=</button>
           </div>
         </div>
