@@ -130,8 +130,11 @@ function showStudentPortal() {
 
 function togglePortal() {
   if (state.currentTeacher) {
+    const infoEl = document.getElementById('teacherInfo');
+    if (infoEl) infoEl.textContent = `ครู: ${state.currentTeacher.fullName}`;
     showView('teacherDashboardView');
     loadTeacherRooms();
+    loadCustomQuestions();
     updatePoolCountDisplay();
   } else {
     showView('teacherLoginView');
@@ -202,24 +205,99 @@ function registerTeacher() {
   showView('teacherLoginView');
 }
 
-function teacherLogin() {
-  const username = document.getElementById('teacherUsername').value.trim();
-  const password = document.getElementById('teacherPassword').value;
+function loginDemoTeacher() {
+  let teachers = getStorage(STORAGE_KEYS.TEACHERS, []);
+  let demo = teachers.find(t => t.username && t.username.toLowerCase() === 'teacher');
+  if (!demo) {
+    demo = {
+      id: 't-demo',
+      fullName: 'ครูวิทยาศาสตร์ (Demo)',
+      username: 'teacher',
+      password: 'password123',
+      pin: '1234',
+      secQuestion: 'pet',
+      secAnswer: 'ด่าง',
+      createdAt: new Date().toISOString()
+    };
+    teachers.push(demo);
+    setStorage(STORAGE_KEYS.TEACHERS, teachers);
+  }
 
-  const teachers = getStorage(STORAGE_KEYS.TEACHERS, []);
-  const teacher = teachers.find(
-    t => t.username.toLowerCase() === username.toLowerCase() && t.password === password
+  // Ensure demo room exists
+  const rooms = getStorage(STORAGE_KEYS.ROOMS, []);
+  if (rooms.length === 0 || !rooms.some(r => r.teacherId === demo.id)) {
+    rooms.unshift({
+      id: 'room-demo-1',
+      code: 'SCI-DEMO1',
+      name: 'ทดสอบความรู้วิทยาศาสตร์พื้นฐาน ม.2',
+      grade: 'ม.2',
+      subject: 'all',
+      classroom: 'ม.2/1',
+      timeLimit: 15,
+      easy: 3,
+      medium: 2,
+      hard: 1,
+      createdAt: new Date().toISOString(),
+      active: true,
+      teacherId: demo.id
+    });
+    setStorage(STORAGE_KEYS.ROOMS, rooms);
+  }
+
+  const uInput = document.getElementById('teacherUsername');
+  const pInput = document.getElementById('teacherPassword');
+  if (uInput) uInput.value = demo.username;
+  if (pInput) pInput.value = demo.password;
+
+  state.currentTeacher = demo;
+  sessionStorage.setItem(STORAGE_KEYS.CURRENT_TEACHER, JSON.stringify(demo));
+
+  const infoEl = document.getElementById('teacherInfo');
+  if (infoEl) infoEl.textContent = `ครู: ${demo.fullName}`;
+
+  showView('teacherDashboardView');
+  loadTeacherRooms();
+  loadCustomQuestions();
+  updatePoolCountDisplay();
+}
+
+function teacherLogin() {
+  const username = (document.getElementById('teacherUsername').value || '').trim();
+  const password = document.getElementById('teacherPassword').value || '';
+
+  // If both fields are empty, automatically log into demo admin
+  if (!username && !password) {
+    loginDemoTeacher();
+    return;
+  }
+
+  if (!username || !password) {
+    showError('teacherLoginError', 'กรุณากรอกทั้งชื่อผู้ใช้และรหัสผ่าน หรือคลิกปุ่ม "🚀 เข้าใช้งานทันที" ด้านบน');
+    return;
+  }
+
+  let teachers = getStorage(STORAGE_KEYS.TEACHERS, []);
+  let teacher = teachers.find(
+    t => t.username && t.username.toLowerCase() === username.toLowerCase() && t.password === password
   );
 
+  // Fallback: If user types demo credentials even if storage was cleared
+  if (!teacher && username.toLowerCase() === 'teacher' && password === 'password123') {
+    loginDemoTeacher();
+    return;
+  }
+
   if (!teacher) {
-    showError('teacherLoginError', 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+    showError('teacherLoginError', 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง (หากยังไม่มีบัญชีสามารถกด "✨ สมัครบัญชีครูใหม่" ด้านล่าง)');
     return;
   }
 
   state.currentTeacher = teacher;
   sessionStorage.setItem(STORAGE_KEYS.CURRENT_TEACHER, JSON.stringify(teacher));
 
-  document.getElementById('teacherInfo').textContent = `ครู: ${teacher.fullName}`;
+  const infoEl = document.getElementById('teacherInfo');
+  if (infoEl) infoEl.textContent = `ครู: ${teacher.fullName}`;
+
   showView('teacherDashboardView');
   loadTeacherRooms();
   loadCustomQuestions();
@@ -1463,21 +1541,25 @@ window.addEventListener('DOMContentLoaded', () => {
   initDemoData();
   setupAntiCheatListeners();
 
-  // Check URL parameters for direct room join (e.g. ?room=SCI-XXXXXX)
-  const urlParams = new URLSearchParams(window.location.search);
-  const roomParam = urlParams.get('room');
-  if (roomParam) {
-    document.getElementById('roomCodeInput').value = roomParam.toUpperCase();
-    checkRoomCode(roomParam);
-  } else {
-    showStudentPortal();
-  }
-
   // Restore teacher session if logged in
   const savedTeacher = sessionStorage.getItem(STORAGE_KEYS.CURRENT_TEACHER);
   if (savedTeacher) {
     try {
       state.currentTeacher = JSON.parse(savedTeacher);
     } catch (e) {}
+  }
+
+  // Check URL parameters for direct room join (e.g. ?room=SCI-XXXXXX) or admin link (?admin=1)
+  const urlParams = new URLSearchParams(window.location.search);
+  const roomParam = urlParams.get('room');
+  const adminParam = urlParams.get('admin');
+
+  if (adminParam === '1' || window.location.hash === '#admin') {
+    togglePortal();
+  } else if (roomParam) {
+    document.getElementById('roomCodeInput').value = roomParam.toUpperCase();
+    checkRoomCode(roomParam);
+  } else {
+    showStudentPortal();
   }
 });

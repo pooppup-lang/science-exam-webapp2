@@ -861,6 +861,27 @@ button.small {
   border: 1px solid var(--border);
 }
 
+.demo-box {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1.5px solid #93c5fd;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.admin-portal-link-box {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
