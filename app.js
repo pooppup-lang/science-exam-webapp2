@@ -670,9 +670,12 @@ function loadTeacherRooms() {
           </span>
         </td>
         <td>
-          <div style="display: flex; gap: 4px;">
-            <button class="small outline" onclick="showRoomResults('${room.id}')">📊 คะแนน</button>
-            ${room.active ? `<button class="small danger" onclick="closeRoom('${room.id}')">ปิดห้อง</button>` : ''}
+          <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+            <button class="small outline" onclick="showRoomResults('${room.id}')" title="ดูผลคะแนนนักเรียน">📊 คะแนน</button>
+            ${room.active 
+              ? `<button class="small secondary" onclick="closeRoom('${room.id}')" title="ปิดรับการสอบ">ปิดห้อง</button>` 
+              : `<button class="small success" onclick="reopenRoom('${room.id}')" title="เปิดรับการสอบใหม่อีกครั้ง">เปิดใหม่</button>`}
+            <button class="small danger" onclick="deleteRoom('${room.id}')" title="ลบห้องสอบนี้ถาวร">🗑️ ลบ</button>
           </div>
         </td>
       </tr>
@@ -693,6 +696,53 @@ function closeRoom(roomId) {
     setStorage(STORAGE_KEYS.ROOMS, rooms);
     loadTeacherRooms();
   }
+}
+
+function reopenRoom(roomId) {
+  if (!state.currentTeacher) return;
+
+  const rooms = getStorage(STORAGE_KEYS.ROOMS, []);
+  const room = rooms.find(r => r.id === roomId && r.teacherId === state.currentTeacher.id);
+  if (room) {
+    room.active = true;
+    setStorage(STORAGE_KEYS.ROOMS, rooms);
+    loadTeacherRooms();
+  }
+}
+
+function deleteRoom(roomId) {
+  if (!state.currentTeacher) return;
+
+  const rooms = getStorage(STORAGE_KEYS.ROOMS, []);
+  const room = rooms.find(r => r.id === roomId && r.teacherId === state.currentTeacher.id);
+  if (!room) return;
+
+  if (!confirm(`⚠️ ยืนยันการลบห้องสอบ "${room.name}" (รหัส: ${room.code})?\n\nเมื่อลบแล้ว ข้อมูลห้องสอบและคะแนนสอบทั้งหมดของนักเรียนในห้องนี้จะถูกลบถาวร ไม่สามารถกู้คืนได้`)) {
+    return;
+  }
+
+  // 1. ลบห้องสอบออกจาก Storage
+  const updatedRooms = rooms.filter(r => r.id !== roomId);
+  setStorage(STORAGE_KEYS.ROOMS, updatedRooms);
+
+  // 2. ลบประวัติผลคะแนนที่ผูกกับห้องสอบนี้
+  const allResults = getStorage(STORAGE_KEYS.RESULTS, []);
+  const updatedResults = allResults.filter(res => res.roomId !== roomId);
+  setStorage(STORAGE_KEYS.RESULTS, updatedResults);
+
+  // 3. ปิดแถบแสดงผลคะแนนหากกำลังเปิดห้องที่ถูกลบอยู่
+  if (state.selectedRoomForResults && state.selectedRoomForResults.id === roomId) {
+    closeResultsSection();
+  }
+
+  // 4. โหลดตารางห้องสอบใหม่
+  loadTeacherRooms();
+}
+
+function closeResultsSection() {
+  const el = document.getElementById('roomResultsSection');
+  if (el) el.style.display = 'none';
+  state.selectedRoomForResults = null;
 }
 
 // STRICT TEACHER ISOLATION: Only display results for rooms belonging to currentTeacher

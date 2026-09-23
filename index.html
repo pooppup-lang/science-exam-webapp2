@@ -38,13 +38,6 @@
         </div>
 
         <button class="btn-large" onclick="checkRoomCode()">🚀 ยืนยันรหัสห้องสอบ</button>
-
-        <div class="admin-portal-link-box">
-          <span>สำหรับคุณครูผู้สอน:</span>
-          <button type="button" class="small outline" onclick="togglePortal()" style="width: auto; margin: 0; padding: 6px 14px; font-size: 13px;">
-            👨‍🏫 เข้าสู่ระบบครู (Admin Portal) →
-          </button>
-        </div>
       </div>
     </div>
 
@@ -413,7 +406,10 @@
           <div id="roomResultsSection" style="margin-top: 24px; display: none;">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
               <h2 id="roomResultTitle" style="margin: 0;">📊 รายงานคะแนนนักเรียน</h2>
-              <button class="small outline" onclick="exportResultsToCSV()">📥 ส่งออกเป็นไฟล์ Excel/CSV</button>
+              <div style="display: flex; gap: 8px;">
+                <button class="small outline" onclick="exportResultsToCSV()">📥 ส่งออกเป็นไฟล์ Excel/CSV</button>
+                <button class="small secondary" onclick="closeResultsSection()">✕ ซ่อน</button>
+              </div>
             </div>
             <div id="roomResultsTable" class="table-responsive"></div>
           </div>
