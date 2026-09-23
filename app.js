@@ -1030,7 +1030,12 @@ function setupAntiCheatListeners() {
   });
 
   window.addEventListener('blur', () => {
-    if (state.examActive) {
+    // บนอุปกรณ์มือถือหรือ iPad (Touch Devices) การแตะช่องกรอกข้อความ, คีย์บอร์ดเด้งขึ้น, หรือเมนูเลือก
+    // อาจทำให้เกิด event blur ทั้งที่นักเรียนยังอยู่ในหน้าเว็บ
+    // จึงใช้ document.hidden (visibilitychange) เป็นหลักสำหรับ Mobile/iPad ซึ่งตรวจจับการสลับแท็บ/สลับแอปได้ 100%
+    const isTouchMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || 
+                          (navigator.maxTouchPoints && navigator.maxTouchPoints > 1);
+    if (!isTouchMobile && state.examActive) {
       handleCheat();
     }
   });
