@@ -199,26 +199,10 @@
         <h1>👨‍🏫 เข้าสู่ระบบครูผู้สอน</h1>
         <p class="subtitle">ระบบจัดการห้องสอบ ออกแบบข้อสอบ และตรวจผลคะแนนนักเรียน</p>
 
-        <!-- Quick 1-Click Demo Box -->
-        <div class="demo-box">
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
-            <div>
-              <strong style="color: #1e40af; font-size: 14px;">⚡ บัญชีทดลองใช้งาน (Demo Admin):</strong>
-              <div style="font-size: 13px; color: #1e3a8a; margin-top: 3px;">
-                ชื่อผู้ใช้: <code style="background: white; padding: 2px 6px; border-radius: 4px; font-weight: 700;">teacher</code> | 
-                รหัสผ่าน: <code style="background: white; padding: 2px 6px; border-radius: 4px; font-weight: 700;">password123</code>
-              </div>
-            </div>
-            <button type="button" class="small success" onclick="loginDemoTeacher()" style="margin: 0; white-space: nowrap; width: auto; font-weight: 700;">
-              🚀 เข้าใช้งานทันที (1-Click)
-            </button>
-          </div>
-        </div>
-
         <div id="teacherLoginError" class="error"></div>
 
         <label for="teacherUsername">ชื่อผู้ใช้ (Username)</label>
-        <input type="text" id="teacherUsername" placeholder="เช่น teacher หรือชื่อที่คุณลงทะเบียน" onkeydown="if(event.key==='Enter') teacherLogin()">
+        <input type="text" id="teacherUsername" placeholder="กรอกชื่อผู้ใช้ที่คุณลงทะเบียนไว้" onkeydown="if(event.key==='Enter') teacherLogin()">
 
         <label for="teacherPassword">รหัสผ่าน (Password)</label>
         <input type="password" id="teacherPassword" placeholder="••••••••" onkeydown="if(event.key==='Enter') teacherLogin()">

@@ -52,41 +52,18 @@ function setStorage(key, value) {
   }
 }
 
-// Initial demo account & room if storage is completely empty
-function initDemoData() {
+// Cleanup any legacy demo teacher data
+function cleanupLegacyDemoData() {
   const teachers = getStorage(STORAGE_KEYS.TEACHERS, []);
-  if (teachers.length === 0) {
-    teachers.push({
-      id: 't-demo',
-      fullName: 'ครูวิทยาศาสตร์ (Demo)',
-      username: 'teacher',
-      password: 'password123',
-      pin: '1234',
-      secQuestion: 'pet',
-      secAnswer: 'ด่าง',
-      createdAt: new Date().toISOString()
-    });
-    setStorage(STORAGE_KEYS.TEACHERS, teachers);
+  const filteredTeachers = teachers.filter(t => t.id !== 't-demo' && t.username !== 'teacher');
+  if (filteredTeachers.length !== teachers.length) {
+    setStorage(STORAGE_KEYS.TEACHERS, filteredTeachers);
   }
 
   const rooms = getStorage(STORAGE_KEYS.ROOMS, []);
-  if (rooms.length === 0) {
-    rooms.push({
-      id: 'room-demo-1',
-      code: 'SCI-DEMO1',
-      name: 'ทดสอบความรู้วิทยาศาสตร์พื้นฐาน ม.2',
-      grade: 'ม.2',
-      subject: 'all',
-      classroom: 'ม.2/1',
-      timeLimit: 15,
-      easy: 3,
-      medium: 2,
-      hard: 1,
-      createdAt: new Date().toISOString(),
-      active: true,
-      teacherId: 't-demo'
-    });
-    setStorage(STORAGE_KEYS.ROOMS, rooms);
+  const filteredRooms = rooms.filter(r => r.teacherId !== 't-demo' && r.id !== 'room-demo-1');
+  if (filteredRooms.length !== rooms.length) {
+    setStorage(STORAGE_KEYS.ROOMS, filteredRooms);
   }
 }
 
@@ -205,74 +182,12 @@ function registerTeacher() {
   showView('teacherLoginView');
 }
 
-function loginDemoTeacher() {
-  let teachers = getStorage(STORAGE_KEYS.TEACHERS, []);
-  let demo = teachers.find(t => t.username && t.username.toLowerCase() === 'teacher');
-  if (!demo) {
-    demo = {
-      id: 't-demo',
-      fullName: 'ครูวิทยาศาสตร์ (Demo)',
-      username: 'teacher',
-      password: 'password123',
-      pin: '1234',
-      secQuestion: 'pet',
-      secAnswer: 'ด่าง',
-      createdAt: new Date().toISOString()
-    };
-    teachers.push(demo);
-    setStorage(STORAGE_KEYS.TEACHERS, teachers);
-  }
-
-  // Ensure demo room exists
-  const rooms = getStorage(STORAGE_KEYS.ROOMS, []);
-  if (rooms.length === 0 || !rooms.some(r => r.teacherId === demo.id)) {
-    rooms.unshift({
-      id: 'room-demo-1',
-      code: 'SCI-DEMO1',
-      name: 'ทดสอบความรู้วิทยาศาสตร์พื้นฐาน ม.2',
-      grade: 'ม.2',
-      subject: 'all',
-      classroom: 'ม.2/1',
-      timeLimit: 15,
-      easy: 3,
-      medium: 2,
-      hard: 1,
-      createdAt: new Date().toISOString(),
-      active: true,
-      teacherId: demo.id
-    });
-    setStorage(STORAGE_KEYS.ROOMS, rooms);
-  }
-
-  const uInput = document.getElementById('teacherUsername');
-  const pInput = document.getElementById('teacherPassword');
-  if (uInput) uInput.value = demo.username;
-  if (pInput) pInput.value = demo.password;
-
-  state.currentTeacher = demo;
-  sessionStorage.setItem(STORAGE_KEYS.CURRENT_TEACHER, JSON.stringify(demo));
-
-  const infoEl = document.getElementById('teacherInfo');
-  if (infoEl) infoEl.textContent = `ครู: ${demo.fullName}`;
-
-  showView('teacherDashboardView');
-  loadTeacherRooms();
-  loadCustomQuestions();
-  updatePoolCountDisplay();
-}
-
 function teacherLogin() {
   const username = (document.getElementById('teacherUsername').value || '').trim();
   const password = document.getElementById('teacherPassword').value || '';
 
-  // If both fields are empty, automatically log into demo admin
-  if (!username && !password) {
-    loginDemoTeacher();
-    return;
-  }
-
   if (!username || !password) {
-    showError('teacherLoginError', 'กรุณากรอกทั้งชื่อผู้ใช้และรหัสผ่าน หรือคลิกปุ่ม "🚀 เข้าใช้งานทันที" ด้านบน');
+    showError('teacherLoginError', 'กรุณากรอกทั้งชื่อผู้ใช้และรหัสผ่าน');
     return;
   }
 
@@ -281,14 +196,8 @@ function teacherLogin() {
     t => t.username && t.username.toLowerCase() === username.toLowerCase() && t.password === password
   );
 
-  // Fallback: If user types demo credentials even if storage was cleared
-  if (!teacher && username.toLowerCase() === 'teacher' && password === 'password123') {
-    loginDemoTeacher();
-    return;
-  }
-
   if (!teacher) {
-    showError('teacherLoginError', 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง (หากยังไม่มีบัญชีสามารถกด "✨ สมัครบัญชีครูใหม่" ด้านล่าง)');
+    showError('teacherLoginError', 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง (หากยังไม่มีบัญชี สามารถกด "✨ สมัครบัญชีครูใหม่" ด้านล่าง)');
     return;
   }
 
@@ -1591,7 +1500,7 @@ function copyText(text) {
 
 // ==================== Initialization ====================
 window.addEventListener('DOMContentLoaded', () => {
-  initDemoData();
+  cleanupLegacyDemoData();
   setupAntiCheatListeners();
 
   // Restore teacher session if logged in
